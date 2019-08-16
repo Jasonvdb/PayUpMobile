@@ -88,6 +88,8 @@
     "console": true,
     "setTimeout": true,
     "it": true,
-    "describe": true
+    "describe": true,
+    "alert": true,
+    "require": true
   }
 }

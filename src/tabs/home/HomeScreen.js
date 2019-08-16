@@ -18,6 +18,7 @@ import {
 
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import displayCurrency from "../../helpers/displayCurrency";
+import Header from "../../elements/header/Header";
 
 class HomeScreen extends Component {
   static navigationOptions = props => {
@@ -25,7 +26,10 @@ class HomeScreen extends Component {
 
   	const value = navigation.getParam("walletValue", null);
   	return {
-  		title: value ? displayCurrency(value) : "AppSats"
+  		title: value ? displayCurrency(value) : "AppSats",
+  		headerTitle: props => (
+  			<Header {...props} onProfilePress={() => navigation.push("Profile")}/>
+  		)
   		//subTitle: "Your balance"
   	};
   };
@@ -59,9 +63,22 @@ class HomeScreen extends Component {
   							}}
   						>
   							<Button
-  								title="Profile"
-  								onPress={() => navigation.navigate("Profile")}
+  								style={{ marginTop: 40 }}
+  								title="Make bet"
+  								onPress={() => alert("TODO")}
   							/>
+
+  							{/*{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(index => (*/}
+  							{/*	<View*/}
+  							{/*		key={index}*/}
+  							{/*		style={{*/}
+  							{/*			width: "100%",*/}
+  							{/*			height: 10,*/}
+  							{/*			marginTop: 40,*/}
+  							{/*			backgroundColor: "blue"*/}
+  							{/*		}}*/}
+  							{/*	/>*/}
+  							{/*))}*/}
   						</View>
   					</ScrollView>
   				</View>
@@ -79,7 +96,7 @@ const styles = StyleSheet.create({
 		//backgroundColor: "#909090"
 	},
 	scrollView: {
-		//backgroundColor: "#555555"
+		backgroundColor: "#fff"
 	}
 });
 

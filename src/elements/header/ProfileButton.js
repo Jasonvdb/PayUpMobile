@@ -1,22 +1,24 @@
 import React from "react";
-import { StyleSheet, View, Button, Image } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import PropTypes from "prop-types";
 
-const ProfileButton = ({ onClick }) => {
+const ProfileButton = ({ onPress }) => {
 	return (
-		<View style={styles.root} onClick={onClick}>
-			<Image
-				style={styles.image}
-				source={{
-					uri: "https://api.adorable.io/avatars/285/jay"
-				}}
-			/>
-		</View>
+		<TouchableOpacity onPress={onPress}>
+			<View style={styles.root}>
+				<Image
+					style={styles.image}
+					source={{
+						uri: "https://api.adorable.io/avatars/285/jay"
+					}}
+				/>
+			</View>
+		</TouchableOpacity>
 	);
 };
 
 ProfileButton.propTypes = {
-	onClick: PropTypes.func.isRequired
+	onPress: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({

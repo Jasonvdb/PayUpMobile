@@ -11,20 +11,20 @@ import PropTypes from "prop-types";
 import ProfileButton from "./ProfileButton";
 
 const Header = props => {
-	const { children, allowFontScaling, style, onProfileClick, ...rest } = props;
+	const { children, allowFontScaling, style, onProfilePress, ...rest } = props;
 	return (
 		<View style={styles.root}>
 			<View style={styles.titleContainer}>
 				<Text style={styles.subTitle}>Your balance</Text>
-				<Text style={styles.title}>{children}</Text>
+				<Text style={styles.title}>{children || "AppSats"}</Text>
 			</View>
-			{onProfileClick ? <ProfileButton onClick={onProfileClick}/> : null}
+			{onProfilePress ? <ProfileButton onPress={onProfilePress}/> : null}
 		</View>
 	);
 };
 
 Header.propTypes = {
-	onProfileClick: PropTypes.func
+	onProfilePress: PropTypes.func
 };
 
 const styles = StyleSheet.create({

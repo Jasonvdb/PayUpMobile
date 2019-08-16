@@ -12,7 +12,8 @@ import {
 	ScrollView,
 	View,
 	Text,
-	StatusBar
+	StatusBar,
+	Button
 } from "react-native";
 
 import { Colors } from "react-native/Libraries/NewAppScreen";
@@ -23,6 +24,8 @@ class SettingsScreen extends React.Component {
   };
 
   render() {
+  	const { navigation } = this.props;
+
   	return (
   		<Fragment>
   			<StatusBar barStyle="dark-content"/>
@@ -35,6 +38,11 @@ class SettingsScreen extends React.Component {
   						style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
   					>
   						<Text>Settings Screen</Text>
+
+  						<Button
+  							title="Profile"
+  							onPress={() => navigation.navigate("Profile")}
+  						/>
   					</View>
   				</ScrollView>
   			</SafeAreaView>

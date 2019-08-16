@@ -1,10 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { createStackNavigator, createAppContainer } from "react-navigation";
-import HomeScreen from "../screens/home/HomeScreen";
-import SettingsScreen from "../screens/settings/SettingsScreen";
+import {
+	createStackNavigator,
+	createAppContainer,
+	createBottomTabNavigator
+} from "react-navigation";
+import HomeScreen from "../tabs/home/HomeScreen";
+import SettingsScreen from "../tabs/settings/SettingsScreen";
 import Header from "../elements/header/Header";
-import ProfileScreen from "../screens/profile/ProfileScreen";
+import ProfileScreen from "../tabs/settings/profile/ProfileScreen";
+import BottomTab from "../elements/tab/BottomTab";
+import BottomTabBar2 from "../elements/tab/BottomTabBar2";
 
 const defaultNavigationOptions = {
 	headerTitle: props => <Header {...props}/>,
@@ -15,16 +21,16 @@ const defaultNavigationOptions = {
 	}
 };
 
-const MainNavigator = createStackNavigator(
+const DummyScreen = () => (
+	<View>
+		<Text>Dummy screen</Text>
+	</View>
+);
+
+const HomeNavigator = createStackNavigator(
 	{
 		Home: {
 			screen: HomeScreen
-		},
-		Settings: {
-			screen: SettingsScreen
-		},
-		Profile: {
-			screen: ProfileScreen
 		}
 	},
 	{
@@ -33,4 +39,55 @@ const MainNavigator = createStackNavigator(
 	},
 );
 
-export default createAppContainer(MainNavigator);
+const WalletNavigator = createStackNavigator(
+	{
+		Wallet: {
+			screen: DummyScreen
+		}
+	},
+	{
+		initialRouteName: "Wallet",
+		defaultNavigationOptions
+	},
+);
+
+const BetsNavigator = createStackNavigator(
+	{
+		Bets: {
+			screen: DummyScreen
+		}
+	},
+	{
+		initialRouteName: "Bets",
+		defaultNavigationOptions
+	},
+);
+
+const SettingsNavigator = createStackNavigator(
+	{
+		Settings: {
+			screen: SettingsScreen
+		},
+		Profile: {
+			screen: ProfileScreen
+		}
+	},
+	{
+		initialRouteName: "Settings",
+		defaultNavigationOptions
+	},
+);
+
+const MainTabNavigator = createBottomTabNavigator(
+	{
+		Home: HomeNavigator,
+		Wallet: WalletNavigator,
+		Bets: BetsNavigator,
+		Settings: SettingsNavigator
+	},
+	{
+		tabBarComponent: BottomTabBar2
+	},
+);
+
+export default createAppContainer(MainTabNavigator);
