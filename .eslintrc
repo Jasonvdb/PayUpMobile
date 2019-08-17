@@ -91,6 +91,10 @@
     "describe": true,
     "alert": true,
     "require": true,
-    "module": true
+    "module": true,
+    "expect": true,
+    "assert": true,
+    "beforeEach": true,
+    "afterEach": true
   }
 }

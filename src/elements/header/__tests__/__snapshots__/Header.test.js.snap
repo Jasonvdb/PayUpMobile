@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BottomTabBar Rendering should match to snapshot 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "style": "display:flex;flex-direction:row;justify-content:space-between;align-items:center;flex:1;padding-left:18px;padding-right:18px",
+    },
+    "children": Array [
+      Object {
+        "attribs": Object {},
+        "children": Array [
+          Object {
+            "attribs": Object {
+              "animation": "fadeInLeft",
+              "style": "color:#A6AAB4;font-size:14px;margin-bottom:4px",
+            },
+            "children": Array [],
+            "name": "text",
+            "namespace": "http://www.w3.org/1999/xhtml",
+            "next": Object {
+              "attribs": Object {
+                "animation": "fadeInRight",
+                "style": "color:#171D33;font-weight:600;font-size:32px",
+              },
+              "children": Array [
+                Object {
+                  "data": "AppSats",
+                  "next": null,
+                  "parent": [Circular],
+                  "prev": null,
+                  "type": "text",
+                },
+              ],
+              "name": "text",
+              "namespace": "http://www.w3.org/1999/xhtml",
+              "next": null,
+              "parent": [Circular],
+              "prev": [Circular],
+              "type": "tag",
+              "x-attribsNamespace": Object {
+                "animation": undefined,
+                "style": undefined,
+              },
+              "x-attribsPrefix": Object {
+                "animation": undefined,
+                "style": undefined,
+              },
+            },
+            "parent": [Circular],
+            "prev": null,
+            "type": "tag",
+            "x-attribsNamespace": Object {
+              "animation": undefined,
+              "style": undefined,
+            },
+            "x-attribsPrefix": Object {
+              "animation": undefined,
+              "style": undefined,
+            },
+          },
+          Object {
+            "attribs": Object {
+              "animation": "fadeInRight",
+              "style": "color:#171D33;font-weight:600;font-size:32px",
+            },
+            "children": Array [
+              Object {
+                "data": "AppSats",
+                "next": null,
+                "parent": [Circular],
+                "prev": null,
+                "type": "text",
+              },
+            ],
+            "name": "text",
+            "namespace": "http://www.w3.org/1999/xhtml",
+            "next": null,
+            "parent": [Circular],
+            "prev": Object {
+              "attribs": Object {
+                "animation": "fadeInLeft",
+                "style": "color:#A6AAB4;font-size:14px;margin-bottom:4px",
+              },
+              "children": Array [],
+              "name": "text",
+              "namespace": "http://www.w3.org/1999/xhtml",
+              "next": [Circular],
+              "parent": [Circular],
+              "prev": null,
+              "type": "tag",
+              "x-attribsNamespace": Object {
+                "animation": undefined,
+                "style": undefined,
+              },
+              "x-attribsPrefix": Object {
+                "animation": undefined,
+                "style": undefined,
+              },
+            },
+            "type": "tag",
+            "x-attribsNamespace": Object {
+              "animation": undefined,
+              "style": undefined,
+            },
+            "x-attribsPrefix": Object {
+              "animation": undefined,
+              "style": undefined,
+            },
+          },
+        ],
+        "name": "view",
+        "namespace": "http://www.w3.org/1999/xhtml",
+        "next": null,
+        "parent": [Circular],
+        "prev": null,
+        "type": "tag",
+        "x-attribsNamespace": Object {},
+        "x-attribsPrefix": Object {},
+      },
+    ],
+    "name": "view",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "style": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "style": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;

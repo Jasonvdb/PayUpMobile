@@ -1,9 +1,10 @@
 export default value => {
-	const sats = (value * 100000000).toString();
+	const sats = Math.round(value * 100000000).toString();
 
-	// str = str.slice(0, -3);
-	// str = parseInt(str);
-	// console.log(sats);
-	//TODO
-	return `${sats.slice(0, -3)}k sats`;
+	const numberString = `${sats.slice(0, -3)}`.replace(
+		/\B(?=(\d{3})+(?!\d))/g,
+		" ",
+	);
+
+	return `${numberString}k sats`;
 };

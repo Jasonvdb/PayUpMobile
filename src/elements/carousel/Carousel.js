@@ -1,17 +1,7 @@
-import React, { Component, Fragment } from "react";
-import {
-	SafeAreaView,
-	StyleSheet,
-	ScrollView,
-	View,
-	Text,
-	StatusBar,
-	Button,
-	Dimensions
-} from "react-native";
+import React, { Component } from "react";
+import { StyleSheet, Dimensions } from "react-native";
 import SnapCarousel from "react-native-snap-carousel";
 import PropTypes from "prop-types";
-import BetCard from "../../tabs/bets/swiper/BetCard";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -46,7 +36,10 @@ class Carousel extends Component {
 				}}
 				data={items}
 				renderItem={props => (
-					<ItemComponent {...props} isSelected={props.index === selectedIndex}/>
+					<ItemComponent
+						{...props}
+						isSelected={props.index === selectedIndex}
+					/>
 				)}
 				sliderWidth={sliderWidth}
 				itemWidth={itemWidth}
