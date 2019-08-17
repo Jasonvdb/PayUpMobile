@@ -17,13 +17,14 @@ import {
 	Dimensions
 } from "react-native";
 import * as Animatable from "react-native-animatable";
+import { withNavigation } from "react-navigation";
 
 import Carousel from "../../../elements/carousel/Carousel";
 import BetCard from "./BetCard";
 
 const windowWidth = Dimensions.get("window").width;
 
-const itemWidth = windowWidth / 1.6;
+const itemWidth = windowWidth / 1.2;
 
 class BetCardSwipe extends Component {
 	constructor(props) {
@@ -35,14 +36,32 @@ class BetCardSwipe extends Component {
 	}
 
 	componentDidMount(): void {
+		const { navigation } = this.props;
+
 		setTimeout(() => {
 			this.setState({
 				items: [
-					{ title: "Won card", type: "won" },
-					{ title: "Lost card", type: "lost" },
+					{
+						title: "Won card",
+						type: "won",
+						onPress: () => navigation.push("Bet")
+					},
+					{
+						title: "Lost card",
+						type: "lost",
+						onPress: () => navigation.push("Bet")
+					},
 
-					{ title: "Active card", type: "active" },
-					{ title: "Add card", type: "add" }
+					{
+						title: "Active card",
+						type: "active",
+						onPress: () => navigation.push("Bet")
+					},
+					{
+						title: "Add card",
+						type: "add",
+						onPress: () => navigation.push("Bet")
+					}
 				]
 			});
 		}, 200);
@@ -73,4 +92,4 @@ const styles = StyleSheet.create({
 	root: {}
 });
 
-export default BetCardSwipe;
+export default withNavigation(BetCardSwipe);

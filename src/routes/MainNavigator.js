@@ -11,6 +11,7 @@ import Header from "../elements/header/Header";
 import ProfileScreen from "../tabs/settings/profile/ProfileScreen";
 import BottomTabBar from "../elements/tab/BottomTabBar";
 import BetsScreen from '../tabs/bets/BetsScreen';
+import BetView from '../tabs/bets/BetView';
 
 const defaultNavigationOptions = {
 	headerTitle: props => <Header {...props}/>,
@@ -31,6 +32,9 @@ const HomeNavigator = createStackNavigator(
 	{
 		Home: {
 			screen: HomeScreen
+		},
+		Bet: {
+			screen: BetView
 		}
 	},
 	{
@@ -55,6 +59,9 @@ const BetsNavigator = createStackNavigator(
 	{
 		Bets: {
 			screen: BetsScreen
+		},
+		Bet: {
+			screen: BetView
 		}
 	},
 	{

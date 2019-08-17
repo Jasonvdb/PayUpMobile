@@ -44,7 +44,7 @@ class HomeScreen extends Component {
   componentDidMount(): void {
   	const { navigation } = this.props;
   	setTimeout(() => {
-  		navigation.setParams({ walletValue: 0.000097, subTitle: "Your balance" });
+  		navigation.setParams({ walletValue: 0.000697, subTitle: "Your balance" });
   	}, 1000);
   }
 
