@@ -9,6 +9,16 @@
 import React from "react";
 
 import MainNavigator from "./src/routes/MainNavigator";
+import { YellowBox } from "react-native";
+YellowBox.ignoreWarnings([
+	"Warning: componentWillReceiveProps is deprecated and will be removed in the next major version. Use static getDerivedStateFromProps instead.\n" +
+    "\n" +
+    "Please update the following components: withAnimatable",
+
+	"Warning: componentWillReceiveProps is deprecated and will be removed in the next major version. Use static getDerivedStateFromProps instead.\n" +
+    "\n" +
+    "Please update the following components: Carousel"
+]);
 
 const App = () => {
 	return <MainNavigator/>;

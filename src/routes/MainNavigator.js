@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 import {
 	createStackNavigator,
 	createAppContainer,
@@ -10,7 +10,7 @@ import SettingsScreen from "../tabs/settings/SettingsScreen";
 import Header from "../elements/header/Header";
 import ProfileScreen from "../tabs/settings/profile/ProfileScreen";
 import BottomTabBar from "../elements/tab/BottomTabBar";
-import Icon from 'react-native-vector-icons/Ionicons';
+import BetsScreen from '../tabs/bets/BetsScreen';
 
 const defaultNavigationOptions = {
 	headerTitle: props => <Header {...props}/>,
@@ -54,7 +54,7 @@ const WalletNavigator = createStackNavigator(
 const BetsNavigator = createStackNavigator(
 	{
 		Bets: {
-			screen: DummyScreen
+			screen: BetsScreen
 		}
 	},
 	{
@@ -77,8 +77,6 @@ const SettingsNavigator = createStackNavigator(
 		defaultNavigationOptions
 	},
 );
-
-//<Icon name="ios-wallet" size={30} color="#4F8EF7"/>
 
 const MainTabNavigator = createBottomTabNavigator(
 	{

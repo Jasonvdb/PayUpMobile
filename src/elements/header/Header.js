@@ -8,15 +8,32 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import PropTypes from "prop-types";
+import * as Animatable from "react-native-animatable";
+
 import ProfileButton from "./ProfileButton";
 
 const Header = props => {
-	const { children, allowFontScaling, style, onProfilePress, ...rest } = props;
+	const {
+		children,
+		allowFontScaling,
+		style,
+		onProfilePress,
+		subTitle,
+		animate,
+		...rest
+	} = props;
+
+	const TextComponent = animate ? Animatable.Text : Text;
+
 	return (
 		<View style={styles.root}>
 			<View style={styles.titleContainer}>
-				<Text style={styles.subTitle}>Your balance</Text>
-				<Text style={styles.title}>{children || "AppSats"}</Text>
+				<TextComponent animation="fadeInLeft" style={styles.subTitle}>
+					{subTitle || ""}
+				</TextComponent>
+				<TextComponent animation="fadeInRight" style={styles.title}>
+					{children || "AppSats"}
+				</TextComponent>
 			</View>
 			{onProfilePress ? <ProfileButton onPress={onProfilePress}/> : null}
 		</View>
@@ -24,7 +41,10 @@ const Header = props => {
 };
 
 Header.propTypes = {
-	onProfilePress: PropTypes.func
+	onProfilePress: PropTypes.func,
+	children: PropTypes.string,
+	subTitle: PropTypes.string,
+	animate: PropTypes.bool
 };
 
 const styles = StyleSheet.create({

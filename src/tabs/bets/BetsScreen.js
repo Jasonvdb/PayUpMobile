@@ -1,11 +1,11 @@
 /**
- * Settings screen
+ * Home screen with bets and transaction summary
  *
  * @format
  * @flow
  */
 
-import React, { Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import {
 	SafeAreaView,
 	StyleSheet,
@@ -15,19 +15,22 @@ import {
 	StatusBar,
 	Button
 } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import displayCurrency from "../../helpers/displayCurrency";
 import Header from "../../elements/header/Header";
 
-class SettingsScreen extends React.Component {
+class BetsScreen extends Component {
   static navigationOptions = props => {
   	const { navigation, ...rest } = props;
 
   	return {
-  		title: "Settings",
+  		title: "Bets",
   		headerTitle: props => (
   			<Header {...props} onProfilePress={() => navigation.push("Profile")}/>
   		)
+  		//subTitle: "Your balance"
   	};
   };
 
@@ -38,21 +41,11 @@ class SettingsScreen extends React.Component {
   		<Fragment>
   			<StatusBar barStyle="dark-content"/>
   			<SafeAreaView>
-  				<ScrollView
-  					contentInsetAdjustmentBehavior="automatic"
-  					style={styles.scrollView}
-  				>
-  					<View
-  						style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-  					>
-  						<Text>Settings Screen</Text>
-
-  						<Button
-  							title="Profile"
-  							onPress={() => navigation.navigate("Profile")}
-  						/>
+  				<View style={styles.root}>
+  					<View style={styles.betCardContainer}>
+  						<Text>Bet cards swiping...</Text>
   					</View>
-  				</ScrollView>
+  				</View>
   			</SafeAreaView>
   		</Fragment>
   	);
@@ -60,9 +53,9 @@ class SettingsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-	scrollView: {
-		backgroundColor: Colors.lighter
+	root: {
+		height: "100%"
 	}
 });
 
-export default SettingsScreen;
+export default BetsScreen;

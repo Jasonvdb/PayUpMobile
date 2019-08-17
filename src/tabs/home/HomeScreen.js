@@ -20,24 +20,31 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import displayCurrency from "../../helpers/displayCurrency";
 import Header from "../../elements/header/Header";
+import BetCardSwipe from "../bets/swiper/BetCardSwipe";
 
 class HomeScreen extends Component {
   static navigationOptions = props => {
   	const { navigation, ...rest } = props;
 
-  	const value = navigation.getParam("walletValue", null);
+  	const value = navigation.getParam("walletValue", "");
+  	const subTitle = navigation.getParam("subTitle", "");
   	return {
-  		title: value ? displayCurrency(value) : "AppSats",
+  		title: value ? displayCurrency(value) : null,
   		headerTitle: props => (
-  			<Header {...props} onProfilePress={() => navigation.push("Profile")}/>
+  			<Header
+  				{...props}
+  				subTitle={subTitle}
+  				onProfilePress={() => navigation.push("Profile")}
+  				animate={!!value}
+  			/>
   		)
-  		//subTitle: "Your balance"
   	};
   };
 
   componentDidMount(): void {
+  	const { navigation } = this.props;
   	setTimeout(() => {
-  		this.props.navigation.setParams({ walletValue: 0.000097 });
+  		navigation.setParams({ walletValue: 0.000097, subTitle: "Your balance" });
   	}, 1000);
   }
 
@@ -49,9 +56,7 @@ class HomeScreen extends Component {
   			<StatusBar barStyle="dark-content"/>
   			<SafeAreaView>
   				<View style={styles.root}>
-  					<View style={styles.betCardContainer}>
-  						<Text>Bet cards swiping...</Text>
-  					</View>
+  					<BetCardSwipe/>
 
   					<ScrollView
   						contentInsetAdjustmentBehavior="automatic"
@@ -63,20 +68,14 @@ class HomeScreen extends Component {
   								justifyContent: "center"
   							}}
   						>
-  							<Button
-  								style={{ marginTop: 40 }}
-  								title="Make bet"
-  								onPress={() => alert("TODO")}
-  							/>
-
   							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(index => (
   								<View
   									key={index}
   									style={{
   										width: "100%",
-  										height: 20,
-  										marginTop: 30,
-  										backgroundColor: "#afcaff"
+  										height: 40,
+  										marginTop: 20,
+  										backgroundColor: "#f0ecf6"
   									}}
   								/>
   							))}
@@ -92,9 +91,6 @@ class HomeScreen extends Component {
 const styles = StyleSheet.create({
 	root: {
 		height: "100%"
-	},
-	betCardContainer: {
-		//backgroundColor: "#909090"
 	},
 	scrollView: {
 		backgroundColor: "#fff"
