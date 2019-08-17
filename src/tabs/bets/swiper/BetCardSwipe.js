@@ -68,7 +68,6 @@ class BetCardSwipe extends Component {
 	}
 
 	render() {
-		const { navigation } = this.props;
 		const { items } = this.state;
 
 		if (!items) {

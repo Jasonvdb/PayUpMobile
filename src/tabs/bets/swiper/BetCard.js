@@ -7,7 +7,7 @@ import LinearGradient from "react-native-linear-gradient";
 import displayCurrency from "../../../helpers/displayCurrency";
 
 const BetCard = props => {
-	const { item, index } = props;
+	const { item, index, isSelected } = props;
 
 	const { type, onPress } = item;
 
@@ -20,7 +20,9 @@ const BetCard = props => {
 				style={styles.root}
 			>
 				<View style={styles.row1}>
-					<Text style={styles.headingText}>{displayCurrency(0.0004)} bet</Text>
+					<Text style={styles.headingText}>
+						{displayCurrency(0.0004)} bet
+					</Text>
 				</View>
 
 				<View style={styles.row2}>
@@ -47,7 +49,8 @@ BetCard.propTypes = {
 	item: PropTypes.shape({
 		type: PropTypes.oneOf(["active", "lost", "won", "add"])
 	}).isRequired,
-	index: PropTypes.number.isRequired
+	index: PropTypes.number.isRequired,
+	isSelected: PropTypes.bool
 };
 
 const styles = StyleSheet.create({

@@ -62,24 +62,18 @@ class HomeScreen extends Component {
   						contentInsetAdjustmentBehavior="automatic"
   						style={styles.scrollView}
   					>
-  						<View
-  							style={{
-  								alignItems: "center",
-  								justifyContent: "center"
-  							}}
-  						>
-  							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(index => (
-  								<View
-  									key={index}
-  									style={{
-  										width: "100%",
-  										height: 40,
-  										marginTop: 20,
-  										backgroundColor: "#f0ecf6"
-  									}}
-  								/>
-  							))}
-  						</View>
+  						{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(index => (
+  							<View
+  								key={index}
+  								style={{
+  									width: "100%",
+  									height: 40,
+  									marginTop: 20,
+  									backgroundColor: "rgba(238,234,244,0.3)",
+  									borderRadius: 8
+  								}}
+  							/>
+  						))}
   					</ScrollView>
   				</View>
   			</SafeAreaView>
@@ -93,7 +87,9 @@ const styles = StyleSheet.create({
 		height: "100%"
 	},
 	scrollView: {
-		backgroundColor: "#fff"
+		backgroundColor: "#fff",
+		paddingLeft: 15,
+		paddingRight: 15
 	}
 });
 

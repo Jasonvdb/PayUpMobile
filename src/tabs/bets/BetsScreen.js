@@ -20,6 +20,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import displayCurrency from "../../helpers/displayCurrency";
 import Header from "../../elements/header/Header";
+import BetCardSwipe from "./swiper/BetCardSwipe";
 
 class BetsScreen extends Component {
   static navigationOptions = props => {
@@ -42,9 +43,7 @@ class BetsScreen extends Component {
   			<StatusBar barStyle="dark-content"/>
   			<SafeAreaView>
   				<View style={styles.root}>
-  					<View style={styles.betCardContainer}>
-  						<Text>Bet cards swiping...</Text>
-  					</View>
+  					<BetCardSwipe/>
   				</View>
   			</SafeAreaView>
   		</Fragment>
