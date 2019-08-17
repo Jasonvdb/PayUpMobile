@@ -15,6 +15,7 @@ import {
 	StatusBar,
 	Button
 } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import displayCurrency from "../../helpers/displayCurrency";

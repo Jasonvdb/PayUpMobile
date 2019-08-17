@@ -10,6 +10,7 @@ import SettingsScreen from "../tabs/settings/SettingsScreen";
 import Header from "../elements/header/Header";
 import ProfileScreen from "../tabs/settings/profile/ProfileScreen";
 import BottomTabBar from "../elements/tab/BottomTabBar";
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const defaultNavigationOptions = {
 	headerTitle: props => <Header {...props}/>,
@@ -76,6 +77,8 @@ const SettingsNavigator = createStackNavigator(
 		defaultNavigationOptions
 	},
 );
+
+//<Icon name="ios-wallet" size={30} color="#4F8EF7"/>
 
 const MainTabNavigator = createBottomTabNavigator(
 	{

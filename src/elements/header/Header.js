@@ -34,14 +34,12 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		alignItems: "center",
 		flex: 1,
-		//backgroundColor: "red",
 		paddingLeft: 18,
 		paddingRight: 18
-		//paddingTop: 10
 	},
 	titleContainer: {},
 	title: {
-		color: "black",
+		color: "#171D33",
 		fontWeight: "600",
 		fontSize: 32
 	},
