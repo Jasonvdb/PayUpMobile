@@ -9,8 +9,7 @@ import HomeScreen from "../tabs/home/HomeScreen";
 import SettingsScreen from "../tabs/settings/SettingsScreen";
 import Header from "../elements/header/Header";
 import ProfileScreen from "../tabs/settings/profile/ProfileScreen";
-import BottomTab from "../elements/tab/BottomTab";
-import BottomTabBar2 from "../elements/tab/BottomTabBar2";
+import BottomTabBar from "../elements/tab/BottomTabBar";
 
 const defaultNavigationOptions = {
 	headerTitle: props => <Header {...props}/>,
@@ -86,7 +85,7 @@ const MainTabNavigator = createBottomTabNavigator(
 		Settings: SettingsNavigator
 	},
 	{
-		tabBarComponent: BottomTabBar2
+		tabBarComponent: BottomTabBar
 	},
 );
 

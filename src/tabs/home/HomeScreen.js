@@ -68,17 +68,17 @@ class HomeScreen extends Component {
   								onPress={() => alert("TODO")}
   							/>
 
-  							{/*{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(index => (*/}
-  							{/*	<View*/}
-  							{/*		key={index}*/}
-  							{/*		style={{*/}
-  							{/*			width: "100%",*/}
-  							{/*			height: 10,*/}
-  							{/*			marginTop: 40,*/}
-  							{/*			backgroundColor: "blue"*/}
-  							{/*		}}*/}
-  							{/*	/>*/}
-  							{/*))}*/}
+  							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(index => (
+  								<View
+  									key={index}
+  									style={{
+  										width: "100%",
+  										height: 20,
+  										marginTop: 30,
+  										backgroundColor: "#afcaff"
+  									}}
+  								/>
+  							))}
   						</View>
   					</ScrollView>
   				</View>
