@@ -67,7 +67,7 @@ const icons = {
 	Settings: "settings"
 };
 
-const CtaButton = props => (
+const CtaButton = () => (
 	<TouchableOpacity style={styles.ctaButton}>
 		<IonIcon name={"ios-add"} size={35} color={"#FFF"}/>
 	</TouchableOpacity>

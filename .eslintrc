@@ -90,6 +90,7 @@
     "it": true,
     "describe": true,
     "alert": true,
-    "require": true
+    "require": true,
+    "module": true
   }
 }
