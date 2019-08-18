@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "test": "jest --watch --config=jest.config.json --coverage",
+    "test": "jest --watchAll=true --config=jest.config.json --coverage",
     "lint": "eslint ."
   },
   "dependencies": {

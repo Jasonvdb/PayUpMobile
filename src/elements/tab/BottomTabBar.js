@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import {
 	View,
 	StyleSheet,
@@ -7,11 +7,85 @@ import {
 	SafeAreaView,
 	ImageBackground
 } from "react-native";
-import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
-import IonIcon from "react-native-vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/SimpleLineIcons";
+import PropTypes from "prop-types";
+
 import theme from "../../config/theme";
+import CtaButton from "./CtaButton";
+import TabButton from "./TabButton";
 
 const windowWidth = Dimensions.get("window").width;
+
+const icons = {
+	Home: "home",
+	Wallet: "wallet",
+	Bets: "pie-chart",
+	Settings: "settings"
+};
+
+class BottomTabBar extends Component {
+	onTabPressHandler(route) {
+		const { onTabPress } = this.props;
+		onTabPress({ route });
+	}
+
+	onTabLongPressHandler(route) {
+		const { onTabLongPress } = this.props;
+		onTabLongPress({ route });
+	}
+
+	onCtaPressHandler() {
+		console.log("TODO");
+	}
+
+	render() {
+		const {
+			getAccessibilityLabel,
+			onTabPress,
+			onTabLongPress,
+			navigation
+		} = this.props;
+
+		const { routes, index: activeRouteIndex } = navigation.state;
+
+		return (
+			<View style={styles.root}>
+				<ImageBackground
+					style={styles.tabImage}
+					source={require("../../../images/tab.png")}
+				>
+					<View style={styles.container}>
+						{routes.map((route, routeIndex) => {
+							return (
+								<Fragment key={routeIndex}>
+									{routeIndex === 2 ? (
+										<CtaButton onPress={this.onCtaPressHandler.bind(this)}/>
+									) : null}
+									<TabButton
+										onPress={this.onTabPressHandler.bind(this)}
+										onLongPress={this.onTabLongPressHandler.bind(this)}
+										getAccessibilityLabel={getAccessibilityLabel}
+										route={route}
+										iconString={icons[route.key]}
+										isActive={routeIndex === activeRouteIndex}
+									/>
+								</Fragment>
+							);
+						})}
+					</View>
+				</ImageBackground>
+				<SafeAreaView/>
+			</View>
+		);
+	}
+}
+
+BottomTabBar.propTypes = {
+	onTabPress: PropTypes.func.isRequired,
+	onTabLongPress: PropTypes.func.isRequired,
+	getAccessibilityLabel: PropTypes.func.isRequired,
+	navigation: PropTypes.object.isRequired
+};
 
 const styles = StyleSheet.create({
 	root: {
@@ -38,85 +112,10 @@ const styles = StyleSheet.create({
 		height: "100%",
 		alignItems: "center"
 	},
-	ctaButton: {
-		top: -37,
-		backgroundColor: theme.brand1,
-		width: 56,
-		height: 56,
-		borderRadius: 35,
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-		paddingTop: 4,
-
-		shadowOffset: { width: 0, height: 4 },
-		shadowOpacity: 0.35,
-		shadowRadius: 12,
-		shadowColor: theme.brand1
-	},
 	tabImage: {
 		width: windowWidth,
 		resizeMode: "center"
 	}
 });
-
-const icons = {
-	Home: "home",
-	Wallet: "wallet",
-	Bets: "pie-chart",
-	Settings: "settings"
-};
-
-const CtaButton = () => (
-	<TouchableOpacity style={styles.ctaButton}>
-		<IonIcon name={"ios-add"} size={35} color={"#FFF"}/>
-	</TouchableOpacity>
-);
-
-const BottomTabBar = props => {
-	const { onTabPress, onTabLongPress, getAccessibilityLabel, navigation } = props;
-
-	const { routes, index: activeRouteIndex } = navigation.state;
-
-	return (
-		<View style={styles.root}>
-			<ImageBackground
-				style={styles.tabImage}
-				source={require("../../../images/tab.png")}
-			>
-				<View style={styles.container}>
-					{routes.map((route, routeIndex) => {
-						const isRouteActive = routeIndex === activeRouteIndex;
-
-						return (
-							<Fragment key={routeIndex}>
-								{routeIndex === 2 ? <CtaButton/> : null}
-								<TouchableOpacity
-									style={styles.tabButton}
-									onPress={() => {
-										onTabPress({ route });
-									}}
-									onLongPress={() => {
-										onTabLongPress({ route });
-									}}
-									accessibilityLabel={getAccessibilityLabel({
-										route
-									})}
-								>
-									<SimpleLineIcon
-										name={icons[route.key]}
-										size={25}
-										color={isRouteActive ? theme.brand1 : theme.disabled1}
-									/>
-								</TouchableOpacity>
-							</Fragment>
-						);
-					})}
-				</View>
-			</ImageBackground>
-			<SafeAreaView/>
-		</View>
-	);
-};
 
 export default BottomTabBar;

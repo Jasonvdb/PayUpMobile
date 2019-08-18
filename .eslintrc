@@ -95,6 +95,7 @@
     "expect": true,
     "assert": true,
     "beforeEach": true,
-    "afterEach": true
+    "afterEach": true,
+    "jest": true
   }
 }

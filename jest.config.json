@@ -3,7 +3,7 @@
   "collectCoverage": true,
   "moduleDirectories": ["node_modules", "src"],
   "transform": {
-    "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    "^.+\\.js$": "<rootDir>/jest/preprocessor.js"
   },
   "setupFiles": ["<rootDir>/jest/setup.js"],
   "transformIgnorePatterns": ["node_modules/(?!(jest-)?react-native)"],

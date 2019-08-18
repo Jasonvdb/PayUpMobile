@@ -1,21 +1,29 @@
-import React from "react";
+import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import PropTypes from "prop-types";
 
-const ProfileButton = ({ onPress }) => {
-	return (
-		<TouchableOpacity onPress={onPress}>
-			<View style={styles.root}>
-				<Image
-					style={styles.image}
-					source={{
-						uri: "https://api.adorable.io/avatars/285/jay"
-					}}
-				/>
-			</View>
-		</TouchableOpacity>
-	);
-};
+class ProfileButton extends Component {
+  onPressHandler = () => {
+  	const { onPress } = this.props;
+
+  	onPress();
+  };
+
+  render() {
+  	return (
+  		<TouchableOpacity onPress={this.onPressHandler}>
+  			<View style={styles.root}>
+  				<Image
+  					style={styles.image}
+  					source={{
+  						uri: "https://api.adorable.io/avatars/285/jay"
+  					}}
+  				/>
+  			</View>
+  		</TouchableOpacity>
+  	);
+  }
+}
 
 ProfileButton.propTypes = {
 	onPress: PropTypes.func.isRequired
