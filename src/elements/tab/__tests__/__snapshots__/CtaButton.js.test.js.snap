@@ -1,3 +1,183 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CtaButton Rendering should match to snapshot  1`] = `ShallowWrapper {}`;
+exports[`CtaButton Rendering should match to snapshot : Route active 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "style": "opacity:1;transform:[object Object]",
+    },
+    "children": Array [
+      Object {
+        "attribs": Object {
+          "style": "top:-37px;background-color:#00239C;width:56px;height:56px;border-radius:35px;display:flex;justify-content:center;align-items:center;padding-top:4px;shadow-offset:[object Object];shadow-opacity:0.35px;shadow-radius:12px;shadow-color:#00239C;opacity:1",
+        },
+        "children": Array [
+          Object {
+            "attribs": Object {
+              "style": "0:[object Object];2:[object Object];3:[object Object]",
+            },
+            "children": Array [
+              Object {
+                "data": "",
+                "next": null,
+                "parent": [Circular],
+                "prev": null,
+                "type": "text",
+              },
+            ],
+            "name": "text",
+            "namespace": "http://www.w3.org/1999/xhtml",
+            "next": null,
+            "parent": [Circular],
+            "prev": null,
+            "type": "tag",
+            "x-attribsNamespace": Object {
+              "style": undefined,
+            },
+            "x-attribsPrefix": Object {
+              "style": undefined,
+            },
+          },
+        ],
+        "name": "view",
+        "namespace": "http://www.w3.org/1999/xhtml",
+        "next": null,
+        "parent": [Circular],
+        "prev": null,
+        "type": "tag",
+        "x-attribsNamespace": Object {
+          "style": undefined,
+        },
+        "x-attribsPrefix": Object {
+          "style": undefined,
+        },
+      },
+    ],
+    "name": "view",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "style": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "style": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
+
+exports[`CtaButton Rendering should match to snapshot : Route not active 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "style": "opacity:0;transform:[object Object]",
+    },
+    "children": Array [
+      Object {
+        "attribs": Object {
+          "style": "top:-37px;background-color:#00239C;width:56px;height:56px;border-radius:35px;display:flex;justify-content:center;align-items:center;padding-top:4px;shadow-offset:[object Object];shadow-opacity:0.35px;shadow-radius:12px;shadow-color:#00239C;opacity:1",
+        },
+        "children": Array [
+          Object {
+            "attribs": Object {
+              "style": "0:[object Object];2:[object Object];3:[object Object]",
+            },
+            "children": Array [
+              Object {
+                "data": "",
+                "next": null,
+                "parent": [Circular],
+                "prev": null,
+                "type": "text",
+              },
+            ],
+            "name": "text",
+            "namespace": "http://www.w3.org/1999/xhtml",
+            "next": null,
+            "parent": [Circular],
+            "prev": null,
+            "type": "tag",
+            "x-attribsNamespace": Object {
+              "style": undefined,
+            },
+            "x-attribsPrefix": Object {
+              "style": undefined,
+            },
+          },
+        ],
+        "name": "view",
+        "namespace": "http://www.w3.org/1999/xhtml",
+        "next": null,
+        "parent": [Circular],
+        "prev": null,
+        "type": "tag",
+        "x-attribsNamespace": Object {
+          "style": undefined,
+        },
+        "x-attribsPrefix": Object {
+          "style": undefined,
+        },
+      },
+    ],
+    "name": "view",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "style": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "style": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;

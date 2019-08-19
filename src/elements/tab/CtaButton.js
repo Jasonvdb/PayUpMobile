@@ -1,25 +1,49 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
+import * as Animatable from "react-native-animatable";
 
 import theme from "../../config/theme";
 
-const CtaButton = ({ onPress }) => (
-	<TouchableOpacity style={styles.ctaButton} onPress={onPress}>
-		<Icon name={"ios-add"} size={35} color={"#FFF"}/>
-	</TouchableOpacity>
+const CtaButton = ({
+	route,
+	onPress,
+	onLongPress,
+	getAccessibilityLabel,
+	isActive
+}) => (
+	<Animatable.View
+		animation={isActive ? "bounceOut" : "bounceIn"}
+		easing={"ease-in-out"}
+		duration={500}
+	>
+		<TouchableOpacity
+			style={styles.ctaButton}
+			onPress={() => onPress(route)}
+			onLongPress={() => onLongPress(route)}
+			accessibilityLabel={getAccessibilityLabel({
+				route
+			})}
+		>
+			<Icon name={"ios-add"} size={35} color={"#FFF"}/>
+		</TouchableOpacity>
+	</Animatable.View>
 );
 
 CtaButton.propTypes = {
-	onPress: PropTypes.func.isRequired
+	route: PropTypes.object.isRequired,
+	onPress: PropTypes.func.isRequired,
+	onLongPress: PropTypes.func.isRequired,
+	getAccessibilityLabel: PropTypes.func.isRequired,
+	isActive: PropTypes.bool.isRequired
 };
 
 export default CtaButton;
 
 const styles = StyleSheet.create({
 	ctaButton: {
-		top: -37,
+		top: -39,
 		backgroundColor: theme.brand1,
 		width: 56,
 		height: 56,

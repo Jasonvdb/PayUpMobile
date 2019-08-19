@@ -32,7 +32,7 @@ describe("TabButton", () => {
 	afterEach(() => {
 		console.error = origConsole;
 	});
-	
+
 	describe("Rendering", () => {
 		it("should match to snapshot ", () => {
 			const inactiveComponent = render(

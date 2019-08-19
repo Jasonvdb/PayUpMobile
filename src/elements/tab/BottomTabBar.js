@@ -34,10 +34,6 @@ class BottomTabBar extends Component {
 		onTabLongPress({ route });
 	}
 
-	onCtaPressHandler() {
-		console.log("TODO");
-	}
-
 	render() {
 		const {
 			getAccessibilityLabel,
@@ -56,20 +52,30 @@ class BottomTabBar extends Component {
 				>
 					<View style={styles.container}>
 						{routes.map((route, routeIndex) => {
-							return (
-								<Fragment key={routeIndex}>
-									{routeIndex === 2 ? (
-										<CtaButton onPress={this.onCtaPressHandler.bind(this)}/>
-									) : null}
-									<TabButton
+							const isActive = routeIndex === activeRouteIndex;
+							if (routeIndex === 2) {
+								return (
+									<CtaButton
+										key={routeIndex}
 										onPress={this.onTabPressHandler.bind(this)}
 										onLongPress={this.onTabLongPressHandler.bind(this)}
 										getAccessibilityLabel={getAccessibilityLabel}
 										route={route}
-										iconString={icons[route.key]}
-										isActive={routeIndex === activeRouteIndex}
+										isActive={isActive}
 									/>
-								</Fragment>
+								);
+							}
+
+							return (
+								<TabButton
+									key={routeIndex}
+									onPress={this.onTabPressHandler.bind(this)}
+									onLongPress={this.onTabLongPressHandler.bind(this)}
+									getAccessibilityLabel={getAccessibilityLabel}
+									route={route}
+									iconString={icons[route.key]}
+									isActive={isActive}
+								/>
 							);
 						})}
 					</View>

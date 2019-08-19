@@ -10,8 +10,8 @@ import SettingsScreen from "../tabs/settings/SettingsScreen";
 import Header from "../elements/header/Header";
 import ProfileScreen from "../tabs/settings/profile/ProfileScreen";
 import BottomTabBar from "../elements/tab/BottomTabBar";
-import BetsScreen from '../tabs/bets/BetsScreen';
-import BetView from '../tabs/bets/BetView';
+import BetsScreen from "../tabs/bets/BetsScreen";
+import BetView from "../tabs/bets/BetView";
 
 const defaultNavigationOptions = {
 	headerTitle: props => <Header {...props}/>,
@@ -28,6 +28,12 @@ const DummyScreen = () => (
 	</View>
 );
 
+const DummyMakeBetScreen = () => (
+	<View>
+		<Text>DummyMakeBetScreen</Text>
+	</View>
+);
+
 const HomeNavigator = createStackNavigator(
 	{
 		Home: {
@@ -40,7 +46,7 @@ const HomeNavigator = createStackNavigator(
 	{
 		initialRouteName: "Home",
 		defaultNavigationOptions
-	},
+	}
 );
 
 const WalletNavigator = createStackNavigator(
@@ -52,7 +58,7 @@ const WalletNavigator = createStackNavigator(
 	{
 		initialRouteName: "Wallet",
 		defaultNavigationOptions
-	},
+	}
 );
 
 const BetsNavigator = createStackNavigator(
@@ -67,7 +73,19 @@ const BetsNavigator = createStackNavigator(
 	{
 		initialRouteName: "Bets",
 		defaultNavigationOptions
+	}
+);
+
+const NewBetsNavigator = createStackNavigator(
+	{
+		NewBet: {
+			screen: DummyMakeBetScreen
+		}
 	},
+	{
+		initialRouteName: "NewBet",
+		defaultNavigationOptions
+	}
 );
 
 const SettingsNavigator = createStackNavigator(
@@ -82,19 +100,20 @@ const SettingsNavigator = createStackNavigator(
 	{
 		initialRouteName: "Settings",
 		defaultNavigationOptions
-	},
+	}
 );
 
 const MainTabNavigator = createBottomTabNavigator(
 	{
 		Home: HomeNavigator,
 		Wallet: WalletNavigator,
+		NewBet: NewBetsNavigator,
 		Bets: BetsNavigator,
 		Settings: SettingsNavigator
 	},
 	{
 		tabBarComponent: BottomTabBar
-	},
+	}
 );
 
 export default createAppContainer(MainTabNavigator);
