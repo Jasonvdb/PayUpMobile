@@ -96,6 +96,10 @@
     "assert": true,
     "beforeEach": true,
     "afterEach": true,
-    "jest": true
+    "jest": true,
+    "process": true,
+    "localStorage": true,
+    "Buffer": true,
+    "__DEV__": true
   }
 }
