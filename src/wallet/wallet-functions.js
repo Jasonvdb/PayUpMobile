@@ -7,6 +7,8 @@ const bip39 = require("bip39");
 const bip32 = require("bip32");
 const crypto = require("crypto");
 
+const DERIVATION_PATH = "m/49'/0'/0'";
+
 const getRandomBytesBuffer = async () => {
 	return await new Promise((resolve, reject) => {
 		// CLI/CI environment
@@ -40,8 +42,7 @@ export const getXpubFromMnemonic = (mnemonic, network) => {
 	const seed = bip39.mnemonicToSeedSync(mnemonic);
 	const root = bip32.fromSeed(seed, network);
 
-	const path = "m/49'/0'/0'";
-	const child = root.derivePath(path).neutered();
+	const child = root.derivePath(DERIVATION_PATH).neutered();
 	const xpub = child.toBase58();
 
 	return xpub;
@@ -51,13 +52,6 @@ export const getXprivFromMnemonic = (mnemonic, network) => {
 	const seed = bip39.mnemonicToSeedSync(mnemonic);
 	const node = bip32.fromSeed(seed, network);
 	const string = node.toBase58();
-	//const restored = bip32.fromBase58(string);
-
-	// console.log(
-	// 	restored
-	// 		.derive(0)
-	// 		.privateKey.toString("hex")
-	// );
 
 	return string;
 };
@@ -80,8 +74,6 @@ export const getAddressFromXpub = (xpub, index, network, type = "receive") => {
 	} else {
 		throw new Error("Invalid type. Must be 'receive' or 'change'");
 	}
-
-	//console.log(network);
 
 	const hdNode = bip32.fromBase58(xpub, network);
 	const child = hdNode.derive(derive);
