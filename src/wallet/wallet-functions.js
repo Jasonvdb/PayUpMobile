@@ -1,4 +1,5 @@
 import { NativeModules } from "react-native";
+import moment from "moment";
 
 const { RNRandomBytes } = NativeModules;
 
@@ -78,4 +79,94 @@ export const getAddressFromXpub = (xpub, index, network, type = "receive") => {
 	const hdNode = bip32.fromBase58(xpub, network);
 	const child = hdNode.derive(derive);
 	return childNodeToP2shSegwitAddress(child.derive(index), network);
+};
+
+const doesOwnAddress = (checkAddress, receiveAddresses, changeAddresses) => {
+	if (receiveAddresses.indexOf(checkAddress) > -1) {
+		return "receive";
+	}
+
+	if (changeAddresses.indexOf(checkAddress) > -1) {
+		return "change";
+	}
+
+	return false;
+};
+
+export const formattedTransactionsFromAddresses = (
+	rawTransactions,
+	receiveAddresses,
+	changeAddresses
+) => {
+	const unfilteredResults = [];
+
+	Object.keys(rawTransactions).forEach(txid => {
+		const { vin, vout, fee, status } = rawTransactions[txid];
+
+		//Received
+		if (Array.isArray(vout)) {
+			vout.forEach(output => {
+				const { scriptpubkey_address, value } = output;
+
+				const ownAddressType = doesOwnAddress(
+					scriptpubkey_address,
+					receiveAddresses,
+					changeAddresses
+				);
+
+				if (ownAddressType === "receive" && !isNaN(value)) {
+					unfilteredResults.push({
+						txid,
+						outputAddress: scriptpubkey_address,
+						timestampUTC: status.block_time,
+						receivedValueInSats: value ? value : 0,
+						feeInSats: fee
+					});
+				} else if (!ownAddressType) {
+					//Not owned address, must be sent
+					unfilteredResults.push({
+						txid,
+						outputAddress: scriptpubkey_address,
+						timestampUTC: status.block_time,
+						sentValueInSats: value ? value : 0,
+						feeInSats: fee
+					});
+				}
+			});
+		}
+	});
+
+	//Remove sent transactions when there is a receive one for same txid. The removed sent txs will be from another wallet.
+	const filteredResults = [];
+	unfilteredResults.forEach((formattedTransaction) => {
+		const { txid, sentValueInSats } = formattedTransaction;
+		let shouldInclude = true;
+		if (sentValueInSats) {
+			const existingReceiveForTx = unfilteredResults.find(
+				({ txid: receiveTxid, receivedValueInSats }) =>
+					receivedValueInSats && receiveTxid === txid
+			);
+
+			if (existingReceiveForTx) {
+				shouldInclude = false;
+			}
+		}
+
+		if (shouldInclude) {
+			filteredResults.push(formattedTransaction);
+		}
+	});
+
+	//Sort by time
+	filteredResults.sort((a, b) => {
+		if (a.timestampUTC > b.timestampUTC) {
+			return -1;
+		}
+		if (a.timestampUTC < b.timestampUTC) {
+			return 1;
+		}
+		return 0;
+	});
+
+	return filteredResults;
 };

@@ -1,5 +1,6 @@
 import Wallet from "../Wallet";
-const bitcoin = require("bitcoinjs-lib");
+
+const fs = require("fs");
 
 const networkName = "testnet";
 
@@ -71,16 +72,15 @@ describe("testnet transactions", () => {
 	});
 
 	it("check first address balance", async () => {
-		//TODO use new function
-		// const firstReceive0 = wallet.receiveAddresses[0];
-		// await wallet.updateAddressTransactionsSync(firstReceive0);
-		// const {
-		// 	confirmedValueInSats,
-		// 	unconfirmedValueInSats
-		// } = wallet.addressBalances[firstReceive0];
-		//
-		// expect(confirmedValueInSats).not.toBeNaN();
-		// expect(unconfirmedValueInSats).not.toBeNaN();
+		const firstReceive0 = wallet.receiveAddresses[0];
+		await wallet.updateAddressBalance(firstReceive0);
+		const {
+			confirmedValueInSats,
+			unconfirmedValueInSats
+		} = wallet.addressBalances[firstReceive0];
+
+		expect(confirmedValueInSats).not.toBeNaN();
+		expect(unconfirmedValueInSats).not.toBeNaN();
 	});
 
 	it("check first address transactions", async () => {
@@ -88,7 +88,7 @@ describe("testnet transactions", () => {
 		await wallet.updateAddressTransactions(firstReceive0);
 		wallet.updateTransactionHistory();
 
-		const transactions = wallet.transactionHistory;
+		const transactions = wallet.neatTransactionHistory;
 
 		//Know there's been at least one tx on testnet for this
 		expect(transactions.length).toBeGreaterThan(1);
@@ -99,4 +99,64 @@ describe("testnet transactions", () => {
 	it("check total wallet balance", async () => {
 		//TODO
 	});
+});
+
+//TODO once these words are scrapped, keep them in the code to test transaction history with
+describe("mainnet transactions with locally stored words", () => {
+	let wallet;
+
+	beforeEach(async () => {
+		const filePath = "./test-words";
+		const mnemonic = fs.readFileSync(filePath, {
+			encoding: "utf-8",
+			flag: "r"
+		});
+
+		if (!mnemonic) {
+			throw new Error(`Missing words (${filePath})`);
+		}
+
+		//Test only works on testnet
+		wallet = new Wallet("mainnet");
+		await wallet.importExistingWallet(mnemonic);
+	});
+
+	afterEach(() => {
+		wallet = null;
+	});
+
+	it("check known transactions", async () => {
+		const numberOfReceiveAddressesToCheck = 5; //wallet.receiveAddresses.length
+		const numberOfChangeAddressesToCheck = 5; //wallet.changeAddresses.length;
+
+		for (let index = 0; index < numberOfReceiveAddressesToCheck; index++) {
+			const address = wallet.receiveAddresses[index];
+			await wallet.updateAddressTransactions(address);
+		}
+
+		for (let index = 0; index < numberOfChangeAddressesToCheck; index++) {
+			const address = wallet.changeAddresses[index];
+			await wallet.updateAddressTransactions(address);
+		}
+
+		wallet.updateTransactionHistory();
+		//
+		const transactions = wallet.neatTransactionHistory;
+
+		let receiveTransactions = 0;
+		let sentTransactions = 0;
+
+		transactions.forEach(({ receivedValueInSats, sentValueInSats }) => {
+			if (receivedValueInSats) {
+				receiveTransactions++;
+			}
+
+			if (sentValueInSats) {
+				sentTransactions++;
+			}
+		});
+
+		expect(receiveTransactions).toBe(1);
+		expect(sentTransactions).toBe(2);
+	}, 600000);
 });

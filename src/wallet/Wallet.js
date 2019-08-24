@@ -1,6 +1,5 @@
-import axios from "axios";
-
 import {
+	formattedTransactionsFromAddresses,
 	generateMnemonic,
 	getAddressFromXpub,
 	getXpubFromMnemonic
@@ -40,9 +39,11 @@ export default class Wallet {
 
   addressUpdateQueue = [];
 
-  addressRawTransactions = {};
+  rawTransactions = {};
 
-  transactionHistory = [];
+  neatTransactionHistory = [];
+
+  addressBalances = {};
 
   constructor(networkName) {
   	if (!networkName || !networks[networkName]) {
@@ -69,7 +70,7 @@ export default class Wallet {
   		throw new Error("Existing wallet already loaded.");
   	}
 
-  	this.mnemonic = mnemonic;
+  	this.mnemonic = mnemonic.trim();
   	this.xpub = getXpubFromMnemonic(this.mnemonic, this.network);
   	this.appendDerivedAddresses(20);
   }
@@ -100,11 +101,12 @@ export default class Wallet {
 
   processAddressTransactionsFromQueue() {
   	//Busy processing already OR nothing to process
-  	if (
-  		this.busyUpdatingAddressTxData ||
-      this.addressUpdateQueue.length === 0
-  	) {
+  	if (this.busyUpdatingAddressTxData) {
   		return;
+  	}
+
+  	if (this.addressUpdateQueue.length === 0) {
+  		this.busyUpdatingAddressTxData = false;
   	}
 
   	const address = this.addressUpdateQueue[0];
@@ -129,69 +131,39 @@ export default class Wallet {
   		address
   	);
 
-  	this.addressRawTransactions[address] = {
-  		rawTransactions,
+  	rawTransactions.forEach(tx => {
+  		const { txid } = tx;
+  		this.rawTransactions[txid] = { ...tx, refreshedAt: new Date() };
+  	});
+  }
+
+  //Used to poll when the user is waiting for funds
+  async updateAddressBalance(address) {
+  	const {
+  		confirmedValueInSats,
+  		unconfirmedValueInSats
+  	} = await getAddressBalance(this.apiBaseUrl, address);
+
+  	//If there's a confirmed balance, update the rest of the wallet
+  	if (confirmedValueInSats > 0) {
+  		await this.updateAddressTransactions(address);
+  		this.updateTransactionHistory();
+  	}
+
+  	//TODO call updateAddressTransactions and then updateTransactionHistory
+
+  	this.addressBalances[address] = {
+  		confirmedValueInSats,
+  		unconfirmedValueInSats,
   		updatedAt: new Date()
   	};
   }
 
-  // async updateAddressBalance(address) {
-  // 	const {
-  // 		confirmedValueInSats,
-  // 		unconfirmedValueInSats
-  // 	} = await getAddressBalance(this.apiBaseUrl, address);
-  //
-  // 	this.addressBalances[address] = {
-  // 		confirmedValueInSats,
-  // 		unconfirmedValueInSats,
-  // 		updatedAt: new Date()
-  // 	};
-  // }
-
   updateTransactionHistory() {
-  	const formattedTransactions = [];
-
-  	this.receiveAddresses.forEach(address => {
-  		const addressData = this.addressRawTransactions[address];
-
-  		//Have data, can get tx history
-  		if (addressData && Array.isArray(addressData.rawTransactions)) {
-  			addressData.rawTransactions.forEach(tx => {
-  				const { txid, vin, vout, fee, status, ...rest } = tx;
-
-  				if (Array.isArray(vout)) {
-  					vout.forEach(output => {
-  						const { scriptpubkey_address, value } = output;
-  						if (scriptpubkey_address === address && !isNaN(value)) {
-  							formattedTransactions.push({
-  								txid,
-  								timestamp_utc: status.block_time,
-  								received_value_in_sats: output.value,
-  								fee_in_sats: fee
-  							});
-  						}
-  					});
-  				}
-  			});
-  		} else {
-  			//No Data, add to processing queue TODO
-  			this.queueAddressForUpdate(address);
-  		}
-  	});
-
-  	formattedTransactions.sort((a, b) => {
-  		if (a.timestamp_utc > b.timestamp_utc) {
-  			return -1;
-  		}
-  		if (a.timestamp_utc < b.timestamp_utc) {
-  			return 1;
-  		}
-  		return 0;
-  	});
-
-  	//TODO get sent TX
-
-  	//TODO check receive addresses
-  	this.transactionHistory = formattedTransactions;
+  	this.neatTransactionHistory = formattedTransactionsFromAddresses(
+  		this.rawTransactions,
+  		this.receiveAddresses,
+  		this.changeAddresses
+  	);
   }
 }
