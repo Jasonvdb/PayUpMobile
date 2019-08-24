@@ -114,22 +114,24 @@ export const formattedTransactionsFromAddresses = (
 					changeAddresses
 				);
 
-				if (ownAddressType === "receive" && !isNaN(value)) {
+				if (ownAddressType === "receive") {
 					unfilteredResults.push({
 						txid,
 						outputAddress: scriptpubkey_address,
-						timestampUTC: status.block_time,
+						timeMoment: moment(status.block_time * 1000, "x"),
 						receivedValueInSats: value ? value : 0,
-						feeInSats: fee
+						feeInSats: fee,
+						confirmed: status.confirmed
 					});
 				} else if (!ownAddressType) {
 					//Not owned address, must be sent
 					unfilteredResults.push({
 						txid,
 						outputAddress: scriptpubkey_address,
-						timestampUTC: status.block_time,
+						timeMoment: moment(status.block_time * 1000, "x"),
 						sentValueInSats: value ? value : 0,
-						feeInSats: fee
+						feeInSats: fee,
+						confirmed: status.confirmed
 					});
 				}
 			});
@@ -138,7 +140,7 @@ export const formattedTransactionsFromAddresses = (
 
 	//Remove sent transactions when there is a receive one for same txid. The removed sent txs will be from another wallet.
 	const filteredResults = [];
-	unfilteredResults.forEach((formattedTransaction) => {
+	unfilteredResults.forEach(formattedTransaction => {
 		const { txid, sentValueInSats } = formattedTransaction;
 		let shouldInclude = true;
 		if (sentValueInSats) {
@@ -159,10 +161,10 @@ export const formattedTransactionsFromAddresses = (
 
 	//Sort by time
 	filteredResults.sort((a, b) => {
-		if (a.timestampUTC > b.timestampUTC) {
+		if (a.timeMoment.isAfter(b.timeMoment)) {
 			return -1;
 		}
-		if (a.timestampUTC < b.timestampUTC) {
+		if (a.timeMoment.isBefore(b.timeMoment)) {
 			return 1;
 		}
 		return 0;

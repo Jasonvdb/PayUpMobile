@@ -1,3 +1,4 @@
+import moment from "moment";
 import {
 	formattedTransactionsFromAddresses,
 	generateMnemonic,
@@ -133,7 +134,10 @@ export default class Wallet {
 
   	rawTransactions.forEach(tx => {
   		const { txid } = tx;
-  		this.rawTransactions[txid] = { ...tx, refreshedAt: new Date() };
+  		this.rawTransactions[txid] = {
+  			...tx,
+  			updatedAtMoment: moment()
+  		};
   	});
   }
 
@@ -150,13 +154,50 @@ export default class Wallet {
   		this.updateTransactionHistory();
   	}
 
-  	//TODO call updateAddressTransactions and then updateTransactionHistory
-
   	this.addressBalances[address] = {
   		confirmedValueInSats,
   		unconfirmedValueInSats,
-  		updatedAt: new Date()
+  		updatedAtMoment: moment()
   	};
+  }
+
+  get balances() {
+  	let confirmedInSats = 0;
+  	let unconfirmedReceivedInSats = 0;
+  	let lastReceivedMoment = null;
+  	this.neatTransactionHistory.forEach(tx => {
+  		const {
+  			receivedValueInSats,
+  			sentValueInSats,
+  			timeMoment,
+  			feeInSats,
+  			confirmed
+  		} = tx;
+
+  		if (receivedValueInSats) {
+  			confirmedInSats += receivedValueInSats;
+
+  			if (confirmed === false) {
+  				unconfirmedReceivedInSats += receivedValueInSats;
+  			}
+
+  			if (lastReceivedMoment === null) {
+  				lastReceivedMoment = timeMoment;
+  			} else if (timeMoment.isAfter(lastReceivedMoment)) {
+  				lastReceivedMoment = timeMoment;
+  			}
+  		} else if (sentValueInSats) {
+  			confirmedInSats -= sentValueInSats + feeInSats;
+  		}
+  	});
+
+  	const result = {
+  		confirmedInSats,
+  		unconfirmedReceivedInSats,
+  		lastReceivedMoment
+  	};
+
+  	return result;
   }
 
   updateTransactionHistory() {

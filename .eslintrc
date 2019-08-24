@@ -101,6 +101,8 @@
     "localStorage": true,
     "Buffer": true,
     "__DEV__": true,
-    "exports": true
+    "exports": true,
+    "beforeAll": true,
+    "afterAll": true
   }
 }

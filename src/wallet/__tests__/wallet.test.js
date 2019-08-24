@@ -82,30 +82,13 @@ describe("testnet transactions", () => {
 		expect(confirmedValueInSats).not.toBeNaN();
 		expect(unconfirmedValueInSats).not.toBeNaN();
 	});
-
-	it("check first address transactions", async () => {
-		const firstReceive0 = wallet.receiveAddresses[0];
-		await wallet.updateAddressTransactions(firstReceive0);
-		wallet.updateTransactionHistory();
-
-		const transactions = wallet.neatTransactionHistory;
-
-		//Know there's been at least one tx on testnet for this
-		expect(transactions.length).toBeGreaterThan(1);
-
-		//TODO check what txs we have
-	});
-
-	it("check total wallet balance", async () => {
-		//TODO
-	});
 });
 
-//TODO once these words are scrapped, keep them in the code to test transaction history with
+//TODO Maybe get a testnet xpub with a large transaction history and load that to test this. Then it can be committed.
 describe("mainnet transactions with locally stored words", () => {
 	let wallet;
 
-	beforeEach(async () => {
+	beforeAll(async () => {
 		const filePath = "./test-words";
 		const mnemonic = fs.readFileSync(filePath, {
 			encoding: "utf-8",
@@ -119,13 +102,7 @@ describe("mainnet transactions with locally stored words", () => {
 		//Test only works on testnet
 		wallet = new Wallet("mainnet");
 		await wallet.importExistingWallet(mnemonic);
-	});
 
-	afterEach(() => {
-		wallet = null;
-	});
-
-	it("check known transactions", async () => {
 		const numberOfReceiveAddressesToCheck = 5; //wallet.receiveAddresses.length
 		const numberOfChangeAddressesToCheck = 5; //wallet.changeAddresses.length;
 
@@ -140,23 +117,39 @@ describe("mainnet transactions with locally stored words", () => {
 		}
 
 		wallet.updateTransactionHistory();
-		//
-		const transactions = wallet.neatTransactionHistory;
+	});
 
-		let receiveTransactions = 0;
-		let sentTransactions = 0;
+	afterAll(() => {
+		wallet = null;
+	});
 
-		transactions.forEach(({ receivedValueInSats, sentValueInSats }) => {
-			if (receivedValueInSats) {
-				receiveTransactions++;
+	it("check known transactions", async () => {
+		let receiveTransactionsCount = 0;
+		let sentTransactionsCount = 0;
+
+		wallet.neatTransactionHistory.forEach(
+			({ receivedValueInSats, sentValueInSats, timeMoment }) => {
+				if (receivedValueInSats) {
+					receiveTransactionsCount++;
+				}
+
+				if (sentValueInSats) {
+					sentTransactionsCount++;
+				}
 			}
+		);
 
-			if (sentValueInSats) {
-				sentTransactions++;
-			}
-		});
-
-		expect(receiveTransactions).toBe(1);
-		expect(sentTransactions).toBe(2);
+		expect(receiveTransactionsCount).toBe(1);
+		expect(sentTransactionsCount).toBe(2);
 	}, 600000);
+
+	it("check total wallet balance", async () => {
+		const { balances } = wallet;
+
+		// expect(balances).toMatchObject({
+		// 	confirmedInSats: 1,
+		// 	unconfirmedInSats: 2,
+		// 	lastReceivedMoment: "TODO"
+		// });
+	});
 });
