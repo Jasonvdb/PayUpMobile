@@ -121,10 +121,6 @@ const styles = StyleSheet.create({
     flex: 2,
     display: "flex",
     justifyContent: "space-around"
-
-    // borderStyle: "solid",
-    // borderColor: "red",
-    // borderWidth: 1
   }
 });
 export default Slide;

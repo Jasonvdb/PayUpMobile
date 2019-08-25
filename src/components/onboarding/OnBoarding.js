@@ -1,5 +1,12 @@
 import React, { Component, Fragment } from "react";
-import { StyleSheet, View, StatusBar, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  View,
+  StatusBar,
+  Dimensions,
+  ActionSheetIOS,
+  Platform
+} from "react-native";
 import SnapCarousel from "react-native-snap-carousel";
 import { inject, observer } from "mobx-react";
 import PropTypes from "prop-types";
@@ -33,21 +40,55 @@ class OnBoarding extends Component {
   }
 
   onCreate() {
-    //TODO ask for testnet or mainnet
     this.setState({ isCreating: true });
-    this.props.wallet
-      .createNewWallet()
-      .then(() => {})
-      .catch(e => {
-        onError(e, "Failed to create new wallet.");
 
-        this.setState({ isCreating: false });
-      });
+    this.chooseNetwork(networkName => {
+      this.props.wallet
+        .createNewWallet(networkName)
+        .then(() => {})
+        .catch(e => {
+          onError(e, "Failed to create new wallet.");
+          this.setState({ isCreating: false });
+        });
+    });
   }
 
   onImport() {
     this.setState({ isImporting: true });
-    alert("Import");
+
+    this.chooseNetwork(networkName => {
+      //TODO allow them to actually type the words
+      const mnemonic =
+        "arena coin myth kangaroo age obey scrap fog exercise space logic rib uphold become ahead mixed power shed state raccoon wreck weird blame ability";
+      this.props.wallet.importExistingWallet(mnemonic, networkName);
+    });
+  }
+
+  chooseNetwork(callback) {
+    if (Platform.OS === "ios") {
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: ["Cancel", "Bitcoin testnet", "Bitcoin mainnet"],
+          //destructiveButtonIndex: 1,
+          cancelButtonIndex: 0
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            this.setState({ isCreating: false });
+          }
+
+          if (buttonIndex === 1) {
+            return callback("testnet");
+          }
+
+          if (buttonIndex === 2) {
+            return callback("mainnet");
+          }
+        }
+      );
+    } else {
+      callback("mainnet"); //TODO off android users a choice
+    }
   }
 
   render() {

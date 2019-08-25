@@ -25,12 +25,12 @@ describe("initializing wallet", () => {
   });
 
   it("fail to make a new wallet without network passed", async () => {
-    const createAndFailFunc = async () => {
+    const shouldFailFunc = async () => {
       const wallet = new Wallet();
       await wallet.createNewWallet();
     };
 
-    await createAndFailFunc()
+    await shouldFailFunc()
       .then(() => {
         throw new Error("Should go to .catch, not .then");
       })
