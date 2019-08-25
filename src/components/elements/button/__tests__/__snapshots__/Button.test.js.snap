@@ -1,9 +1,301 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button Rendering should match to snapshot - Primary: Primary button snapshot 1`] = `ShallowWrapper {}`;
+exports[`button Rendering should match to snapshot - CTA: CTA button snapshot 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "style": "opacity:1",
+    },
+    "children": Array [
+      Object {
+        "attribs": Object {
+          "colors": "4294465446,4294924376",
+          "endpoint": "[object Object]",
+          "startpoint": "[object Object]",
+          "style": "align-self:stretch;justify-content:center;background-color:transparent;border-radius:30px;height:55px;color:#fff",
+        },
+        "children": Array [
+          Object {
+            "attribs": Object {
+              "style": "align-self:center;color:#FFF;font-size:22px;font-weight:200;text-transform:uppercase",
+            },
+            "children": Array [
+              Object {
+                "data": "CTA button",
+                "next": null,
+                "parent": [Circular],
+                "prev": null,
+                "type": "text",
+              },
+            ],
+            "name": "text",
+            "namespace": "http://www.w3.org/1999/xhtml",
+            "next": null,
+            "parent": [Circular],
+            "prev": null,
+            "type": "tag",
+            "x-attribsNamespace": Object {
+              "style": undefined,
+            },
+            "x-attribsPrefix": Object {
+              "style": undefined,
+            },
+          },
+        ],
+        "name": "bvlineargradient",
+        "namespace": "http://www.w3.org/1999/xhtml",
+        "next": null,
+        "parent": [Circular],
+        "prev": null,
+        "type": "tag",
+        "x-attribsNamespace": Object {
+          "colors": undefined,
+          "endpoint": undefined,
+          "startpoint": undefined,
+          "style": undefined,
+        },
+        "x-attribsPrefix": Object {
+          "colors": undefined,
+          "endpoint": undefined,
+          "startpoint": undefined,
+          "style": undefined,
+        },
+      },
+    ],
+    "name": "view",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "style": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "style": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
 
-exports[`Button Rendering should match to snapshot - Secondary: Secondary button snapshot 1`] = `ShallowWrapper {}`;
+exports[`button Rendering should match to snapshot - Default: Default button snapshot 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "style": "opacity:1",
+    },
+    "children": Array [
+      Object {
+        "attribs": Object {
+          "colors": "4294924376,4294924376",
+          "endpoint": "[object Object]",
+          "startpoint": "[object Object]",
+          "style": "align-self:stretch;justify-content:center;background-color:transparent;border-radius:30px;height:55px;color:#fff",
+        },
+        "children": Array [
+          Object {
+            "attribs": Object {
+              "style": "align-self:center;color:#FFF;font-size:18px;font-weight:200;text-transform:uppercase",
+            },
+            "children": Array [
+              Object {
+                "data": "Default button",
+                "next": null,
+                "parent": [Circular],
+                "prev": null,
+                "type": "text",
+              },
+            ],
+            "name": "text",
+            "namespace": "http://www.w3.org/1999/xhtml",
+            "next": null,
+            "parent": [Circular],
+            "prev": null,
+            "type": "tag",
+            "x-attribsNamespace": Object {
+              "style": undefined,
+            },
+            "x-attribsPrefix": Object {
+              "style": undefined,
+            },
+          },
+        ],
+        "name": "bvlineargradient",
+        "namespace": "http://www.w3.org/1999/xhtml",
+        "next": null,
+        "parent": [Circular],
+        "prev": null,
+        "type": "tag",
+        "x-attribsNamespace": Object {
+          "colors": undefined,
+          "endpoint": undefined,
+          "startpoint": undefined,
+          "style": undefined,
+        },
+        "x-attribsPrefix": Object {
+          "colors": undefined,
+          "endpoint": undefined,
+          "startpoint": undefined,
+          "style": undefined,
+        },
+      },
+    ],
+    "name": "view",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "style": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "style": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;
 
-exports[`button Rendering should match to snapshot - Primary: Primary button snapshot 1`] = `ShallowWrapper {}`;
-
-exports[`button Rendering should match to snapshot - Secondary: Secondary button snapshot 1`] = `ShallowWrapper {}`;
+exports[`button Rendering should match to snapshot - Text: Default button snapshot 1`] = `
+initialize {
+  "0": Object {
+    "attribs": Object {
+      "style": "opacity:1",
+    },
+    "children": Array [
+      Object {
+        "attribs": Object {
+          "colors": "0",
+          "endpoint": "[object Object]",
+          "startpoint": "[object Object]",
+          "style": "align-self:stretch;justify-content:center;background-color:transparent;border-radius:30px;height:45px;color:#fff",
+        },
+        "children": Array [
+          Object {
+            "attribs": Object {
+              "style": "align-self:center;color:#666666;font-size:18px;font-weight:200;text-transform:uppercase",
+            },
+            "children": Array [
+              Object {
+                "data": "Text button",
+                "next": null,
+                "parent": [Circular],
+                "prev": null,
+                "type": "text",
+              },
+            ],
+            "name": "text",
+            "namespace": "http://www.w3.org/1999/xhtml",
+            "next": null,
+            "parent": [Circular],
+            "prev": null,
+            "type": "tag",
+            "x-attribsNamespace": Object {
+              "style": undefined,
+            },
+            "x-attribsPrefix": Object {
+              "style": undefined,
+            },
+          },
+        ],
+        "name": "bvlineargradient",
+        "namespace": "http://www.w3.org/1999/xhtml",
+        "next": null,
+        "parent": [Circular],
+        "prev": null,
+        "type": "tag",
+        "x-attribsNamespace": Object {
+          "colors": undefined,
+          "endpoint": undefined,
+          "startpoint": undefined,
+          "style": undefined,
+        },
+        "x-attribsPrefix": Object {
+          "colors": undefined,
+          "endpoint": undefined,
+          "startpoint": undefined,
+          "style": undefined,
+        },
+      },
+    ],
+    "name": "view",
+    "namespace": "http://www.w3.org/1999/xhtml",
+    "next": null,
+    "parent": null,
+    "prev": null,
+    "root": Object {
+      "attribs": Object {},
+      "children": Array [
+        [Circular],
+      ],
+      "name": "root",
+      "namespace": "http://www.w3.org/1999/xhtml",
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "type": "root",
+      "x-attribsNamespace": Object {},
+      "x-attribsPrefix": Object {},
+    },
+    "type": "tag",
+    "x-attribsNamespace": Object {
+      "style": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "style": undefined,
+    },
+  },
+  "_root": [Circular],
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "normalizeWhitespace": false,
+    "withDomLvl1": true,
+    "xml": false,
+  },
+}
+`;

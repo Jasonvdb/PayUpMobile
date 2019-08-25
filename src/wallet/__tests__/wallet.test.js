@@ -117,10 +117,13 @@ describe("mainnet transactions with locally stored words", () => {
 		}
 
 		wallet.updateTransactionHistory();
+
+		jest.setTimeout(30000);
 	});
 
 	afterAll(() => {
 		wallet = null;
+		jest.setTimeout(5000);
 	});
 
 	it("check known transactions", async () => {
@@ -141,7 +144,7 @@ describe("mainnet transactions with locally stored words", () => {
 
 		expect(receiveTransactionsCount).toBe(1);
 		expect(sentTransactionsCount).toBe(2);
-	}, 600000);
+	});
 
 	it("check total wallet balance", async () => {
 		const { balances } = wallet;

@@ -9,7 +9,7 @@ initialize {
     "children": Array [
       Object {
         "attribs": Object {
-          "style": "top:-39px;background-color:#00239C;width:56px;height:56px;border-radius:35px;display:flex;justify-content:center;align-items:center;padding-top:4px;shadow-offset:[object Object];shadow-opacity:0.35px;shadow-radius:12px;shadow-color:#00239C;opacity:1",
+          "style": "top:-39px;background-color:#f857a6;width:56px;height:56px;border-radius:35px;display:flex;justify-content:center;align-items:center;padding-top:4px;shadow-offset:[object Object];shadow-opacity:0.35px;shadow-radius:12px;shadow-color:#f857a6;opacity:1",
         },
         "children": Array [
           Object {
@@ -100,7 +100,7 @@ initialize {
     "children": Array [
       Object {
         "attribs": Object {
-          "style": "top:-39px;background-color:#00239C;width:56px;height:56px;border-radius:35px;display:flex;justify-content:center;align-items:center;padding-top:4px;shadow-offset:[object Object];shadow-opacity:0.35px;shadow-radius:12px;shadow-color:#00239C;opacity:1",
+          "style": "top:-39px;background-color:#f857a6;width:56px;height:56px;border-radius:35px;display:flex;justify-content:center;align-items:center;padding-top:4px;shadow-offset:[object Object];shadow-opacity:0.35px;shadow-radius:12px;shadow-color:#f857a6;opacity:1",
         },
         "children": Array [
           Object {

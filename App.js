@@ -1,7 +1,6 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
+ * AppSats bitcoin wallet / betting app
+
  * @format
  * @flow
  */
@@ -26,7 +25,7 @@ YellowBox.ignoreWarnings([
 //TODO check if we have a saved wallet, or if we must onboard the user
 
 const App = () => {
-	return <OnBoarding/>;
+	return <MainNavigator/>;
 };
 
 export default App;
