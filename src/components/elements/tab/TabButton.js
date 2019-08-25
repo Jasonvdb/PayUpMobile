@@ -3,7 +3,7 @@ import Icon from "react-native-vector-icons/SimpleLineIcons";
 import React from "react";
 import PropTypes from "prop-types";
 
-import theme from "../../config/theme";
+import theme from "../../../config/theme";
 
 const TabButton = ({
 	route,

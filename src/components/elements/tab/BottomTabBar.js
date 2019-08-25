@@ -10,7 +10,7 @@ import {
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import PropTypes from "prop-types";
 
-import theme from "../../config/theme";
+import theme from "../../../config/theme";
 import CtaButton from "./CtaButton";
 import TabButton from "./TabButton";
 
@@ -48,7 +48,7 @@ class BottomTabBar extends Component {
 			<View style={styles.root}>
 				<ImageBackground
 					style={styles.tabImage}
-					source={require("../../../images/tab.png")}
+					source={require("../../../../images/tab.png")}
 				>
 					<View style={styles.container}>
 						{routes.map((route, routeIndex) => {

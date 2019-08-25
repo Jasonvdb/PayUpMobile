@@ -9,7 +9,7 @@ jest.mock("Linking", () => ({
 	openURL: mockOpenURL
 }));
 
-describe("Button", () => {
+describe("button", () => {
 	describe("Rendering", () => {
 		it("should match to snapshot - Primary", () => {
 			const component = shallow(<Button label="test label" primary/>);
@@ -21,7 +21,7 @@ describe("Button", () => {
 		});
 	});
 
-	describe("Interaction", () => {
+	describe("interaction", () => {
 		describe("onPressHandler", () => {
 			const mockOnPress = jest.fn();
 			let instance;
@@ -54,7 +54,7 @@ describe("Button", () => {
 
 			it("should not call openURL if url is nor provided", () => {
 				const innerInstance = shallow(
-					<Button label="test label" onPress={mockOnPress}/>,
+					<Button onPress={mockOnPress}>test label</Button>,
 				).instance();
 				innerInstance.onPressHandler();
 				// 4. mockOpenURL should NOT be called as we have NOT passed in 'url' prop

@@ -2,9 +2,9 @@ import React, { Component, Fragment } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
-import theme from "../../../config/theme";
+import theme from "../../../../config/theme";
 import LinearGradient from "react-native-linear-gradient";
-import displayCurrency from "../../../helpers/displayCurrency";
+import displayCurrency from "../../../../helpers/displayCurrency";
 
 const BetCard = props => {
 	const { item, index, isSelected } = props;

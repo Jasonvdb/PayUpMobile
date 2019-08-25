@@ -18,7 +18,7 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import displayCurrency from "../../helpers/displayCurrency";
+import displayCurrency from "../../../helpers/displayCurrency";
 import Header from "../../elements/header/Header";
 import BetCardSwipe from "./swiper/BetCardSwipe";
 

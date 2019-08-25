@@ -18,10 +18,9 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import displayCurrency from "../../helpers/displayCurrency";
+import displayCurrency from "../../../helpers/displayCurrency";
 import Header from "../../elements/header/Header";
 import BetCardSwipe from "../bets/swiper/BetCardSwipe";
-import setup from "../../crypto/setup";
 
 class HomeScreen extends Component {
   static navigationOptions = props => {
@@ -47,9 +46,6 @@ class HomeScreen extends Component {
   	setTimeout(() => {
   		navigation.setParams({ walletValue: 0.000697, subTitle: "Your balance" });
   	}, 1000);
-
-  	console.log(__DEV__);
-  	const result = setup();
   }
 
   render() {

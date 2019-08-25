@@ -4,7 +4,7 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import * as Animatable from "react-native-animatable";
 
-import theme from "../../config/theme";
+import theme from "../../../config/theme";
 
 const CtaButton = ({
 	route,
