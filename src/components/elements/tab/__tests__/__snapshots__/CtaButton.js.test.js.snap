@@ -9,32 +9,60 @@ initialize {
     "children": Array [
       Object {
         "attribs": Object {
-          "style": "top:-39px;background-color:#f857a6;width:56px;height:56px;border-radius:35px;display:flex;justify-content:center;align-items:center;padding-top:4px;shadow-offset:[object Object];shadow-opacity:0.35px;shadow-radius:12px;shadow-color:#f857a6;opacity:1",
+          "style": "opacity:1",
         },
         "children": Array [
           Object {
             "attribs": Object {
-              "style": "0:[object Object];2:[object Object];3:[object Object]",
+              "colors": "4294465446,4294924376",
+              "endpoint": "[object Object]",
+              "startpoint": "[object Object]",
+              "style": "top:-39px;background-color:#ff5858;width:56px;height:56px;border-radius:35px;display:flex;justify-content:center;align-items:center;padding-top:4px;shadow-offset:[object Object];shadow-opacity:0.35px;shadow-radius:12px;shadow-color:#ff5858",
             },
             "children": Array [
               Object {
-                "data": "",
+                "attribs": Object {
+                  "style": "0:[object Object];2:[object Object];3:[object Object]",
+                },
+                "children": Array [
+                  Object {
+                    "data": "",
+                    "next": null,
+                    "parent": [Circular],
+                    "prev": null,
+                    "type": "text",
+                  },
+                ],
+                "name": "text",
+                "namespace": "http://www.w3.org/1999/xhtml",
                 "next": null,
                 "parent": [Circular],
                 "prev": null,
-                "type": "text",
+                "type": "tag",
+                "x-attribsNamespace": Object {
+                  "style": undefined,
+                },
+                "x-attribsPrefix": Object {
+                  "style": undefined,
+                },
               },
             ],
-            "name": "text",
+            "name": "bvlineargradient",
             "namespace": "http://www.w3.org/1999/xhtml",
             "next": null,
             "parent": [Circular],
             "prev": null,
             "type": "tag",
             "x-attribsNamespace": Object {
+              "colors": undefined,
+              "endpoint": undefined,
+              "startpoint": undefined,
               "style": undefined,
             },
             "x-attribsPrefix": Object {
+              "colors": undefined,
+              "endpoint": undefined,
+              "startpoint": undefined,
               "style": undefined,
             },
           },
@@ -100,32 +128,60 @@ initialize {
     "children": Array [
       Object {
         "attribs": Object {
-          "style": "top:-39px;background-color:#f857a6;width:56px;height:56px;border-radius:35px;display:flex;justify-content:center;align-items:center;padding-top:4px;shadow-offset:[object Object];shadow-opacity:0.35px;shadow-radius:12px;shadow-color:#f857a6;opacity:1",
+          "style": "opacity:1",
         },
         "children": Array [
           Object {
             "attribs": Object {
-              "style": "0:[object Object];2:[object Object];3:[object Object]",
+              "colors": "4294465446,4294924376",
+              "endpoint": "[object Object]",
+              "startpoint": "[object Object]",
+              "style": "top:-39px;background-color:#ff5858;width:56px;height:56px;border-radius:35px;display:flex;justify-content:center;align-items:center;padding-top:4px;shadow-offset:[object Object];shadow-opacity:0.35px;shadow-radius:12px;shadow-color:#ff5858",
             },
             "children": Array [
               Object {
-                "data": "",
+                "attribs": Object {
+                  "style": "0:[object Object];2:[object Object];3:[object Object]",
+                },
+                "children": Array [
+                  Object {
+                    "data": "",
+                    "next": null,
+                    "parent": [Circular],
+                    "prev": null,
+                    "type": "text",
+                  },
+                ],
+                "name": "text",
+                "namespace": "http://www.w3.org/1999/xhtml",
                 "next": null,
                 "parent": [Circular],
                 "prev": null,
-                "type": "text",
+                "type": "tag",
+                "x-attribsNamespace": Object {
+                  "style": undefined,
+                },
+                "x-attribsPrefix": Object {
+                  "style": undefined,
+                },
               },
             ],
-            "name": "text",
+            "name": "bvlineargradient",
             "namespace": "http://www.w3.org/1999/xhtml",
             "next": null,
             "parent": [Circular],
             "prev": null,
             "type": "tag",
             "x-attribsNamespace": Object {
+              "colors": undefined,
+              "endpoint": undefined,
+              "startpoint": undefined,
               "style": undefined,
             },
             "x-attribsPrefix": Object {
+              "colors": undefined,
+              "endpoint": undefined,
+              "startpoint": undefined,
               "style": undefined,
             },
           },

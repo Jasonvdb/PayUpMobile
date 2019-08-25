@@ -123,7 +123,6 @@ describe("mainnet transactions with locally stored words", () => {
 
 	afterAll(() => {
 		wallet = null;
-		jest.setTimeout(5000);
 	});
 
 	it("check known transactions", async () => {
