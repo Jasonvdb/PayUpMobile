@@ -7,90 +7,110 @@
 
 import React, { Component, Fragment } from "react";
 import {
-	SafeAreaView,
-	StyleSheet,
-	ScrollView,
-	View,
-	Text,
-	StatusBar,
-	Button
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+  Button
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { inject, observer } from "mobx-react";
 
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import displayCurrency from "../../../helpers/displayCurrency";
 import Header from "../../elements/header/Header";
 import BetCardSwipe from "../bets/swiper/BetCardSwipe";
+import TransactionRow from "../wallet/TransactionRow";
 
 class HomeScreen extends Component {
   static navigationOptions = props => {
-  	const { navigation, ...rest } = props;
+    const { navigation, ...rest } = props;
 
-  	const value = navigation.getParam("walletValue", "");
-  	const subTitle = navigation.getParam("subTitle", "");
-  	return {
-  		title: value ? displayCurrency(value) : null,
-  		headerTitle: props => (
-  			<Header
-  				{...props}
-  				subTitle={subTitle}
-  				onProfilePress={() => navigation.push("Profile")}
-  				animate={!!value}
-  			/>
-  		)
-  	};
+    const balanceInSats = navigation.getParam("balanceInSats", "");
+    const subTitle = navigation.getParam("subTitle", "");
+    return {
+      title: balanceInSats !== "" ? displayCurrency(balanceInSats) : null,
+      headerTitle: props => (
+        <Header
+          {...props}
+          subTitle={subTitle}
+          onProfilePress={() => navigation.push("Profile")}
+          animate={!!balanceInSats}
+        />
+      )
+    };
   };
 
+  componentDidUpdate(prevProps, prevState, snapshot): void {
+    const { navigation, wallet } = this.props;
+
+    const balances = wallet.balances;
+
+    const {
+      confirmedInSats,
+      unconfirmedReceivedInSats,
+      lastReceivedMoment
+    } = balances;
+
+    const balanceInSats = confirmedInSats + unconfirmedReceivedInSats;
+
+    if (balanceInSats !== this.balanceInSats) {
+      this.balanceInSats = balanceInSats;
+      navigation.setParams({
+        balanceInSats,
+        subTitle: "Your balance"
+      });
+    }
+  }
+
   componentDidMount(): void {
-  	const { navigation } = this.props;
-  	setTimeout(() => {
-  		navigation.setParams({ walletValue: 0.000697, subTitle: "Your balance" });
-  	}, 1000);
+    const { navigation, wallet } = this.props;
+
+    wallet.refreshAllAddresses();
   }
 
   render() {
-  	const { navigation } = this.props;
+    const { navigation, wallet } = this.props;
 
-  	return (
-  		<Fragment>
-  			<StatusBar barStyle="dark-content"/>
-  			<SafeAreaView>
-  				<View style={styles.root}>
-  					<BetCardSwipe/>
+    const { neatTransactionHistory } = wallet;
 
-  					<ScrollView
-  						contentInsetAdjustmentBehavior="automatic"
-  						style={styles.scrollView}
-  					>
-  						{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(index => (
-  							<View
-  								key={index}
-  								style={{
-  									width: "100%",
-  									height: 40,
-  									marginTop: 20,
-  									backgroundColor: "rgba(238,234,244,0.3)",
-  									borderRadius: 8
-  								}}
-  							/>
-  						))}
-  					</ScrollView>
-  				</View>
-  			</SafeAreaView>
-  		</Fragment>
-  	);
+    return (
+      <Fragment>
+        <StatusBar barStyle="dark-content"/>
+        <SafeAreaView>
+          <View style={styles.root}>
+            <BetCardSwipe/>
+
+            <ScrollView
+              contentInsetAdjustmentBehavior="automatic"
+              style={styles.scrollView}
+            >
+              {neatTransactionHistory.map((tx, index) => (
+                <TransactionRow
+                  key={index}
+                  {...tx}
+                  onPress={() => alert("TODO")}
+                />
+              ))}
+            </ScrollView>
+          </View>
+        </SafeAreaView>
+      </Fragment>
+    );
   }
 }
 
 const styles = StyleSheet.create({
-	root: {
-		height: "100%"
-	},
-	scrollView: {
-		backgroundColor: "#fff",
-		paddingLeft: 15,
-		paddingRight: 15
-	}
+  root: {
+    height: "100%"
+  },
+  scrollView: {
+    backgroundColor: "#fff",
+    paddingTop: 20,
+    paddingLeft: 15,
+    paddingRight: 15
+  }
 });
 
-export default HomeScreen;
+export default inject("wallet")(observer(HomeScreen));

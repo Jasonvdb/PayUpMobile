@@ -107,6 +107,7 @@ describe("mainnet transactions with locally stored words", () => {
 
     //Test only works on testnet
     wallet = new Wallet();
+    console.log(mnemonic);
     await wallet.importExistingWallet(mnemonic, "mainnet");
 
     const numberOfReceiveAddressesToCheck = 5; //wallet.receiveAddresses.length
@@ -144,6 +145,8 @@ describe("mainnet transactions with locally stored words", () => {
         }
       }
     );
+
+    console.log("receiveTransactionsCount: ", receiveTransactionsCount);
 
     expect(receiveTransactionsCount).toBe(1);
     expect(sentTransactionsCount).toBe(2);

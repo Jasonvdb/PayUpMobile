@@ -104,6 +104,16 @@ export default class Wallet {
     }
   }
 
+  refreshAllAddresses() {
+    this.receiveAddresses.forEach(address =>
+      this.queueAddressForUpdate(address)
+    );
+
+    this.changeAddresses.forEach(address =>
+      this.queueAddressForUpdate(address)
+    );
+  }
+
   queueAddressForUpdate(address) {
     this.addressUpdateQueue.push(address);
     this.processAddressTransactionsFromQueue();
@@ -116,7 +126,7 @@ export default class Wallet {
     }
 
     if (this.addressUpdateQueue.length === 0) {
-      this.busyUpdatingAddressTxData = false;
+      return;
     }
 
     const address = this.addressUpdateQueue[0];
@@ -125,6 +135,7 @@ export default class Wallet {
     this.updateAddressTransactions(address)
       .then(() => {
         this.addressUpdateQueue.shift();
+        this.updateTransactionHistory();
       })
       .catch(e => {
         throw e;
@@ -143,6 +154,7 @@ export default class Wallet {
 
     rawTransactions.forEach(tx => {
       const { txid } = tx;
+
       this.rawTransactions[txid] = {
         ...tx,
         updatedAtMoment: moment()
@@ -184,16 +196,18 @@ export default class Wallet {
       } = tx;
 
       if (receivedValueInSats) {
-        confirmedInSats += receivedValueInSats;
-
-        if (confirmed === false) {
+        if (confirmed) {
+          confirmedInSats += receivedValueInSats;
+        } else if (confirmed === false) {
           unconfirmedReceivedInSats += receivedValueInSats;
         }
 
-        if (lastReceivedMoment === null) {
-          lastReceivedMoment = timeMoment;
-        } else if (timeMoment.isAfter(lastReceivedMoment)) {
-          lastReceivedMoment = timeMoment;
+        if (timeMoment) {
+          if (lastReceivedMoment === null) {
+            lastReceivedMoment = timeMoment;
+          } else if (timeMoment.isAfter(lastReceivedMoment)) {
+            lastReceivedMoment = timeMoment;
+          }
         }
       } else if (sentValueInSats) {
         confirmedInSats -= sentValueInSats + feeInSats;

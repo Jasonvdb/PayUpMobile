@@ -1,9 +1,11 @@
-export default value => {
-	const sats = parseInt((value * 100000000).toFixed(0));
+export default sats => {
+  let stringSats = `${sats}`;
+  if (sats > 1000) {
+    stringSats = `${stringSats.slice(0, -3)}k`;
+  }
 
-	const numberString = `${sats}`
-		.slice(0, -3)
-		.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  //Format numbers with spaces for thousdand separators
+  const numberString = stringSats.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-	return `${numberString}k sats`;
+  return `${numberString} sats`;
 };

@@ -8,6 +8,9 @@ const theme = {
   fontColor1: "#111111",
   fontColor2: "#515151",
 
+  sentColor: "#F2C94C",
+  receivedColor: "#27AE60",
+
   defaultButtonLabelColor: "#666666",
 
   ctaButtonGradients: ["#f857a6", "#ff5858"],

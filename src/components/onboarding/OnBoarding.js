@@ -15,6 +15,7 @@ import theme from "../../config/theme";
 import Slide from "./Slide";
 import onError from "../../helpers/onError";
 import Wallet from "../../wallet/Wallet";
+import settings from "../../config/settings";
 const windowWidth = Dimensions.get("window").width;
 
 const sliderWidth = windowWidth;
@@ -29,7 +30,13 @@ class OnBoarding extends Component {
     };
   }
 
-  componentDidMount(): void {}
+  componentDidMount(): void {
+    //TODO remove this
+    // this.props.wallet.importExistingWallet(
+    //   settings.mainnetTestMnemonic,
+    //   "mainnet"
+    // );
+  }
 
   snapToNext() {
     setTimeout(() => this._carousel.snapToNext(), 50);
@@ -42,8 +49,10 @@ class OnBoarding extends Component {
   onCreate() {
     this.setState({ isCreating: true });
 
+    const { wallet } = this.props;
+
     this.chooseNetwork(networkName => {
-      this.props.wallet
+      wallet
         .createNewWallet(networkName)
         .then(() => {})
         .catch(e => {
@@ -55,12 +64,11 @@ class OnBoarding extends Component {
 
   onImport() {
     this.setState({ isImporting: true });
+    const { wallet } = this.props;
 
     this.chooseNetwork(networkName => {
       //TODO allow them to actually type the words
-      const mnemonic =
-        "arena coin myth kangaroo age obey scrap fog exercise space logic rib uphold become ahead mixed power shed state raccoon wreck weird blame ability";
-      this.props.wallet.importExistingWallet(mnemonic, networkName);
+      wallet.importExistingWallet(settings.mainnetTestMnemonic, networkName);
     });
   }
 

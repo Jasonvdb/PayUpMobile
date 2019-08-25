@@ -8,7 +8,8 @@ decorate(Wallet, {
   importExistingWallet: action,
   balances: computed,
   updateTransactionHistory: action,
-  neatTransactionHistory: observable
+  neatTransactionHistory: observable,
+  refreshAllAddresses: action
 });
 
 const wallet = new Wallet();
