@@ -9,7 +9,7 @@
 import React from "react";
 
 import MainNavigator from "./src/components/routes/MainNavigator";
-import Container from "./src/components/onboarding/Container";
+import OnBoarding from "./src/components/onboarding/OnBoarding";
 
 import { YellowBox } from "react-native";
 
@@ -26,7 +26,7 @@ YellowBox.ignoreWarnings([
 //TODO check if we have a saved wallet, or if we must onboard the user
 
 const App = () => {
-	return <Container/>;
+	return <OnBoarding/>;
 };
 
 export default App;

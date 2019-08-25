@@ -10,7 +10,8 @@ const theme = {
 
 	defaultButtonLabelColor: "#666666",
 
-	buttonGradients: ["#f857a6", "#ff5858"],
+	ctaButtonGradients: ["#f857a6", "#ff5858"],
+	defaultButtonGradients: ["#ff5858", "#ff5858"],
 	activeGradients: ["#00239C", "rgba(0,35,156,0.65)"],
 	wonGradients: ["#54D3AD", "rgba(84,211,173,0.65)"],
 	lostGradients: ["#E10600", "rgba(225,6,0,0.65)"],

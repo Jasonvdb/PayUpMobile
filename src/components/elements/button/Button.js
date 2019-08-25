@@ -4,7 +4,6 @@ import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
 import theme from "../../../config/theme";
-import Header from "../header/Header";
 
 // 1. Changed to a class based component
 class Button extends Component {
@@ -22,34 +21,41 @@ class Button extends Component {
   };
 
   render() {
-  	const { children, variant } = this.props;
+  	const { children, variant, style } = this.props;
 
   	let labelStyle = styles.label;
+  	let containerStyle = { ...styles.container, ...style };
+  	let gradientContainerProps = {
+  		start: { x: 0, y: 0 },
+  		end: { x: 0, y: 1 },
+  		colors: theme.defaultButtonGradients
+  	};
 
-  	//TODO don't use TouchableOpacity fro android
-
-  	if (variant === "default") {
-  		return (
-  			<TouchableOpacity onPress={this.onPressHandler}>
-  				<View style={styles.button}>
-  					<Text style={styles.label}>{children}</Text>
-  				</View>
-  			</TouchableOpacity>
-  		);
+  	switch (variant) {
+  		case "cta": {
+  			labelStyle = { ...labelStyle, ...styles.ctaLabel };
+  			containerStyle = { ...containerStyle, ...styles.ctaContainer };
+  			gradientContainerProps = {
+  				...gradientContainerProps,
+  				colors: theme.ctaButtonGradients
+  			};
+  			break;
+  		}
+  		case "text": {
+  			labelStyle = { ...labelStyle, ...styles.textLabel };
+  			containerStyle = { ...containerStyle, ...styles.textContainer };
+  			gradientContainerProps = {
+  				colors: ["transparent"]
+  			};
+  			break;
+  		}
   	}
 
-  	if (variant === "cta") {
-  		labelStyle = { ...labelStyle, ...styles.ctaLabel };
-  	}
+  	//TODO don't use TouchableOpacity for android
 
   	return (
   		<TouchableOpacity onPress={this.onPressHandler}>
-  			<LinearGradient
-  				start={{ x: 0, y: 0 }}
-  				end={{ x: 1, y: 1 }}
-  				colors={theme.buttonGradients}
-  				style={styles.button}
-  			>
+  			<LinearGradient {...gradientContainerProps} style={containerStyle}>
   				<Text style={labelStyle}>{children}</Text>
   			</LinearGradient>
   		</TouchableOpacity>
@@ -58,33 +64,46 @@ class Button extends Component {
 }
 
 Button.defaultProps = {
-	variant: "default"
+	variant: "default",
+	style: {}
 };
 
-Header.propTypes = {
+Button.propTypes = {
 	onPress: PropTypes.func,
 	url: PropTypes.string,
-	children: PropTypes.string
+	children: PropTypes.string,
+	variant: PropTypes.oneOf(["default", "cta", "text"]),
+	style: PropTypes.object
 };
 
 const styles = {
-	button: {
-		height: 55,
+	container: {
 		alignSelf: "stretch",
 		justifyContent: "center",
 		backgroundColor: "transparent",
-		borderRadius: 30
+		borderRadius: 30,
+		height: 55,
+		color: "#fff"
 	},
 	label: {
 		alignSelf: "center",
-		color: theme.defaultButtonLabelColor,
+		color: "#FFF",
 		fontSize: 18,
 		fontWeight: "200",
 		textTransform: "uppercase"
 	},
+	ctaContainer: {
+		height: 55
+	},
 	ctaLabel: {
-		color: "#fff",
 		fontSize: 22
+	},
+	textContainer: {
+		height: 45
+	},
+	textLabel: {
+		color: theme.defaultButtonLabelColor,
+		fontSize: 18
 	}
 };
 

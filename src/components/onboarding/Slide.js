@@ -13,7 +13,7 @@ import Button from "../elements/button/Button";
 import theme from "../../config/theme";
 
 const Slide = props => {
-	const { onContinuePress, onBackPress, item } = props;
+	const { onContinuePress, onBackPress, onCreate, onImport, item } = props;
 
 	const { imageSource, title, content } = item;
 
@@ -27,11 +27,27 @@ const Slide = props => {
 			</View>
 
 			<View style={styles.buttonContainer}>
-				<Button onPress={onContinuePress} variant={"cta"}>
-          Continue
-				</Button>
+				{onCreate ? (
+					<Button onPress={onCreate} variant={"cta"} style={{ marginBottom: 10 }}>
+            Create new wallet
+					</Button>
+				) : null}
+				{onImport ? (
+					<Button onPress={onImport} variant={"text"}>
+            Import existing wallet
+					</Button>
+				) : null}
+
+				{onContinuePress ? (
+					<Button onPress={onContinuePress} variant={"cta"}>
+            Continue
+					</Button>
+				) : null}
+
 				{onBackPress ? (
-					<Button onPress={onBackPress}>Back</Button>
+					<Button onPress={onBackPress} variant={"text"}>
+            Back
+					</Button>
 				) : (
 					<View style={{ height: 55 }}/>
 				)}
@@ -42,7 +58,9 @@ const Slide = props => {
 
 Slide.propTypes = {
 	onContinuePress: PropTypes.func,
-	onBackPress: PropTypes.func
+	onBackPress: PropTypes.func,
+	onCreate: PropTypes.func,
+	onImport: PropTypes.func
 };
 
 const styles = StyleSheet.create({

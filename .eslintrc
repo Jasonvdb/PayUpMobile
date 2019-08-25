@@ -26,7 +26,6 @@
     "no-nested-ternary": 0,
     "camelcase": 0,
     "no-underscore-dangle": 0,
-    "indent": ["error", "tab", {"SwitchCase": 1}],
     "no-unused-vars": 0,
     "no-var": "error",
     "prefer-const": "error",
