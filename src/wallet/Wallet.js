@@ -1,23 +1,23 @@
 import moment from "moment";
 import {
-	formattedTransactionsFromAddresses,
-	generateMnemonic,
-	getAddressFromXpub,
-	getXpubFromMnemonic
+  formattedTransactionsFromAddresses,
+  generateMnemonic,
+  getAddressFromXpub,
+  getXpubFromMnemonic
 } from "./wallet-functions";
 import { getAddressBalance, getAddressTransactions } from "./blockexplorer";
 
 const bitcoin = require("bitcoinjs-lib");
 
 const networks = {
-	mainnet: {
-		network: bitcoin.networks.bitcoin,
-		apiBaseUrl: "https://blockstream.info/api/"
-	},
-	testnet: {
-		network: bitcoin.networks.testnet,
-		apiBaseUrl: "https://blockstream.info/testnet/api/"
-	}
+  mainnet: {
+    network: bitcoin.networks.bitcoin,
+    apiBaseUrl: "https://blockstream.info/api/"
+  },
+  testnet: {
+    network: bitcoin.networks.testnet,
+    apiBaseUrl: "https://blockstream.info/testnet/api/"
+  }
 };
 
 /**
@@ -46,165 +46,174 @@ export default class Wallet {
 
   addressBalances = {};
 
-  constructor(networkName) {
-  	if (!networkName || !networks[networkName]) {
-  		throw new Error(
-  			`Please specify a valid network (${Object.keys(networks).join(", ")})`
-  		);
-  	}
-  	const { network, apiBaseUrl } = networks[networkName];
-  	this.network = network;
-  	this.apiBaseUrl = apiBaseUrl;
+  constructor() {}
+
+  async createNewWallet(networkName) {
+    this.setNetworkDetails(networkName);
+
+    const mnemonic = await generateMnemonic();
+    this._init(mnemonic);
   }
 
-  async createNewWallet() {
-  	const mnemonic = await generateMnemonic();
-  	this._init(mnemonic);
+  importExistingWallet(mnemonic, networkName) {
+    this.setNetworkDetails(networkName);
+    this._init(mnemonic);
   }
 
-  importExistingWallet(mnemonic) {
-  	this._init(mnemonic);
+  setNetworkDetails(networkName) {
+    if (!networkName || !networks[networkName]) {
+      throw new Error(
+        `Please specify a valid network (${Object.keys(networks).join(", ")})`
+      );
+    }
+    const { network, apiBaseUrl } = networks[networkName];
+    this.network = network;
+    this.apiBaseUrl = apiBaseUrl;
   }
 
   _init(mnemonic) {
-  	if (this.mnemonic) {
-  		throw new Error("Existing wallet already loaded.");
-  	}
+    if (this.mnemonic) {
+      throw new Error("Existing wallet already loaded.");
+    }
 
-  	this.mnemonic = mnemonic.trim();
-  	this.xpub = getXpubFromMnemonic(this.mnemonic, this.network);
-  	this.appendDerivedAddresses(20);
+    this.mnemonic = mnemonic.trim();
+    this.xpub = getXpubFromMnemonic(this.mnemonic, this.network);
+    this.appendDerivedAddresses(20);
+  }
+
+  get isInitialized() {
+    return !!this.xpub;
   }
 
   appendDerivedAddresses(numberOfAddresses) {
-  	if (!this.xpub) {
-  		throw new Error("No wallet loaded.");
-  	}
+    if (!this.xpub) {
+      throw new Error("No wallet loaded.");
+    }
 
-  	const startIndex = this.receiveAddresses.length;
-  	const endIndex = startIndex + numberOfAddresses;
+    const startIndex = this.receiveAddresses.length;
+    const endIndex = startIndex + numberOfAddresses;
 
-  	for (let index = startIndex; index < endIndex; index++) {
-  		this.receiveAddresses.push(
-  			getAddressFromXpub(this.xpub, index, this.network, "receive")
-  		);
+    for (let index = startIndex; index < endIndex; index++) {
+      this.receiveAddresses.push(
+        getAddressFromXpub(this.xpub, index, this.network, "receive")
+      );
 
-  		this.changeAddresses.push(
-  			getAddressFromXpub(this.xpub, index, this.network, "change")
-  		);
-  	}
+      this.changeAddresses.push(
+        getAddressFromXpub(this.xpub, index, this.network, "change")
+      );
+    }
   }
 
   queueAddressForUpdate(address) {
-  	this.addressUpdateQueue.push(address);
-  	this.processAddressTransactionsFromQueue();
+    this.addressUpdateQueue.push(address);
+    this.processAddressTransactionsFromQueue();
   }
 
   processAddressTransactionsFromQueue() {
-  	//Busy processing already OR nothing to process
-  	if (this.busyUpdatingAddressTxData) {
-  		return;
-  	}
+    //Busy processing already OR nothing to process
+    if (this.busyUpdatingAddressTxData) {
+      return;
+    }
 
-  	if (this.addressUpdateQueue.length === 0) {
-  		this.busyUpdatingAddressTxData = false;
-  	}
+    if (this.addressUpdateQueue.length === 0) {
+      this.busyUpdatingAddressTxData = false;
+    }
 
-  	const address = this.addressUpdateQueue[0];
+    const address = this.addressUpdateQueue[0];
 
-  	this.busyUpdatingAddressTxData = true;
-  	this.updateAddressTransactions(address)
-  		.then(() => {
-  			this.addressUpdateQueue.shift();
-  		})
-  		.catch(e => {
-  			throw e;
-  		})
-  		.then(() => {
-  			this.busyUpdatingAddressTxData = false;
-  			this.processAddressTransactionsFromQueue();
-  		});
+    this.busyUpdatingAddressTxData = true;
+    this.updateAddressTransactions(address)
+      .then(() => {
+        this.addressUpdateQueue.shift();
+      })
+      .catch(e => {
+        throw e;
+      })
+      .then(() => {
+        this.busyUpdatingAddressTxData = false;
+        this.processAddressTransactionsFromQueue();
+      });
   }
 
   async updateAddressTransactions(address) {
-  	const rawTransactions = await getAddressTransactions(
-  		this.apiBaseUrl,
-  		address
-  	);
+    const rawTransactions = await getAddressTransactions(
+      this.apiBaseUrl,
+      address
+    );
 
-  	rawTransactions.forEach(tx => {
-  		const { txid } = tx;
-  		this.rawTransactions[txid] = {
-  			...tx,
-  			updatedAtMoment: moment()
-  		};
-  	});
+    rawTransactions.forEach(tx => {
+      const { txid } = tx;
+      this.rawTransactions[txid] = {
+        ...tx,
+        updatedAtMoment: moment()
+      };
+    });
   }
 
   //Used to poll when the user is waiting for funds
   async updateAddressBalance(address) {
-  	const {
-  		confirmedValueInSats,
-  		unconfirmedValueInSats
-  	} = await getAddressBalance(this.apiBaseUrl, address);
+    const {
+      confirmedValueInSats,
+      unconfirmedValueInSats
+    } = await getAddressBalance(this.apiBaseUrl, address);
 
-  	//If there's a confirmed balance, update the rest of the wallet
-  	if (confirmedValueInSats > 0) {
-  		await this.updateAddressTransactions(address);
-  		this.updateTransactionHistory();
-  	}
+    //If there's a confirmed balance, update the rest of the wallet
+    if (confirmedValueInSats > 0) {
+      await this.updateAddressTransactions(address);
+      this.updateTransactionHistory();
+    }
 
-  	this.addressBalances[address] = {
-  		confirmedValueInSats,
-  		unconfirmedValueInSats,
-  		updatedAtMoment: moment()
-  	};
+    this.addressBalances[address] = {
+      confirmedValueInSats,
+      unconfirmedValueInSats,
+      updatedAtMoment: moment()
+    };
   }
 
   get balances() {
-  	let confirmedInSats = 0;
-  	let unconfirmedReceivedInSats = 0;
-  	let lastReceivedMoment = null;
-  	this.neatTransactionHistory.forEach(tx => {
-  		const {
-  			receivedValueInSats,
-  			sentValueInSats,
-  			timeMoment,
-  			feeInSats,
-  			confirmed
-  		} = tx;
+    let confirmedInSats = 0;
+    let unconfirmedReceivedInSats = 0;
+    let lastReceivedMoment = null;
+    this.neatTransactionHistory.forEach(tx => {
+      const {
+        receivedValueInSats,
+        sentValueInSats,
+        timeMoment,
+        feeInSats,
+        confirmed
+      } = tx;
 
-  		if (receivedValueInSats) {
-  			confirmedInSats += receivedValueInSats;
+      if (receivedValueInSats) {
+        confirmedInSats += receivedValueInSats;
 
-  			if (confirmed === false) {
-  				unconfirmedReceivedInSats += receivedValueInSats;
-  			}
+        if (confirmed === false) {
+          unconfirmedReceivedInSats += receivedValueInSats;
+        }
 
-  			if (lastReceivedMoment === null) {
-  				lastReceivedMoment = timeMoment;
-  			} else if (timeMoment.isAfter(lastReceivedMoment)) {
-  				lastReceivedMoment = timeMoment;
-  			}
-  		} else if (sentValueInSats) {
-  			confirmedInSats -= sentValueInSats + feeInSats;
-  		}
-  	});
+        if (lastReceivedMoment === null) {
+          lastReceivedMoment = timeMoment;
+        } else if (timeMoment.isAfter(lastReceivedMoment)) {
+          lastReceivedMoment = timeMoment;
+        }
+      } else if (sentValueInSats) {
+        confirmedInSats -= sentValueInSats + feeInSats;
+      }
+    });
 
-  	const result = {
-  		confirmedInSats,
-  		unconfirmedReceivedInSats,
-  		lastReceivedMoment
-  	};
+    const result = {
+      confirmedInSats,
+      unconfirmedReceivedInSats,
+      lastReceivedMoment
+    };
 
-  	return result;
+    return result;
   }
 
   updateTransactionHistory() {
-  	this.neatTransactionHistory = formattedTransactionsFromAddresses(
-  		this.rawTransactions,
-  		this.receiveAddresses,
-  		this.changeAddresses
-  	);
+    this.neatTransactionHistory = formattedTransactionsFromAddresses(
+      this.rawTransactions,
+      this.receiveAddresses,
+      this.changeAddresses
+    );
   }
 }

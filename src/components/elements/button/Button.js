@@ -12,7 +12,11 @@ class Button extends Component {
 
   // 2. Custom function called onPress TouchableOpacity
   onPressHandler = () => {
-    const { onPress, url } = this.props;
+    const { onPress, url, disabled } = this.props;
+    if (disabled) {
+      return;
+    }
+
     if (url) {
       Linking.openURL(url);
     }
@@ -20,7 +24,7 @@ class Button extends Component {
   };
 
   render() {
-    const { children, variant, style } = this.props;
+    const { children, variant, style, disabled } = this.props;
 
     let labelStyle = styles.label;
     let containerStyle = { ...styles.container, ...style };
@@ -36,7 +40,7 @@ class Button extends Component {
         containerStyle = { ...containerStyle, ...styles.ctaContainer };
         gradientContainerProps = {
           ...gradientContainerProps,
-          colors: theme.ctaButtonGradients
+          colors: !disabled ? theme.ctaButtonGradients : theme.disabledButtonGradients
         };
         break;
       }
@@ -65,7 +69,8 @@ class Button extends Component {
 Button.defaultProps = {
   variant: "default",
   style: {},
-  onPress: () => {}
+  onPress: () => {},
+  disabled: false
 };
 
 Button.propTypes = {
@@ -73,7 +78,8 @@ Button.propTypes = {
   url: PropTypes.string,
   children: PropTypes.string,
   variant: PropTypes.oneOf(["default", "cta", "text"]),
-  style: PropTypes.object
+  style: PropTypes.object,
+  disabled: PropTypes.bool
 };
 
 const styles = {

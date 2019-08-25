@@ -1,9 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { StyleSheet, View, StatusBar, Dimensions } from "react-native";
 import SnapCarousel from "react-native-snap-carousel";
+import { inject, observer } from "mobx-react";
+import PropTypes from "prop-types";
 
 import theme from "../../config/theme";
 import Slide from "./Slide";
+import onError from "../../helpers/onError";
+import Wallet from "../../wallet/Wallet";
 const windowWidth = Dimensions.get("window").width;
 
 const sliderWidth = windowWidth;
@@ -11,6 +15,11 @@ const sliderWidth = windowWidth;
 class OnBoarding extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isCreating: false,
+      isImporting: false
+    };
   }
 
   componentDidMount(): void {}
@@ -24,14 +33,26 @@ class OnBoarding extends Component {
   }
 
   onCreate() {
-    alert("Create");
+    //TODO ask for testnet or mainnet
+    this.setState({ isCreating: true });
+    this.props.wallet
+      .createNewWallet()
+      .then(() => {})
+      .catch(e => {
+        onError(e, "Failed to create new wallet.");
+
+        this.setState({ isCreating: false });
+      });
   }
 
   onImport() {
+    this.setState({ isImporting: true });
     alert("Import");
   }
 
   render() {
+    const { isCreating, isImporting } = this.state;
+
     const items = [
       {
         imageSource: require("../../../images/onboarding_2.png"),
@@ -90,7 +111,13 @@ class OnBoarding extends Component {
                 props.onImport = this.onImport.bind(this);
               }
 
-              return <Slide {...props}/>;
+              return (
+                <Slide
+                  {...props}
+                  isCreating={isCreating}
+                  isImporting={isImporting}
+                />
+              );
             }}
             sliderWidth={sliderWidth}
             itemWidth={sliderWidth}
@@ -101,6 +128,10 @@ class OnBoarding extends Component {
   }
 }
 
+OnBoarding.propTypes = {
+  wallet: PropTypes.instanceOf(Wallet)
+};
+
 const styles = StyleSheet.create({
   root: {
     height: "100%",
@@ -108,4 +139,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default OnBoarding;
+export default inject("wallet")(observer(OnBoarding));
