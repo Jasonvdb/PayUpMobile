@@ -18,23 +18,20 @@ const TxIcon = props => {
 
   let rootStyle = styles.root;
   let iconName = "";
-  let iconStyle = styles.icon;
 
   if (variant === "sent") {
-    iconName = "ios-arrow-round-down";
+    iconName = "ios-arrow-round-up";
     rootStyle = { ...rootStyle, ...styles.sent };
-    iconStyle = { ...iconStyle, ...styles.sentIcon };
   }
 
   if (variant === "received") {
-    iconName = "ios-arrow-round-up";
+    iconName = "ios-arrow-round-down";
     rootStyle = { ...rootStyle, ...styles.received };
-    iconStyle = { ...iconStyle, ...styles.receivedIcon };
   }
 
   return (
     <View style={rootStyle}>
-      <Icon style={iconStyle} name={iconName} size={35} color={"#FFF"}/>
+      <Icon style={styles.icon} name={iconName} size={35} color={"#FFF"}/>
     </View>
   );
 };
@@ -60,11 +57,8 @@ const styles = StyleSheet.create({
   received: {
     backgroundColor: theme.receivedColor
   },
-  sentIcon: {
-    top: -2
-  },
-  receivedIcon: {
-    top: 0
+  icon: {
+    top: -1
   }
 });
 export default TxIcon;
