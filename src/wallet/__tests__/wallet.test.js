@@ -63,7 +63,7 @@ describe("testnet transactions", () => {
   beforeEach(async () => {
     const words = [];
     for (let index = 0; index < 24; index++) {
-      words.push("appsats");
+      words.push("payup");
     }
 
     const mnemonic = words.join(" ");

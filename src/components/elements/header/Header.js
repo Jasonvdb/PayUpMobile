@@ -32,7 +32,7 @@ const Header = props => {
 					{subTitle || ""}
 				</TextComponent>
 				<TextComponent animation="fadeInRight" style={styles.title}>
-					{children || "AppSats"}
+					{children || "PayUp"}
 				</TextComponent>
 			</View>
 			{onProfilePress ? <ProfileButton onPress={onProfilePress}/> : null}

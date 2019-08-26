@@ -1,5 +1,5 @@
 /**
- * AppSats bitcoin wallet / betting app
+ * PayUp bitcoin wallet / betting app
 
  * @format
  * @flow

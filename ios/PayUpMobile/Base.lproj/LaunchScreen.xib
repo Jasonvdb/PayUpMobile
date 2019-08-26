@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash" translatesAutoresizingMaskIntoConstraints="NO" id="F4u-0L-uDf">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PayUp" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UpY-MX-aWM">
+                    <rect key="frame" x="92" y="209" width="296" height="63"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="47"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="F4u-0L-uDf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="AQy-wz-uFB"/>
+                <constraint firstItem="F4u-0L-uDf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="O8n-eJ-suk"/>
+                <constraint firstAttribute="trailing" secondItem="UpY-MX-aWM" secondAttribute="trailing" constant="92" id="OIA-bO-Npc"/>
+                <constraint firstItem="UpY-MX-aWM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="92" id="YGa-Dd-BMs"/>
+                <constraint firstItem="UpY-MX-aWM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="209" id="i2D-6S-vtd"/>
+                <constraint firstAttribute="bottom" secondItem="UpY-MX-aWM" secondAttribute="bottom" constant="208" id="m2b-Ds-7Po"/>
+                <constraint firstAttribute="trailing" secondItem="F4u-0L-uDf" secondAttribute="trailing" id="obX-Db-mua"/>
+                <constraint firstAttribute="bottom" secondItem="F4u-0L-uDf" secondAttribute="bottom" id="pZb-Fp-jro"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="547.82608695652175" y="454.6875"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Splash" width="375" height="812"/>
+    </resources>
+</document>
