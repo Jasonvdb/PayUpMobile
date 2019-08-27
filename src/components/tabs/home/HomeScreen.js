@@ -22,6 +22,8 @@ import displayCurrency from "../../../helpers/displayCurrency";
 import Header from "../../elements/header/Header";
 import BetCardSwipe from "../bets/swiper/BetCardSwipe";
 import TransactionRow from "../wallet/TransactionRow";
+import BottomSheet from "../../elements/bottom-sheet/BottomSheet";
+import TransactionDetails from "../wallet/TransactionDetails";
 
 class HomeScreen extends Component {
   static navigationOptions = props => {
@@ -41,6 +43,20 @@ class HomeScreen extends Component {
       )
     };
   };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedTransactionDetails: null
+    };
+  }
+
+  componentDidMount(): void {
+    const { navigation, wallet } = this.props;
+
+    wallet.refreshAllAddresses();
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot): void {
     const { navigation, wallet } = this.props;
@@ -64,14 +80,9 @@ class HomeScreen extends Component {
     }
   }
 
-  componentDidMount(): void {
-    const { navigation, wallet } = this.props;
-
-    wallet.refreshAllAddresses();
-  }
-
   render() {
     const { navigation, wallet } = this.props;
+    const { selectedTransactionDetails } = this.state;
 
     const { neatTransactionHistory } = wallet;
 
@@ -90,12 +101,34 @@ class HomeScreen extends Component {
                 <TransactionRow
                   key={index}
                   {...tx}
-                  onPress={() => alert("TODO")}
+                  onPress={() => {
+                    this.setState({ selectedTransactionDetails: tx }, () => {
+                      this.RBSheet.open();
+                    });
+                  }}
                 />
               ))}
             </ScrollView>
           </View>
         </SafeAreaView>
+        <BottomSheet
+          closeOnDragDown
+          ref={ref => {
+            this.RBSheet = ref;
+          }}
+          height={340}
+          duration={200}
+          customStyles={{
+            container: {
+              justifyContent: "center",
+              alignItems: "center"
+            }
+          }}
+        >
+          {selectedTransactionDetails ? (
+            <TransactionDetails {...selectedTransactionDetails}/>
+          ) : null}
+        </BottomSheet>
       </Fragment>
     );
   }

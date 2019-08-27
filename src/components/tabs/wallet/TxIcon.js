@@ -14,10 +14,12 @@ import Icon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
 
 const TxIcon = props => {
-  const { variant } = props;
+  const { variant, size, confirmed } = props;
 
   let rootStyle = styles.root;
+  let iconStyle = styles.icon;
   let iconName = "";
+  let iconSize = 35;
 
   if (variant === "sent") {
     iconName = "ios-arrow-round-up";
@@ -29,17 +31,32 @@ const TxIcon = props => {
     rootStyle = { ...rootStyle, ...styles.received };
   }
 
+  if (!confirmed) {
+    rootStyle = { ...rootStyle, ...styles.unconfirmed };
+  }
+
+  if (size === "large") {
+    rootStyle = { ...rootStyle, ...styles.largeRoot };
+    iconSize = 70;
+    iconStyle = { ...iconStyle, ...styles.largeIcon };
+  }
+
   return (
     <View style={rootStyle}>
-      <Icon style={styles.icon} name={iconName} size={35} color={"#FFF"}/>
+      <Icon style={iconStyle} name={iconName} size={iconSize} color={"#FFF"}/>
     </View>
   );
 };
 
-TxIcon.defaultProps = {};
+TxIcon.defaultProps = {
+  size: "small",
+  confirmed: true
+};
 
 TxIcon.propTypes = {
-  variant: PropTypes.oneOf(["sent", "received"])
+  variant: PropTypes.oneOf(["sent", "received"]),
+  size: PropTypes.oneOf(["small", "large"]),
+  confirmed: PropTypes.bool
 };
 
 const styles = StyleSheet.create({
@@ -51,14 +68,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  largeRoot: {
+    width: 96,
+    height: 96,
+    borderRadius: 60
+  },
   sent: {
     backgroundColor: theme.sentColor
   },
   received: {
     backgroundColor: theme.receivedColor
   },
+  unconfirmed: {
+    backgroundColor: theme.unconfirmedColor
+  },
   icon: {
     top: -1
+  },
+  largeIcon: {
+    top: 1
   }
 });
 export default TxIcon;

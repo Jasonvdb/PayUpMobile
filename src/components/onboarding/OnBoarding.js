@@ -5,7 +5,8 @@ import {
   StatusBar,
   Dimensions,
   ActionSheetIOS,
-  Platform
+  Platform,
+  Text
 } from "react-native";
 import SnapCarousel from "react-native-snap-carousel";
 import { inject, observer } from "mobx-react";
@@ -16,6 +17,7 @@ import Slide from "./Slide";
 import onError from "../../helpers/onError";
 import Wallet from "../../wallet/Wallet";
 import settings from "../../config/settings";
+import BottomSheet from "../elements/bottom-sheet/BottomSheet";
 const windowWidth = Dimensions.get("window").width;
 
 const sliderWidth = windowWidth;
@@ -32,10 +34,10 @@ class OnBoarding extends Component {
 
   componentDidMount(): void {
     //TODO remove this
-    // this.props.wallet.importExistingWallet(
-    //   settings.mainnetTestMnemonic,
-    //   "mainnet"
-    // );
+    this.props.wallet.importExistingWallet(
+      settings.mainnetTestMnemonic,
+      "mainnet"
+    );
   }
 
   snapToNext() {
@@ -47,28 +49,29 @@ class OnBoarding extends Component {
   }
 
   onCreate() {
-    this.setState({ isCreating: true });
+    this.setState({ isCreating: true }, () => {
+      this.chooseNetwork(networkName => {
+        const { wallet } = this.props;
 
-    const { wallet } = this.props;
-
-    this.chooseNetwork(networkName => {
-      wallet
-        .createNewWallet(networkName)
-        .then(() => {})
-        .catch(e => {
-          onError(e, "Failed to create new wallet.");
-          this.setState({ isCreating: false });
-        });
+        wallet
+          .createNewWallet(networkName)
+          .then(() => {})
+          .catch(e => {
+            onError(e, "Failed to create new wallet.");
+            this.setState({ isCreating: false });
+          });
+      });
     });
   }
 
   onImport() {
-    this.setState({ isImporting: true });
-    const { wallet } = this.props;
+    this.setState({ isImporting: true }, () => {
+      this.chooseNetwork(networkName => {
+        const { wallet } = this.props;
 
-    this.chooseNetwork(networkName => {
-      //TODO allow them to actually type the words
-      wallet.importExistingWallet(settings.mainnetTestMnemonic, networkName);
+        //TODO allow them to actually type the words
+        wallet.importExistingWallet(settings.mainnetTestMnemonic, networkName);
+      });
     });
   }
 
@@ -82,7 +85,7 @@ class OnBoarding extends Component {
         },
         buttonIndex => {
           if (buttonIndex === 0) {
-            this.setState({ isCreating: false });
+            this.setState({ isCreating: false, isImporting: false });
           }
 
           if (buttonIndex === 1) {

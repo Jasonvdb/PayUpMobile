@@ -25,50 +25,67 @@ const Slide = props => {
 
   const { imageSource, title, content } = item;
 
-  //TODO use isCreating & isImporting
-
   const disabled = isCreating || isImporting;
 
   return (
     <View style={styles.root}>
-      <Image style={styles.image} source={imageSource}/>
-
+      <View style={styles.imageContainer}>
+        <Image style={styles.image} source={imageSource}/>
+      </View>
       <View style={styles.contentContainer}>
         <Text style={styles.titleText}>{title}</Text>
         <Text style={styles.contentText}>{content}</Text>
       </View>
 
-      <View style={styles.buttonContainer}>
-        {onCreate ? (
-          <Button
-            onPress={onCreate}
-            variant={"cta"}
-            style={{ marginBottom: 10 }}
-            disabled={disabled}
-          >
-            {isCreating ? "Creating your wallet..." : "Create new wallet"}
-          </Button>
-        ) : null}
-        {onImport ? (
-          <Button onPress={onImport} variant={"text"} disabled={disabled}>
-            Import existing wallet
-          </Button>
-        ) : null}
+      {isImporting || isCreating ? (
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>
+            {isImporting ? "Importing existing wallet..." : ""}
+            {isCreating ? "Creating new wallet..." : ""}
+          </Text>
+        </View>
+      ) : (
+        <View style={styles.actionContainer}>
+          {onCreate ? (
+            <Button onPress={onCreate} variant={"cta"} disabled={disabled}>
+              {isCreating ? "Creating your wallet..." : "Create new wallet"}
+            </Button>
+          ) : null}
+          {onImport ? (
+            <Button
+              style={{ marginTop: 15 }}
+              onPress={onImport}
+              variant={"text"}
+              disabled={disabled}
+            >
+              Import existing wallet
+            </Button>
+          ) : null}
 
-        {onContinuePress ? (
-          <Button onPress={onContinuePress} variant={"cta"} disabled={disabled}>
-            Continue
-          </Button>
-        ) : null}
+          {onContinuePress ? (
+            <Button
+              onPress={onContinuePress}
+              variant={"cta"}
+              disabled={disabled}
+            >
+              Continue
+            </Button>
+          ) : null}
 
-        {onBackPress ? (
-          <Button onPress={onBackPress} variant={"text"} disabled={disabled}>
-            Back
-          </Button>
-        ) : (
-          <View style={{ height: 55 }}/>
-        )}
-      </View>
+          {onBackPress ? (
+            <Button
+              style={{ marginTop: 15 }}
+              onPress={onBackPress}
+              variant={"text"}
+              disabled={disabled}
+            >
+              Back
+            </Button>
+          ) : (
+            <View style={{ height: 55 }}/>
+          )}
+        </View>
+      )}
     </View>
   );
 };
@@ -88,11 +105,14 @@ const styles = StyleSheet.create({
     height: "100%",
     display: "flex"
   },
+  imageContainer: {
+    flex: 5,
+    paddingTop: 30
+  },
   image: {
     width: "100%",
     height: "100%",
-    resizeMode: "contain",
-    flex: 5
+    resizeMode: "contain"
   },
   contentContainer: {
     paddingLeft: 35,
@@ -114,13 +134,23 @@ const styles = StyleSheet.create({
     color: theme.fontColor2,
     fontWeight: "200"
   },
-  buttonContainer: {
+  actionContainer: {
     paddingLeft: 35,
     paddingRight: 35,
-    paddingBottom: 20,
-    flex: 2,
+    paddingBottom: 35,
+    flex: 3,
     display: "flex",
-    justifyContent: "space-around"
+    justifyContent: "flex-end"
+  },
+  loadingContainer: {
+    flex: 3,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  loadingText: {
+    fontSize: 22,
+    color: theme.fontColor2
   }
 });
 export default Slide;

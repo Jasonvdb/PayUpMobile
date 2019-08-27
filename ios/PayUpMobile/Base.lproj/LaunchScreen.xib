@@ -18,21 +18,18 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash" translatesAutoresizingMaskIntoConstraints="NO" id="F4u-0L-uDf">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PayUp" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UpY-MX-aWM">
-                    <rect key="frame" x="92" y="209" width="296" height="63"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="47"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </label>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pay Up" translatesAutoresizingMaskIntoConstraints="NO" id="2TC-zv-wuO">
+                    <rect key="frame" x="153" y="192" width="174" height="97"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="2TC-zv-wuO" secondAttribute="bottom" constant="191" id="0FU-HS-ISu"/>
                 <constraint firstItem="F4u-0L-uDf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="AQy-wz-uFB"/>
                 <constraint firstItem="F4u-0L-uDf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="O8n-eJ-suk"/>
-                <constraint firstAttribute="trailing" secondItem="UpY-MX-aWM" secondAttribute="trailing" constant="92" id="OIA-bO-Npc"/>
-                <constraint firstItem="UpY-MX-aWM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="92" id="YGa-Dd-BMs"/>
-                <constraint firstItem="UpY-MX-aWM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="209" id="i2D-6S-vtd"/>
-                <constraint firstAttribute="bottom" secondItem="UpY-MX-aWM" secondAttribute="bottom" constant="208" id="m2b-Ds-7Po"/>
+                <constraint firstItem="2TC-zv-wuO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="192" id="QGd-do-8qV"/>
+                <constraint firstItem="2TC-zv-wuO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="153" id="Xmk-QH-3De"/>
+                <constraint firstAttribute="trailing" secondItem="2TC-zv-wuO" secondAttribute="trailing" constant="153" id="bhR-oA-uVx"/>
                 <constraint firstAttribute="trailing" secondItem="F4u-0L-uDf" secondAttribute="trailing" id="obX-Db-mua"/>
                 <constraint firstAttribute="bottom" secondItem="F4u-0L-uDf" secondAttribute="bottom" id="pZb-Fp-jro"/>
             </constraints>
@@ -42,6 +39,7 @@
         </view>
     </objects>
     <resources>
+        <image name="Pay Up" width="95.5" height="148.5"/>
         <image name="Splash" width="375" height="812"/>
     </resources>
 </document>

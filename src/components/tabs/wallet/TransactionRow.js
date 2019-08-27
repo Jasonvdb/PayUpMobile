@@ -6,12 +6,12 @@
  */
 
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
-import * as Animatable from "react-native-animatable";
 import TxIcon from "./TxIcon";
 import displayCurrency from "../../../helpers/displayCurrency";
 import theme from "../../../config/theme";
+import moment from "moment";
 
 const TransactionRow = props => {
   const {
@@ -21,46 +21,53 @@ const TransactionRow = props => {
     outputAddress,
     receivedValueInSats,
     sentValueInSats,
-    timeMoment
+    timeMoment,
+    onPress
   } = props;
 
   return (
-    <View style={styles.root}>
-      <View style={styles.iconContainer}>
-        <TxIcon
-          variant={sentValueInSats ? "sent" : "received"}
-          style={styles.icon}
-        />
-      </View>
-      <View style={styles.detailsContainer}>
-        <Text style={styles.fromText}>Wallet funds</Text>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.root}>
+        <View style={styles.iconContainer}>
+          <TxIcon
+            variant={sentValueInSats ? "sent" : "received"}
+            style={styles.icon}
+          />
+        </View>
+        <View style={styles.detailsContainer}>
+          <Text style={styles.fromText}>Wallet funds</Text>
 
-        <Text style={styles.timeText}>
-          {timeMoment ? timeMoment.format("D MMM, h:mm:ss a") : "unconfirmed"}
-        </Text>
-      </View>
+          <Text style={styles.timeText}>
+            {timeMoment ? timeMoment.format("D MMM, h:mm:ss a") : "unconfirmed"}
+          </Text>
+        </View>
 
-      <View style={styles.valueContainer}>
-        {sentValueInSats ? (
-          <Text style={{ ...styles.valueText, ...styles.sentText }}>
-            -{displayCurrency(sentValueInSats)}
-          </Text>
-        ) : null}
-        {receivedValueInSats ? (
-          <Text style={{ ...styles.valueText, ...styles.receivedText }}>
-            {displayCurrency(receivedValueInSats)}
-          </Text>
-        ) : null}
+        <View style={styles.valueContainer}>
+          {sentValueInSats ? (
+            <Text style={{ ...styles.valueText, ...styles.sentText }}>
+              -{displayCurrency(sentValueInSats)}
+            </Text>
+          ) : null}
+          {receivedValueInSats ? (
+            <Text style={{ ...styles.valueText, ...styles.receivedText }}>
+              {displayCurrency(receivedValueInSats)}
+            </Text>
+          ) : null}
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 TransactionRow.propTypes = {
-  onPress: PropTypes.func.isRequired
-  // children: PropTypes.string,
-  // subTitle: PropTypes.string,
-  // animate: PropTypes.bool
+  onPress: PropTypes.func.isRequired,
+  txid: PropTypes.string.isRequired,
+  confirmed: PropTypes.bool.isRequired,
+  feeInSats: PropTypes.number.isRequired,
+  outputAddress: PropTypes.string.isRequired,
+  receivedValueInSats: PropTypes.number,
+  sentValueInSats: PropTypes.number,
+  timeMoment: PropTypes.instanceOf(moment)
 };
 
 const styles = StyleSheet.create({
@@ -81,28 +88,15 @@ const styles = StyleSheet.create({
     paddingRight: 18
   },
   iconContainer: {
-    //flex: 1,
-
     paddingRight: 18
-    // borderStyle: "solid",
-    // borderColor: "green",
-    // borderWidth: 1
   },
   detailsContainer: {
     flex: 4
-
-    // borderStyle: "solid",
-    // borderColor: "blue",
-    // borderWidth: 1
   },
   valueContainer: {
     flex: 2,
     display: "flex",
     justifyContent: "flex-end"
-
-    // borderStyle: "solid",
-    // borderColor: "red",
-    // borderWidth: 1
   },
   fromText: {
     fontSize: 14,
