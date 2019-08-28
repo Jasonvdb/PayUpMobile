@@ -8,8 +8,8 @@ const theme = {
   fontColor1: "#111111",
   fontColor2: "#515151",
 
-  sentColor: "#f2bf00",
-  receivedColor: "#219653",
+  sentColor: "#ee4d5f",
+  receivedColor: "#3bb2b8",
   unconfirmedColor: "rgba(127,127,127,0.56)",
 
   defaultButtonLabelColor: "#666666",
@@ -19,10 +19,10 @@ const theme = {
   ctaButtonGradients: ["#f857a6", "#ff5858"],
   disabledButtonGradients: ["rgba(193,193,193,0.73)", "rgba(164,162,169,0.66)"],
   defaultButtonGradients: ["#ff5858", "#ff5858"],
-  activeGradients: ["#00239C", "rgba(0,35,156,0.65)"],
-  wonGradients: ["#54D3AD", "rgba(84,211,173,0.65)"],
-  lostGradients: ["#E10600", "rgba(225,6,0,0.65)"],
-  addGradients: ["#a4a4a4", "#c8c8c8"]
+  activeGradients: ["#6ee2f5", "#6454f0"],
+  wonGradients: ["#42e695", "#3bb2b8"],
+  lostGradients: ["#E10600", "#ff3200"],
+  addGradients: ["#c8c8c8", "#c8c8c8"]
 };
 
 export default theme;

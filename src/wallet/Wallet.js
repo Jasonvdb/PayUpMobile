@@ -46,6 +46,10 @@ export default class Wallet {
 
   addressBalances = {};
 
+  busyUpdatingAddressTxData = false;
+
+  addressUpdatesInQueue = false;
+
   constructor() {}
 
   async createNewWallet(networkName) {
@@ -126,10 +130,13 @@ export default class Wallet {
     }
 
     if (this.addressUpdateQueue.length === 0) {
+      this.addressUpdatesInQueue = false;
       return;
     }
 
     const address = this.addressUpdateQueue[0];
+
+    this.addressUpdatesInQueue = true;
 
     this.busyUpdatingAddressTxData = true;
     this.updateAddressTransactions(address)

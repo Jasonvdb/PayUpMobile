@@ -9,21 +9,17 @@ import React, { Component, Fragment } from "react";
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
-  Text,
   StatusBar,
-  Button
+  ActivityIndicator
 } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
 import { inject, observer } from "mobx-react";
 
 import displayCurrency from "../../../helpers/displayCurrency";
 import Header from "../../elements/header/Header";
 import BetCardSwipe from "../bets/swiper/BetCardSwipe";
-import TransactionRow from "../wallet/TransactionRow";
-import BottomSheet from "../../elements/bottom-sheet/BottomSheet";
-import TransactionDetails from "../wallet/TransactionDetails";
+import TransactionList from "../wallet/TransactionList";
+import theme from "../../../config/theme";
 
 class HomeScreen extends Component {
   static navigationOptions = props => {
@@ -47,9 +43,7 @@ class HomeScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      selectedTransactionDetails: null
-    };
+    this.state = {};
   }
 
   componentDidMount(): void {
@@ -82,9 +76,6 @@ class HomeScreen extends Component {
 
   render() {
     const { navigation, wallet } = this.props;
-    const { selectedTransactionDetails } = this.state;
-
-    const { neatTransactionHistory } = wallet;
 
     return (
       <Fragment>
@@ -93,42 +84,12 @@ class HomeScreen extends Component {
           <View style={styles.root}>
             <BetCardSwipe/>
 
-            <ScrollView
-              contentInsetAdjustmentBehavior="automatic"
-              style={styles.scrollView}
-            >
-              {neatTransactionHistory.map((tx, index) => (
-                <TransactionRow
-                  key={index}
-                  {...tx}
-                  onPress={() => {
-                    this.setState({ selectedTransactionDetails: tx }, () => {
-                      this.RBSheet.open();
-                    });
-                  }}
-                />
-              ))}
-            </ScrollView>
+            {wallet.addressUpdatesInQueue ? (
+              <ActivityIndicator style={styles.loader} color={theme.gray1}/>
+            ) : null}
+            <TransactionList wallet={wallet}/>
           </View>
         </SafeAreaView>
-        <BottomSheet
-          closeOnDragDown
-          ref={ref => {
-            this.RBSheet = ref;
-          }}
-          height={340}
-          duration={200}
-          customStyles={{
-            container: {
-              justifyContent: "center",
-              alignItems: "center"
-            }
-          }}
-        >
-          {selectedTransactionDetails ? (
-            <TransactionDetails {...selectedTransactionDetails}/>
-          ) : null}
-        </BottomSheet>
       </Fragment>
     );
   }
@@ -138,11 +99,8 @@ const styles = StyleSheet.create({
   root: {
     height: "100%"
   },
-  scrollView: {
-    backgroundColor: "#fff",
-    paddingTop: 20,
-    paddingLeft: 15,
-    paddingRight: 15
+  loader: {
+    margin: 20
   }
 });
 

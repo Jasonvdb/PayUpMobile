@@ -9,7 +9,8 @@ decorate(Wallet, {
   balances: computed,
   updateTransactionHistory: action,
   neatTransactionHistory: observable,
-  refreshAllAddresses: action
+  refreshAllAddresses: action,
+  addressUpdatesInQueue: observable
 });
 
 const wallet = new Wallet();

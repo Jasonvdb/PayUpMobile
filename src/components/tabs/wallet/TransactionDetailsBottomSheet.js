@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import PropTypes from "prop-types";
 import TxIcon from "./TxIcon";
@@ -7,18 +7,16 @@ import theme from "../../../config/theme";
 import moment from "moment";
 import Button from "../../elements/button/Button";
 import settings from "../../../config/settings";
+import BottomSheet from "../../elements/bottom-sheet/BottomSheet";
 
-const TransactionDetails = props => {
-  const {
-    txid,
-    confirmed,
-    feeInSats,
-    outputAddress,
-    receivedValueInSats,
-    sentValueInSats,
-    timeMoment
-  } = props;
-
+const TransactionContent = ({
+  txid,
+  sentValueInSats,
+  receivedValueInSats,
+  feeInSats,
+  confirmed,
+  timeMoment
+}) => {
   let iconVariant;
   if (sentValueInSats) {
     iconVariant = "sent";
@@ -67,14 +65,58 @@ const TransactionDetails = props => {
   );
 };
 
-TransactionDetails.propTypes = {
-  txid: PropTypes.string.isRequired,
-  confirmed: PropTypes.bool.isRequired,
-  feeInSats: PropTypes.number.isRequired,
-  outputAddress: PropTypes.string.isRequired,
-  receivedValueInSats: PropTypes.number,
-  sentValueInSats: PropTypes.number,
-  timeMoment: PropTypes.instanceOf(moment)
+class TransactionDetailsBottomSheet extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot): void {
+    //If we have a transaction
+    if (!prevProps.transaction && this.props.transaction && this.RBSheet) {
+      this.RBSheet.open();
+
+      //TODO start interval for updating this address
+    }
+  }
+
+  render() {
+    const { transaction, onClose } = this.props;
+
+    return (
+      <BottomSheet
+        closeOnDragDown
+        ref={ref => {
+          this.RBSheet = ref;
+        }}
+        onClose={onClose}
+        height={340}
+        duration={200}
+        customStyles={{
+          container: {
+            justifyContent: "center",
+            alignItems: "center"
+          }
+        }}
+      >
+        {transaction ? <TransactionContent {...transaction}/> : null}
+      </BottomSheet>
+    );
+  }
+}
+
+TransactionDetailsBottomSheet.propTypes = {
+  transaction: PropTypes.shape({
+    txid: PropTypes.string.isRequired,
+    confirmed: PropTypes.bool.isRequired,
+    feeInSats: PropTypes.number.isRequired,
+    outputAddress: PropTypes.string.isRequired,
+    receivedValueInSats: PropTypes.number,
+    sentValueInSats: PropTypes.number,
+    timeMoment: PropTypes.instanceOf(moment)
+  }),
+  onClose: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({
@@ -117,4 +159,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TransactionDetails;
+export default TransactionDetailsBottomSheet;

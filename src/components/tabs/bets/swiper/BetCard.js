@@ -12,34 +12,32 @@ const BetCard = props => {
   const { type, onPress } = item;
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      <LinearGradient
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        colors={theme[`${type}Gradients`] || []}
-        style={styles.root}
-      >
-        <View style={styles.row1}>
-          <Text style={styles.headingText}>{displayCurrency(400000)} bet</Text>
-        </View>
+    <LinearGradient
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      colors={theme[`${type}Gradients`] || []}
+      style={styles.root}
+    >
+      <View style={styles.row1}>
+        <Text style={styles.headingText}>{displayCurrency(400000)} bet</Text>
+      </View>
 
-        <View style={styles.row2}>
-          <Text style={styles.subHeading}>Winning outcome</Text>
-          <Text style={styles.valueText}>Muller gets a baby</Text>
-        </View>
+      <View style={styles.row2}>
+        <Text style={styles.subHeading}>Winning outcome</Text>
+        <Text style={styles.valueText}>Muller gets a baby</Text>
+      </View>
 
-        <View style={styles.row3}>
-          <View>
-            <Text style={styles.subHeading}>Buddy</Text>
-            <Text style={styles.valueText}>Mario</Text>
-          </View>
-          <View>
-            <Text style={styles.subHeading}>Ends in</Text>
-            <Text style={styles.valueText}>6 hours</Text>
-          </View>
+      <View style={styles.row3}>
+        <View>
+          <Text style={styles.subHeading}>Buddy</Text>
+          <Text style={styles.valueText}>Mario</Text>
         </View>
-      </LinearGradient>
-    </TouchableOpacity>
+        <View>
+          <Text style={styles.subHeading}>Ends in</Text>
+          <Text style={styles.valueText}>6 hours</Text>
+        </View>
+      </View>
+    </LinearGradient>
   );
 };
 
