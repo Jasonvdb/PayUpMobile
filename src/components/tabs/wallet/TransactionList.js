@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, RefreshControl } from "react-native";
 import PropTypes from "prop-types";
 import { inject, observer } from "mobx-react";
 
@@ -47,9 +47,20 @@ class TransactionList extends Component {
 
     const { neatTransactionHistory } = wallet;
 
+    console.log("wallet.addressUpdatesInQueue: ", wallet.addressUpdatesInQueue);
+
+    const refreshControl = (
+      <RefreshControl
+        title={"Refreshing transactions..."}
+        refreshing={!!wallet.addressUpdatesInQueue}
+        onRefresh={() => wallet.refreshAllAddresses()}
+      />
+    );
+
     return (
       <Fragment>
         <ScrollView
+          refreshControl={refreshControl}
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}
         >
