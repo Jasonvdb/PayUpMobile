@@ -11,7 +11,7 @@ import {
   StyleSheet,
   View,
   StatusBar,
-  ActivityIndicator
+  ActivityIndicator, Dimensions
 } from "react-native";
 import { inject, observer } from "mobx-react";
 
@@ -20,6 +20,7 @@ import Header from "../../elements/header/Header";
 import BetCardSwipe from "../bets/swiper/BetCardSwipe";
 import TransactionList from "../wallet/TransactionList";
 import theme from "../../../config/theme";
+import Button from "../../elements/button/Button";
 
 class HomeScreen extends Component {
   static navigationOptions = props => {
@@ -77,6 +78,8 @@ class HomeScreen extends Component {
   render() {
     const { navigation, wallet } = this.props;
 
+    console.log(wallet.balances);
+
     return (
       <Fragment>
         <StatusBar barStyle="dark-content"/>
@@ -84,10 +87,10 @@ class HomeScreen extends Component {
           <View style={styles.root}>
             <BetCardSwipe/>
 
-            {wallet.addressUpdatesInQueue ? (
-              <ActivityIndicator style={styles.loader} color={theme.gray1}/>
-            ) : null}
-            <TransactionList wallet={wallet}/>
+            {/*{wallet.addressUpdatesInQueue ? (*/}
+            {/*  <ActivityIndicator style={styles.loader} color={theme.gray1}/>*/}
+            {/*) : null}*/}
+            <TransactionList/>
           </View>
         </SafeAreaView>
       </Fragment>

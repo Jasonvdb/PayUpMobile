@@ -1,5 +1,10 @@
 import React, { Component, Fragment } from "react";
-import { StyleSheet, ScrollView, RefreshControl } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  RefreshControl,
+  SafeAreaView
+} from "react-native";
 import PropTypes from "prop-types";
 import { inject, observer } from "mobx-react";
 
@@ -7,6 +12,8 @@ import TransactionRow from "../wallet/TransactionRow";
 import BottomSheet from "../../elements/bottom-sheet/BottomSheet";
 import TransactionDetailsBottomSheet from "../wallet/TransactionDetailsBottomSheet";
 import Wallet from "../../../wallet/Wallet";
+import Button from "../../elements/button/Button";
+import ReceiveButton from "./ReceiveButton";
 
 class TransactionList extends Component {
   constructor(props) {
@@ -47,12 +54,18 @@ class TransactionList extends Component {
 
     const { neatTransactionHistory } = wallet;
 
-    console.log("wallet.addressUpdatesInQueue: ", wallet.addressUpdatesInQueue);
+    //TODO use SectionList rather
+
+    const isRefreshing = !!wallet.addressUpdatesInQueue;
 
     const refreshControl = (
       <RefreshControl
-        title={"Refreshing transactions..."}
-        refreshing={!!wallet.addressUpdatesInQueue}
+        title={
+          isRefreshing
+            ? "Refreshing transactions..."
+            : "Pull to refresh transactions"
+        }
+        refreshing={isRefreshing}
         onRefresh={() => wallet.refreshAllAddresses()}
       />
     );
@@ -73,6 +86,8 @@ class TransactionList extends Component {
               }}
             />
           ))}
+
+          <ReceiveButton/>
         </ScrollView>
 
         <TransactionDetailsBottomSheet
