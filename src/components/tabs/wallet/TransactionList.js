@@ -1,18 +1,11 @@
 import React, { Component, Fragment } from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  RefreshControl,
-  SafeAreaView
-} from "react-native";
+import { StyleSheet, ScrollView, RefreshControl, View } from "react-native";
 import PropTypes from "prop-types";
 import { inject, observer } from "mobx-react";
 
 import TransactionRow from "../wallet/TransactionRow";
-import BottomSheet from "../../elements/bottom-sheet/BottomSheet";
 import TransactionDetailsBottomSheet from "../wallet/TransactionDetailsBottomSheet";
 import Wallet from "../../../wallet/Wallet";
-import Button from "../../elements/button/Button";
 import ReceiveButton from "./ReceiveButton";
 
 class TransactionList extends Component {
@@ -87,7 +80,9 @@ class TransactionList extends Component {
             />
           ))}
 
-          <ReceiveButton/>
+          <ReceiveButton />
+
+          <View style={styles.bottomSpacer} />
         </ScrollView>
 
         <TransactionDetailsBottomSheet
@@ -109,6 +104,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingLeft: 15,
     paddingRight: 15
+  },
+  bottomSpacer: {
+    marginTop: 150
   }
 });
 

@@ -18,7 +18,10 @@ const TransactionContent = ({
   timeMoment
 }) => {
   let iconVariant;
-  if (sentValueInSats) {
+
+  if (!confirmed) {
+    iconVariant = "unconfirmed";
+  } else if (sentValueInSats) {
     iconVariant = "sent";
   } else if (receivedValueInSats) {
     iconVariant = "received";
@@ -46,12 +49,7 @@ const TransactionContent = ({
       </View>
 
       {iconVariant ? (
-        <TxIcon
-          confirmed={confirmed}
-          size={"large"}
-          variant={iconVariant}
-          style={styles.icon}
-        />
+        <TxIcon size={"large"} variant={iconVariant} style={styles.icon} />
       ) : null}
 
       {timeMoment ? (
@@ -100,7 +98,7 @@ class TransactionDetailsBottomSheet extends Component {
           }
         }}
       >
-        {transaction ? <TransactionContent {...transaction}/> : null}
+        {transaction ? <TransactionContent {...transaction} /> : null}
       </BottomSheet>
     );
   }

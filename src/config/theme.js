@@ -9,7 +9,7 @@ const theme = {
   fontColor2: "#515151",
 
   sentColor: "#ee4d5f",
-  receivedColor: "#3bb2b8",
+  receivedColor: "#219653",
   unconfirmedColor: "rgba(127,127,127,0.56)",
 
   defaultButtonLabelColor: "#666666",

@@ -14,7 +14,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
 
 const TxIcon = props => {
-  const { variant, size, confirmed } = props;
+  const { variant, size } = props;
 
   let rootStyle = styles.root;
   let iconStyle = styles.icon;
@@ -31,8 +31,11 @@ const TxIcon = props => {
     rootStyle = { ...rootStyle, ...styles.received };
   }
 
-  if (!confirmed) {
+  if (variant === "unconfirmed") {
+    iconName = "ios-hourglass";
     rootStyle = { ...rootStyle, ...styles.unconfirmed };
+    iconStyle = { ...iconStyle, ...styles.unconfirmedIcon };
+    iconSize = 20;
   }
 
   if (size === "large") {
@@ -43,20 +46,18 @@ const TxIcon = props => {
 
   return (
     <View style={rootStyle}>
-      <Icon style={iconStyle} name={iconName} size={iconSize} color={"#FFF"}/>
+      <Icon style={iconStyle} name={iconName} size={iconSize} color={"#FFF"} />
     </View>
   );
 };
 
 TxIcon.defaultProps = {
-  size: "small",
-  confirmed: true
+  size: "small"
 };
 
 TxIcon.propTypes = {
-  variant: PropTypes.oneOf(["sent", "received"]),
-  size: PropTypes.oneOf(["small", "large"]),
-  confirmed: PropTypes.bool
+  variant: PropTypes.oneOf(["sent", "received", "unconfirmed"]),
+  size: PropTypes.oneOf(["small", "large"])
 };
 
 const styles = StyleSheet.create({
@@ -85,8 +86,11 @@ const styles = StyleSheet.create({
   icon: {
     top: -1
   },
-  largeIcon: {
+  unconfirmedIcon: {
     top: 1
+  },
+  largeIcon: {
+    top: 2
   }
 });
 export default TxIcon;

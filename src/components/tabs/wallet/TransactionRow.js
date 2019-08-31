@@ -25,14 +25,21 @@ const TransactionRow = props => {
     onPress
   } = props;
 
+  let iconVariant;
+
+  if (!confirmed) {
+    iconVariant = "unconfirmed";
+  } else if (sentValueInSats) {
+    iconVariant = "sent";
+  } else {
+    iconVariant = "received";
+  }
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.root}>
         <View style={styles.iconContainer}>
-          <TxIcon
-            variant={sentValueInSats ? "sent" : "received"}
-            style={styles.icon}
-          />
+          <TxIcon variant={iconVariant} style={styles.icon} />
         </View>
         <View style={styles.detailsContainer}>
           <Text style={styles.fromText}>Wallet funds</Text>
