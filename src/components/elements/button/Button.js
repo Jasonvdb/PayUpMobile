@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Text, TouchableOpacity, Linking } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  Linking,
+  View,
+  TouchableHighlight,
+  Platform
+} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 import theme from "../../../config/theme";
@@ -34,34 +41,51 @@ class Button extends Component {
       colors: theme.defaultButtonGradients
     };
 
+    const androidUnderlayColor = "transparent";
+
     switch (variant) {
       case "cta": {
         labelStyle = { ...labelStyle, ...styles.ctaLabel };
         containerStyle = { ...containerStyle, ...styles.ctaContainer };
         gradientContainerProps = {
           ...gradientContainerProps,
-          colors: !disabled ? theme.ctaButtonGradients : theme.disabledButtonGradients
+          colors: !disabled
+            ? theme.ctaButtonGradients
+            : theme.disabledButtonGradients
         };
         break;
       }
       case "text": {
         labelStyle = { ...labelStyle, ...styles.textLabel };
         containerStyle = { ...containerStyle, ...styles.textContainer };
-        gradientContainerProps = {
-          colors: ["transparent"]
-        };
+        gradientContainerProps = null;
         break;
       }
     }
 
-    //TODO don't use TouchableOpacity for android
+    const Container = gradientContainerProps ? LinearGradient : View;
+
+    const content = (
+      <Container {...gradientContainerProps} style={containerStyle}>
+        <Text style={labelStyle}>{children}</Text>
+      </Container>
+    );
+
+    if (Platform.OS === "ios") {
+      return (
+        <TouchableOpacity onPress={this.onPressHandler}>
+          {content}
+        </TouchableOpacity>
+      );
+    }
 
     return (
-      <TouchableOpacity onPress={this.onPressHandler}>
-        <LinearGradient {...gradientContainerProps} style={containerStyle}>
-          <Text style={labelStyle}>{children}</Text>
-        </LinearGradient>
-      </TouchableOpacity>
+      <TouchableHighlight
+        underlayColor={androidUnderlayColor}
+        onPress={this.onPressHandler}
+      >
+        {content}
+      </TouchableHighlight>
     );
   }
 }
