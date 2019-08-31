@@ -4,7 +4,7 @@ exports[`CtaButton Rendering should match to snapshot : Route active 1`] = `
 initialize {
   "0": Object {
     "attribs": Object {
-      "style": "opacity:1;transform:[object Object]",
+      "style": "opacity:0;transform:[object Object]",
     },
     "children": Array [
       Object {

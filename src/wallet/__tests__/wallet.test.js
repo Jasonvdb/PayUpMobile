@@ -95,19 +95,20 @@ describe("mainnet transactions with locally stored words", () => {
   let wallet;
 
   beforeAll(async () => {
-    const filePath = "./test-words";
-    const mnemonic = fs.readFileSync(filePath, {
-      encoding: "utf-8",
-      flag: "r"
-    });
+    // const filePath = "./test-words";
+    // const mnemonic = fs.readFileSync(filePath, {
+    //   encoding: "utf-8",
+    //   flag: "r"
+    // });
+
+    const mnemonic = process.env.MAINNET_MNEMONIC;
 
     if (!mnemonic) {
-      throw new Error(`Missing words (${filePath})`);
+      throw new Error(`Missing words (process.env.MAINNET_MNEMONIC)`);
     }
 
     //Test only works on testnet
     wallet = new Wallet();
-    console.log(mnemonic);
     await wallet.importExistingWallet(mnemonic, "mainnet");
 
     const numberOfReceiveAddressesToCheck = 5; //wallet.receiveAddresses.length
@@ -146,10 +147,8 @@ describe("mainnet transactions with locally stored words", () => {
       }
     );
 
-    console.log("receiveTransactionsCount: ", receiveTransactionsCount);
-
-    expect(receiveTransactionsCount).toBe(1);
-    expect(sentTransactionsCount).toBe(2);
+    expect(receiveTransactionsCount).toBe(4);
+    expect(sentTransactionsCount).toBe(3);
   });
 
   it("check total wallet balance", async () => {

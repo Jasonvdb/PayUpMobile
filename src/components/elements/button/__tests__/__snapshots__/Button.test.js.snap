@@ -209,9 +209,6 @@ initialize {
     "children": Array [
       Object {
         "attribs": Object {
-          "colors": "0",
-          "endpoint": "[object Object]",
-          "startpoint": "[object Object]",
           "style": "align-self:stretch;justify-content:center;background-color:transparent;border-radius:30px;height:45px;color:#fff",
         },
         "children": Array [
@@ -242,22 +239,16 @@ initialize {
             },
           },
         ],
-        "name": "bvlineargradient",
+        "name": "view",
         "namespace": "http://www.w3.org/1999/xhtml",
         "next": null,
         "parent": [Circular],
         "prev": null,
         "type": "tag",
         "x-attribsNamespace": Object {
-          "colors": undefined,
-          "endpoint": undefined,
-          "startpoint": undefined,
           "style": undefined,
         },
         "x-attribsPrefix": Object {
-          "colors": undefined,
-          "endpoint": undefined,
-          "startpoint": undefined,
           "style": undefined,
         },
       },
