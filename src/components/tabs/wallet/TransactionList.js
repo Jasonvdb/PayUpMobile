@@ -101,9 +101,7 @@ TransactionList.propTypes = {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: "transparent",
-    paddingTop: 20,
-    paddingLeft: 15,
-    paddingRight: 15
+    paddingTop: 20
   },
   bottomSpacer: {
     marginTop: 150

@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, TouchableHighlight, Platform } from "react-native";
 import PropTypes from "prop-types";
 import TxIcon from "./TxIcon";
 import displayCurrency from "../../../helpers/displayCurrency";
@@ -35,8 +35,10 @@ const TransactionRow = props => {
     iconVariant = "received";
   }
 
+  const Touchable = Platform.OS === "ios" ? TouchableOpacity : TouchableHighlight;
+
   return (
-    <TouchableOpacity onPress={onPress}>
+    <Touchable underlayColor={"transparent"} onPress={onPress}>
       <View style={styles.root}>
         <View style={styles.iconContainer}>
           <TxIcon variant={iconVariant} style={styles.icon} />
@@ -62,7 +64,7 @@ const TransactionRow = props => {
           ) : null}
         </View>
       </View>
-    </TouchableOpacity>
+    </Touchable>
   );
 };
 
@@ -84,15 +86,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 60,
     backgroundColor: "#FFF",
+
     shadowColor: "black",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.06,
     shadowRadius: 26,
+
+    elevation: 2,
+
     marginBottom: 8,
     borderRadius: 6,
 
     paddingLeft: 18,
-    paddingRight: 18
+    paddingRight: 18,
+
+    marginLeft: 15,
+    marginRight: 15
   },
   iconContainer: {
     paddingRight: 18

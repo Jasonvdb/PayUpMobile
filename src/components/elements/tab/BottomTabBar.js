@@ -53,6 +53,7 @@ class BottomTabBar extends Component {
 					<View style={styles.container}>
 						{routes.map((route, routeIndex) => {
 							const isActive = routeIndex === activeRouteIndex;
+
 							if (routeIndex === 2) {
 								return (
 									<CtaButton
@@ -61,7 +62,7 @@ class BottomTabBar extends Component {
 										onLongPress={this.onTabLongPressHandler.bind(this)}
 										getAccessibilityLabel={getAccessibilityLabel}
 										route={route}
-										isActive={isActive}
+										hide={isActive}
 									/>
 								);
 							}

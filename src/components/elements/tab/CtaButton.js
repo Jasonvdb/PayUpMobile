@@ -7,15 +7,16 @@ import LinearGradient from "react-native-linear-gradient";
 
 import theme from "../../../config/theme";
 
+
 const CtaButton = ({
   route,
   onPress,
   onLongPress,
   getAccessibilityLabel,
-  isActive
+  hide
 }) => (
   <Animatable.View
-    animation={isActive ? "bounceOut" : "bounceIn"}
+    animation={hide ? "bounceOut" : "bounceIn"}
     easing={"ease-in-out"}
     duration={500}
   >
@@ -41,7 +42,7 @@ CtaButton.propTypes = {
   onPress: PropTypes.func.isRequired,
   onLongPress: PropTypes.func.isRequired,
   getAccessibilityLabel: PropTypes.func.isRequired,
-  isActive: PropTypes.bool.isRequired
+  hide: PropTypes.bool.isRequired
 };
 
 export default CtaButton;
