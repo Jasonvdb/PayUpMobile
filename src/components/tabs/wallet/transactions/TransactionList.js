@@ -6,7 +6,6 @@ import { inject, observer } from "mobx-react";
 import TransactionRow from "./TransactionRow";
 import TransactionDetailsBottomSheet from "./TransactionDetailsBottomSheet";
 import Wallet from "../../../../wallet/Wallet";
-import ReceiveButton from "../ReceiveButton";
 
 class TransactionList extends Component {
   constructor(props) {
@@ -42,10 +41,21 @@ class TransactionList extends Component {
   }
 
   render() {
-    const { navigation, wallet } = this.props;
+    const { style, wallet, filter } = this.props;
     const { selectedTransaction } = this.state;
 
     const { neatTransactionHistory } = wallet;
+
+    const transactions = [];
+    neatTransactionHistory.forEach(tx => {
+      if (
+        filter === "all" ||
+        (filter === "received" && tx.receivedValueInSats) ||
+        (filter === "sent" && tx.sentValueInSats)
+      ) {
+        transactions.push(tx);
+      }
+    });
 
     //TODO use SectionList rather
 
@@ -68,9 +78,9 @@ class TransactionList extends Component {
         <ScrollView
           refreshControl={refreshControl}
           contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}
+          style={{ ...styles.scrollView, ...style }}
         >
-          {neatTransactionHistory.map((transaction, index) => (
+          {transactions.map((transaction, index) => (
             <TransactionRow
               key={index}
               {...transaction}
@@ -91,8 +101,15 @@ class TransactionList extends Component {
   }
 }
 
+TransactionList.defaultProps = {
+  style: {},
+  filter: "all"
+};
+
 TransactionList.propTypes = {
-  wallet: PropTypes.instanceOf(Wallet)
+  wallet: PropTypes.instanceOf(Wallet),
+  style: PropTypes.object,
+  filter: PropTypes.oneOf(["all", "received", "sent"])
 };
 
 const styles = StyleSheet.create({

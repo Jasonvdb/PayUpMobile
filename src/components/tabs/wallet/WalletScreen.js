@@ -19,6 +19,7 @@ import Header from "../../elements/header/Header";
 import TransactionList from "./transactions/TransactionList";
 import BalanceSection from "./BalanceSection";
 import ReceiveButton from "./ReceiveButton";
+import TabSelector from "../../elements/tab-selector/TabSelector";
 
 class WalletScreen extends Component {
   static navigationOptions = props => {
@@ -35,20 +36,46 @@ class WalletScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      filter: "all"
+    };
+  }
+
+  onTabSwitch(index) {
+    let filter = "all";
+    switch (index) {
+      case 0:
+        filter = "all";
+        break;
+      case 1:
+        filter = "received";
+        break;
+      case 2:
+        filter = "sent";
+        break;
+    }
+
+    this.setState({ filter });
   }
 
   render() {
     const { navigation, wallet } = this.props;
+    const { filter } = this.state;
 
     return (
       <Fragment>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <View style={styles.root}>
-            <BalanceSection />
+            <BalanceSection style={styles.balances} />
 
-            <TransactionList />
+            <TabSelector
+              style={styles.tabs}
+              labels={["All", "Received", "Sent"]}
+              onChange={this.onTabSwitch.bind(this)}
+            />
+
+            <TransactionList style={styles.transactionList} filter={filter} />
 
             {/*<ReceiveButton />*/}
           </View>
@@ -61,6 +88,15 @@ class WalletScreen extends Component {
 const styles = StyleSheet.create({
   root: {
     height: "100%"
+  },
+  balances: {
+    paddingTop: 6
+  },
+  tabs: {
+    marginTop: 20
+  },
+  transactionList: {
+    paddingTop: 25
   }
 });
 

@@ -8,13 +8,13 @@ import displayCurrency from "../../../helpers/displayCurrency";
 import theme from "../../../config/theme";
 
 const BalanceSection = props => {
-  const { wallet } = props;
+  const { wallet, style } = props;
 
   const balances = wallet.balances;
   const { totalBalanceInSats } = balances;
 
   return (
-    <View style={styles.root}>
+    <View style={{ ...styles.root, ...style }}>
       <View>
         <Text style={styles.subHeadingText}>In wallet</Text>
         <Text style={{ ...styles.valueText, ...styles.receivedText }}>
@@ -34,8 +34,13 @@ const BalanceSection = props => {
   );
 };
 
+BalanceSection.defaultProps = {
+  style: {}
+};
+
 BalanceSection.propTypes = {
-  wallet: PropTypes.instanceOf(Wallet).isRequired
+  wallet: PropTypes.instanceOf(Wallet).isRequired,
+  style: PropTypes.object
 };
 
 const styles = StyleSheet.create({
@@ -43,7 +48,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 20,
     paddingLeft: theme.sidePadding,
     paddingRight: theme.sidePadding
   },
