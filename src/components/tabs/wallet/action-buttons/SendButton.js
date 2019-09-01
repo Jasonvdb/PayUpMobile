@@ -18,7 +18,7 @@ class SendButton extends Component {
     return (
       <Button
         onPress={this.onSend.bind(this)}
-        variant={"default"}
+        variant={"send"}
         style={styles.root}
       >
         Send

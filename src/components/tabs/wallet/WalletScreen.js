@@ -118,8 +118,7 @@ const styles = StyleSheet.create({
     paddingRight: theme.sidePadding
   },
   actionSpacer: {
-    marginLeft: 10,
-    marginRight: 10
+    marginLeft: theme.sidePadding
   }
 });
 

@@ -17,6 +17,8 @@ const theme = {
   gray1: "#7f7f7f",
 
   ctaButtonGradients: ["#f857a6", "#ff5858"],
+  receiveButtonGradients: ["#26b76a", "#219653"],
+  sendButtonGradients: ["#ff3200", "#ee4d5f"],
   disabledButtonGradients: ["rgba(193,193,193,0.73)", "rgba(164,162,169,0.66)"],
   defaultButtonGradients: ["#ff5858", "#ff5858"],
   activeGradients: ["#6ee2f5", "#6454f0"],

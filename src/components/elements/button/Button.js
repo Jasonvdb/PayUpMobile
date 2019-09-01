@@ -55,6 +55,28 @@ class Button extends Component {
         };
         break;
       }
+      case "receive": {
+        labelStyle = { ...labelStyle, ...styles.smallLabel };
+        containerStyle = { ...containerStyle, ...styles.smallContainer };
+        gradientContainerProps = {
+          ...gradientContainerProps,
+          colors: !disabled
+            ? theme.receiveButtonGradients
+            : theme.disabledButtonGradients
+        };
+        break;
+      }
+      case "send": {
+        labelStyle = { ...labelStyle, ...styles.smallLabel };
+        containerStyle = { ...containerStyle, ...styles.smallContainer };
+        gradientContainerProps = {
+          ...gradientContainerProps,
+          colors: !disabled
+              ? theme.sendButtonGradients
+              : theme.disabledButtonGradients
+        };
+        break;
+      }
       case "text": {
         labelStyle = { ...labelStyle, ...styles.textLabel };
         containerStyle = { ...containerStyle, ...styles.textContainer };
@@ -101,7 +123,7 @@ Button.propTypes = {
   onPress: PropTypes.func,
   url: PropTypes.string,
   children: PropTypes.string,
-  variant: PropTypes.oneOf(["default", "cta", "text"]),
+  variant: PropTypes.oneOf(["default", "cta", "text", "receive", "send"]),
   style: PropTypes.object,
   disabled: PropTypes.bool
 };
@@ -125,8 +147,14 @@ const styles = {
   ctaContainer: {
     height: 55
   },
+  smallContainer: {
+    height: 40
+  },
   ctaLabel: {
     fontSize: 22
+  },
+  smallLabel: {
+    fontSize: 18
   },
   textContainer: {
     height: 45

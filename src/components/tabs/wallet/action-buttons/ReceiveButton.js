@@ -5,6 +5,7 @@ import { inject, observer } from "mobx-react";
 import Button from "../../../elements/button/Button";
 import BottomSheet from "../../../elements/bottom-sheet/BottomSheet";
 import ReceiveSheetContent from "../ReceiveSheetContent";
+import onError from "../../../../helpers/onError";
 
 const windowHeight = Dimensions.get("window").height;
 
@@ -12,23 +13,33 @@ class ReceiveButton extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      address: null
+    };
   }
 
   componentDidUpdate(prevProps, prevState, snapshot): void {}
 
   showAddress() {
+    const { navigation, wallet } = this.props;
+
     this.RBSheet.open();
+
+    wallet
+      .unusedReceiveAddress()
+      .then(address => this.setState({ address }))
+      .catch(e => onError(e));
   }
 
   render() {
     const { navigation, wallet } = this.props;
+    const { address } = this.state;
 
     return (
       <Fragment>
         <Button
           onPress={this.showAddress.bind(this)}
-          variant={"default"}
+          variant={"receive"}
           style={styles.root}
         >
           Receive
@@ -49,7 +60,7 @@ class ReceiveButton extends Component {
             }
           }}
         >
-          <ReceiveSheetContent />
+          <ReceiveSheetContent address={address} />
         </BottomSheet>
       </Fragment>
     );
