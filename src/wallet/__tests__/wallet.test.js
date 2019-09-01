@@ -126,7 +126,7 @@ describe("mainnet transactions with locally stored words", () => {
 
   it(
     "check known transactions",
-    async () => {
+    () => {
       let receiveTransactionsCount = 0;
       let sentTransactionsCount = 0;
 
@@ -151,11 +151,7 @@ describe("mainnet transactions with locally stored words", () => {
   it("check total wallet balance", async () => {
     const { balances } = wallet;
 
-    // expect(balances).toMatchObject({
-    // 	confirmedInSats: 1,
-    // 	unconfirmedInSats: 2,
-    // 	lastReceivedMoment: "TODO"
-    // });
+    //TODO
   });
 });
 

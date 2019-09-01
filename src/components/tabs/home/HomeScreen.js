@@ -53,9 +53,9 @@ class HomeScreen extends Component {
 
     wallet.refreshAllAddresses();
 
-    setTimeout(() => {
-      this.updateHeaderBalance();
-    }, 5000);
+    // setTimeout(() => {
+    //   this.updateHeaderBalance();
+    // }, 20000);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot): void {
@@ -67,18 +67,12 @@ class HomeScreen extends Component {
 
     const balances = wallet.balances;
 
-    const {
-      confirmedInSats,
-      unconfirmedReceivedInSats,
-      lastReceivedMoment
-    } = balances;
+    const { totalBalanceInSats } = balances;
 
-    const balanceInSats = confirmedInSats + unconfirmedReceivedInSats;
-
-    if (balanceInSats !== this.balanceInSats) {
-      this.balanceInSats = balanceInSats;
+    if (totalBalanceInSats !== this.totalBalanceInSats) {
+      this.totalBalanceInSats = totalBalanceInSats;
       navigation.setParams({
-        balanceInSats,
+        balanceInSats: totalBalanceInSats,
         subTitle: "Your balance"
       });
     }
@@ -88,7 +82,7 @@ class HomeScreen extends Component {
     const { navigation, wallet } = this.props;
 
     //TODO put back somehow
-    //const test = wallet.balances;
+    const test = wallet.balances;
 
     return (
       <Fragment>

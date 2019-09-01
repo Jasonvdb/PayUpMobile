@@ -103,16 +103,19 @@ export default class Wallet {
       );
     }
 
-    const startIndex = this.receiveAddresses.length;
+    let startIndex = 0;
+    if (type === "receive") {
+      startIndex = this.receiveAddresses.length;
+    }
+
+    if (type === "change") {
+      startIndex = this.changeAddresses.length;
+    }
+
     const endIndex = startIndex + numberOfAddresses;
 
     for (let index = startIndex; index < endIndex; index++) {
-      const address = getAddressFromXpub(
-        this.xpub,
-        index,
-        this.network,
-        "receive"
-      );
+      const address = getAddressFromXpub(this.xpub, index, this.network, type);
 
       if (type === "receive") {
         this.receiveAddresses.push(address);
@@ -206,17 +209,15 @@ export default class Wallet {
   }
 
   get balances() {
-    console.log("_______BALANCE________");
-    let confirmedInSats = 0;
-    let unconfirmedReceivedInSats = 0;
     let lastReceivedMoment = null;
 
-    let totalConfirmedReceived = 0;
-    let totalUnconfirmedReceived = 0;
+    let totalConfirmedReceivedInSats = 0;
+    let totalUnconfirmedReceivedInSats = 0;
 
-    let totalConfirmedSent = 0;
-    let totalUnconfirmedSent = 0;
+    let totalConfirmedSentInSats = 0;
+    let totalUnconfirmedSentInSats = 0;
 
+    let test = 0;
     this.neatTransactionHistory.forEach(tx => {
       const {
         receivedValueInSats,
@@ -227,14 +228,16 @@ export default class Wallet {
       } = tx;
 
       if (receivedValueInSats) {
+        test += receivedValueInSats;
+      } else {
+        test -= sentValueInSats;
+      }
+
+      if (receivedValueInSats) {
         if (confirmed) {
-          confirmedInSats += receivedValueInSats;
-
-          totalConfirmedReceived += receivedValueInSats;
+          totalConfirmedReceivedInSats += receivedValueInSats;
         } else {
-          unconfirmedReceivedInSats += receivedValueInSats;
-
-          totalUnconfirmedReceived += receivedValueInSats;
+          totalUnconfirmedReceivedInSats += receivedValueInSats;
         }
 
         if (timeMoment) {
@@ -244,34 +247,29 @@ export default class Wallet {
             lastReceivedMoment = timeMoment;
           }
         }
-
-        console.log("RECEIVE: ", receivedValueInSats);
       } else if (sentValueInSats) {
         if (confirmed) {
-          totalConfirmedSent += sentValueInSats;
+          totalConfirmedSentInSats += sentValueInSats + feeInSats;
         } else {
-          totalUnconfirmedSent += sentValueInSats;
+          totalUnconfirmedSentInSats += sentValueInSats + feeInSats;
         }
-
-        console.log("SENT: ", sentValueInSats + feeInSats);
-
-        confirmedInSats -= sentValueInSats + feeInSats;
       }
-
-      console.log("BAL: ", confirmedInSats);
     });
 
     const result = {
-      confirmedInSats: Math.max(confirmedInSats, 0),
-      unconfirmedReceivedInSats: Math.max(unconfirmedReceivedInSats, 0),
+      totalConfirmedReceivedInSats,
+      totalUnconfirmedReceivedInSats,
+      totalConfirmedSentInSats,
+      totalUnconfirmedSentInSats,
+      totalBalanceInSats: Math.max(
+        totalConfirmedReceivedInSats +
+          totalUnconfirmedReceivedInSats -
+          totalConfirmedSentInSats -
+          totalUnconfirmedSentInSats,
+        0
+      ),
       lastReceivedMoment
     };
-
-    console.log(">> totalConfirmedReceived: ", totalConfirmedReceived);
-    console.log(">> totalUnconfirmedReceived: ", totalUnconfirmedReceived);
-    console.log(">> totalConfirmedSent: ", totalConfirmedSent);
-    console.log(">> totalUnconfirmedSent: ", totalUnconfirmedSent);
-    console.log("___________________");
 
     return result;
   }
