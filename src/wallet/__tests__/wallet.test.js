@@ -95,19 +95,12 @@ describe("mainnet transactions with locally stored words", () => {
   let wallet;
 
   beforeAll(async () => {
-    // const filePath = "./test-words";
-    // const mnemonic = fs.readFileSync(filePath, {
-    //   encoding: "utf-8",
-    //   flag: "r"
-    // });
-
     const mnemonic = process.env.MAINNET_MNEMONIC;
 
     if (!mnemonic) {
       throw new Error(`Missing words (process.env.MAINNET_MNEMONIC)`);
     }
 
-    //Test only works on testnet
     wallet = new Wallet();
     await wallet.importExistingWallet(mnemonic, "mainnet");
 
@@ -160,4 +153,35 @@ describe("mainnet transactions with locally stored words", () => {
     // 	lastReceivedMoment: "TODO"
     // });
   });
+});
+
+describe("receive addresses", () => {
+  let wallet;
+
+  beforeEach(async () => {
+    //TODO use an existing xpub
+    const mnemonic = process.env.MAINNET_MNEMONIC;
+
+    if (!mnemonic) {
+      throw new Error(`Missing words (process.env.MAINNET_MNEMONIC)`);
+    }
+
+    wallet = new Wallet();
+    await wallet.importExistingWallet(mnemonic, "mainnet");
+  });
+
+  afterEach(() => {
+    wallet = null;
+  });
+
+  it(
+    "get unused receive address",
+    async () => {
+      const receiveAddress = await wallet.unusedReceiveAddress();
+      
+      expect(wallet.unusedReceiveAddressIndex).toBeGreaterThan(0);
+      expect(receiveAddress).toBe("35Y5r6WhUrE3MuBwQZApQ5DLjKchaGiAjg");
+    },
+    10 * 60 * 1000
+  );
 });

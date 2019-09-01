@@ -34,6 +34,8 @@ export default class Wallet {
 
   receiveAddresses = [];
 
+  unusedReceiveAddressIndex = 0;
+
   changeAddresses = [];
 
   apiBaseUrl = null;
@@ -236,5 +238,35 @@ export default class Wallet {
       this.receiveAddresses,
       this.changeAddresses
     );
+  }
+
+  async unusedReceiveAddress() {
+    //TODO loop this until we get a clean address
+    let unusedAddress = null;
+
+    while (!unusedAddress) {
+      const receiveAddress = this.receiveAddresses[
+        this.unusedReceiveAddressIndex
+      ];
+      if (!receiveAddress) {
+        //TODO derive some more addresses here
+      }
+
+      await this.updateAddressBalance(receiveAddress);
+
+      const balances = this.addressBalances[receiveAddress];
+      if (balances) {
+        const { confirmedValueInSats, unconfirmedValueInSats } = balances;
+
+        if (!confirmedValueInSats && !unconfirmedValueInSats) {
+          //Address is clean
+          unusedAddress = receiveAddress;
+        } else {
+          this.unusedReceiveAddressIndex++;
+        }
+      }
+    }
+
+    return unusedAddress;
   }
 }
