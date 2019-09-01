@@ -3,7 +3,7 @@ const theme = {
   brand2: "#f857a6",
   disabled1: "#A6AAB4",
 
-  background: "#f8f8f8",
+  background: "#FFF",
 
   fontColor1: "#111111",
   fontColor2: "#515151",
@@ -22,7 +22,9 @@ const theme = {
   activeGradients: ["#6ee2f5", "#6454f0"],
   wonGradients: ["#42e695", "#3bb2b8"],
   lostGradients: ["#E10600", "#ff3200"],
-  addGradients: ["#c8c8c8", "#c8c8c8"]
+  addGradients: ["#c8c8c8", "#c8c8c8"],
+
+  sidePadding: 14 //TODO Adjust depending on phone size
 };
 
 export default theme;

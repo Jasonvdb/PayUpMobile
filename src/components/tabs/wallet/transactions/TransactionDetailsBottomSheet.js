@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import PropTypes from "prop-types";
 import TxIcon from "./TxIcon";
-import displayCurrency from "../../../helpers/displayCurrency";
-import theme from "../../../config/theme";
+import displayCurrency from "../../../../helpers/displayCurrency";
+import theme from "../../../../config/theme";
 import moment from "moment";
-import Button from "../../elements/button/Button";
-import settings from "../../../config/settings";
-import BottomSheet from "../../elements/bottom-sheet/BottomSheet";
+import Button from "../../../elements/button/Button";
+import settings from "../../../../config/settings";
+import BottomSheet from "../../../elements/bottom-sheet/BottomSheet";
 
 const TransactionContent = ({
   txid,

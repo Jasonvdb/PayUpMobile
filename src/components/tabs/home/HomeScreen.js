@@ -6,23 +6,13 @@
  */
 
 import React, { Component, Fragment } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  StatusBar,
-  ActivityIndicator,
-  Dimensions
-} from "react-native";
+import { SafeAreaView, StyleSheet, View, StatusBar } from "react-native";
 import { inject, observer } from "mobx-react";
 
 import displayCurrency from "../../../helpers/displayCurrency";
 import Header from "../../elements/header/Header";
 import BetCardSwipe from "../bets/swiper/BetCardSwipe";
-import TransactionList from "../wallet/TransactionList";
-import theme from "../../../config/theme";
-import Button from "../../elements/button/Button";
-
+import TransactionList from "../wallet/transactions/TransactionList";
 class HomeScreen extends Component {
   static navigationOptions = props => {
     const { navigation, ...rest } = props;
@@ -65,16 +55,18 @@ class HomeScreen extends Component {
   updateHeaderBalance() {
     const { navigation, wallet } = this.props;
 
-    const balances = wallet.balances;
+    if (!wallet.addressUpdatesInQueue) {
+      const balances = wallet.balances;
 
-    const { totalBalanceInSats } = balances;
+      const { totalBalanceInSats } = balances;
 
-    if (totalBalanceInSats !== this.totalBalanceInSats) {
-      this.totalBalanceInSats = totalBalanceInSats;
-      navigation.setParams({
-        balanceInSats: totalBalanceInSats,
-        subTitle: "Your balance"
-      });
+      if (totalBalanceInSats !== this.totalBalanceInSats) {
+        this.totalBalanceInSats = totalBalanceInSats;
+        navigation.setParams({
+          balanceInSats: totalBalanceInSats,
+          subTitle: "Your balance"
+        });
+      }
     }
   }
 
@@ -82,7 +74,7 @@ class HomeScreen extends Component {
     const { navigation, wallet } = this.props;
 
     //TODO put back somehow
-    const test = wallet.balances;
+    const addressUpdatesInQueue = wallet.addressUpdatesInQueue;
 
     return (
       <Fragment>
@@ -90,10 +82,6 @@ class HomeScreen extends Component {
         <SafeAreaView>
           <View style={styles.root}>
             <BetCardSwipe />
-
-            {/*{wallet.addressUpdatesInQueue ? (*/}
-            {/*  <ActivityIndicator style={styles.loader} color={theme.gray1}/>*/}
-            {/*) : null}*/}
             <TransactionList />
           </View>
         </SafeAreaView>
@@ -105,9 +93,6 @@ class HomeScreen extends Component {
 const styles = StyleSheet.create({
   root: {
     height: "100%"
-  },
-  loader: {
-    margin: 20
   }
 });
 

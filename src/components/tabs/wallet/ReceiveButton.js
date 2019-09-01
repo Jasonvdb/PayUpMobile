@@ -20,7 +20,7 @@ import { inject, observer } from "mobx-react";
 import displayCurrency from "../../../helpers/displayCurrency";
 import Header from "../../elements/header/Header";
 import BetCardSwipe from "../bets/swiper/BetCardSwipe";
-import TransactionList from "../wallet/TransactionList";
+import TransactionList from "./transactions/TransactionList";
 import theme from "../../../config/theme";
 import Button from "../../elements/button/Button";
 import BottomSheet from "../../elements/bottom-sheet/BottomSheet";

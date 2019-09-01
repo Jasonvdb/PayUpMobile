@@ -16,7 +16,6 @@ import {
 	Button
 } from "react-native";
 
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import Header from "../../elements/header/Header";
 
 class SettingsScreen extends React.Component {
@@ -61,7 +60,7 @@ class SettingsScreen extends React.Component {
 
 const styles = StyleSheet.create({
 	scrollView: {
-		backgroundColor: Colors.lighter
+		// backgroundColor: Colors.lighter
 	}
 });
 

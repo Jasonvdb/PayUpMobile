@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import * as Animatable from "react-native-animatable";
 
 import ProfileButton from "./ProfileButton";
+import theme from "../../../config/theme";
 
 const Header = props => {
 	const {
@@ -54,8 +55,8 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		alignItems: "center",
 		flex: 1,
-		paddingLeft: 18,
-		paddingRight: 18
+		paddingLeft: theme.sidePadding,
+		paddingRight: theme.sidePadding
 	},
 	titleContainer: {},
 	title: {

@@ -8,10 +8,8 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import PropTypes from "prop-types";
-import * as Animatable from "react-native-animatable";
-import theme from "../../../config/theme";
+import theme from "../../../../config/theme";
 import Icon from "react-native-vector-icons/Ionicons";
-import LinearGradient from "react-native-linear-gradient";
 
 const TxIcon = props => {
   const { variant, size } = props;

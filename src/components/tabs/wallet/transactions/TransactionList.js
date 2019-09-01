@@ -3,10 +3,10 @@ import { StyleSheet, ScrollView, RefreshControl, View } from "react-native";
 import PropTypes from "prop-types";
 import { inject, observer } from "mobx-react";
 
-import TransactionRow from "../wallet/TransactionRow";
-import TransactionDetailsBottomSheet from "../wallet/TransactionDetailsBottomSheet";
-import Wallet from "../../../wallet/Wallet";
-import ReceiveButton from "./ReceiveButton";
+import TransactionRow from "./TransactionRow";
+import TransactionDetailsBottomSheet from "./TransactionDetailsBottomSheet";
+import Wallet from "../../../../wallet/Wallet";
+import ReceiveButton from "../ReceiveButton";
 
 class TransactionList extends Component {
   constructor(props) {
@@ -79,9 +79,6 @@ class TransactionList extends Component {
               }}
             />
           ))}
-
-          <ReceiveButton />
-
           <View style={styles.bottomSpacer} />
         </ScrollView>
 
@@ -100,7 +97,7 @@ TransactionList.propTypes = {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: "transparent",
+    backgroundColor: "#FFF",
     paddingTop: 20
   },
   bottomSpacer: {

@@ -9,8 +9,8 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TouchableHighlight, Platform } from "react-native";
 import PropTypes from "prop-types";
 import TxIcon from "./TxIcon";
-import displayCurrency from "../../../helpers/displayCurrency";
-import theme from "../../../config/theme";
+import displayCurrency from "../../../../helpers/displayCurrency";
+import theme from "../../../../config/theme";
 import moment from "moment";
 
 const TransactionRow = props => {
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     shadowColor: "black",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.06,
-    shadowRadius: 26,
+    shadowRadius: 6,
 
     elevation: 2,
 
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
     paddingLeft: 18,
     paddingRight: 18,
 
-    marginLeft: 15,
-    marginRight: 15
+    marginLeft: theme.sidePadding,
+    marginRight: theme.sidePadding
   },
   iconContainer: {
     paddingRight: 18
