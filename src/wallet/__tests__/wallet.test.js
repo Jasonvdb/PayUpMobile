@@ -124,25 +124,29 @@ describe("mainnet transactions with locally stored words", () => {
     wallet = null;
   });
 
-  it("check known transactions", async () => {
-    let receiveTransactionsCount = 0;
-    let sentTransactionsCount = 0;
+  it(
+    "check known transactions",
+    async () => {
+      let receiveTransactionsCount = 0;
+      let sentTransactionsCount = 0;
 
-    wallet.neatTransactionHistory.forEach(
-      ({ receivedValueInSats, sentValueInSats, timeMoment }) => {
-        if (receivedValueInSats) {
-          receiveTransactionsCount++;
+      wallet.neatTransactionHistory.forEach(
+        ({ receivedValueInSats, sentValueInSats, timeMoment }) => {
+          if (receivedValueInSats) {
+            receiveTransactionsCount++;
+          }
+
+          if (sentValueInSats) {
+            sentTransactionsCount++;
+          }
         }
+      );
 
-        if (sentValueInSats) {
-          sentTransactionsCount++;
-        }
-      }
-    );
-
-    expect(receiveTransactionsCount).toBe(4);
-    expect(sentTransactionsCount).toBe(3);
-  });
+      expect(receiveTransactionsCount).toBe(4);
+      expect(sentTransactionsCount).toBe(3);
+    },
+    10 * 60 * 1000
+  );
 
   it("check total wallet balance", async () => {
     const { balances } = wallet;

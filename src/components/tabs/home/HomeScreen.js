@@ -11,7 +11,8 @@ import {
   StyleSheet,
   View,
   StatusBar,
-  ActivityIndicator, Dimensions
+  ActivityIndicator,
+  Dimensions
 } from "react-native";
 import { inject, observer } from "mobx-react";
 
@@ -51,9 +52,17 @@ class HomeScreen extends Component {
     const { navigation, wallet } = this.props;
 
     wallet.refreshAllAddresses();
+
+    setTimeout(() => {
+      this.updateHeaderBalance();
+    }, 5000);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot): void {
+    this.updateHeaderBalance();
+  }
+
+  updateHeaderBalance() {
     const { navigation, wallet } = this.props;
 
     const balances = wallet.balances;
@@ -78,19 +87,20 @@ class HomeScreen extends Component {
   render() {
     const { navigation, wallet } = this.props;
 
-    console.log(wallet.balances);
+    //TODO put back somehow
+    //const test = wallet.balances;
 
     return (
       <Fragment>
-        <StatusBar barStyle="dark-content"/>
+        <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <View style={styles.root}>
-            <BetCardSwipe/>
+            <BetCardSwipe />
 
             {/*{wallet.addressUpdatesInQueue ? (*/}
             {/*  <ActivityIndicator style={styles.loader} color={theme.gray1}/>*/}
             {/*) : null}*/}
-            <TransactionList/>
+            <TransactionList />
           </View>
         </SafeAreaView>
       </Fragment>

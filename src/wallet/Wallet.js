@@ -206,9 +206,17 @@ export default class Wallet {
   }
 
   get balances() {
+    console.log("_______BALANCE________");
     let confirmedInSats = 0;
     let unconfirmedReceivedInSats = 0;
     let lastReceivedMoment = null;
+
+    let totalConfirmedReceived = 0;
+    let totalUnconfirmedReceived = 0;
+
+    let totalConfirmedSent = 0;
+    let totalUnconfirmedSent = 0;
+
     this.neatTransactionHistory.forEach(tx => {
       const {
         receivedValueInSats,
@@ -221,8 +229,12 @@ export default class Wallet {
       if (receivedValueInSats) {
         if (confirmed) {
           confirmedInSats += receivedValueInSats;
-        } else if (confirmed === false) {
+
+          totalConfirmedReceived += receivedValueInSats;
+        } else {
           unconfirmedReceivedInSats += receivedValueInSats;
+
+          totalUnconfirmedReceived += receivedValueInSats;
         }
 
         if (timeMoment) {
@@ -232,16 +244,34 @@ export default class Wallet {
             lastReceivedMoment = timeMoment;
           }
         }
+
+        console.log("RECEIVE: ", receivedValueInSats);
       } else if (sentValueInSats) {
+        if (confirmed) {
+          totalConfirmedSent += sentValueInSats;
+        } else {
+          totalUnconfirmedSent += sentValueInSats;
+        }
+
+        console.log("SENT: ", sentValueInSats + feeInSats);
+
         confirmedInSats -= sentValueInSats + feeInSats;
       }
+
+      console.log("BAL: ", confirmedInSats);
     });
 
     const result = {
-      confirmedInSats,
-      unconfirmedReceivedInSats,
+      confirmedInSats: Math.max(confirmedInSats, 0),
+      unconfirmedReceivedInSats: Math.max(unconfirmedReceivedInSats, 0),
       lastReceivedMoment
     };
+
+    console.log(">> totalConfirmedReceived: ", totalConfirmedReceived);
+    console.log(">> totalUnconfirmedReceived: ", totalUnconfirmedReceived);
+    console.log(">> totalConfirmedSent: ", totalConfirmedSent);
+    console.log(">> totalUnconfirmedSent: ", totalUnconfirmedSent);
+    console.log("___________________");
 
     return result;
   }
@@ -261,7 +291,7 @@ export default class Wallet {
       const receiveAddress = this.receiveAddresses[
         this.unusedReceiveAddressIndex
       ];
-      
+
       if (!receiveAddress) {
         //TODO test this
         this.appendDerivedAddresses(5, "receive");
