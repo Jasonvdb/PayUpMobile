@@ -31,10 +31,10 @@ class Button extends Component {
   };
 
   render() {
-    const { children, variant, style, disabled } = this.props;
+    const { children, variant, disabled, style } = this.props;
 
     let labelStyle = styles.label;
-    let containerStyle = { ...styles.container, ...style };
+    let containerStyle = { ...styles.container };
     let gradientContainerProps = {
       start: { x: 0, y: 0 },
       end: { x: 0, y: 1 },
@@ -73,7 +73,7 @@ class Button extends Component {
 
     if (Platform.OS === "ios") {
       return (
-        <TouchableOpacity onPress={this.onPressHandler}>
+        <TouchableOpacity onPress={this.onPressHandler} style={style}>
           {content}
         </TouchableOpacity>
       );
@@ -84,7 +84,7 @@ class Button extends Component {
         underlayColor={androidUnderlayColor}
         onPress={this.onPressHandler}
       >
-        {content}
+        <View style={style}>{content}</View>
       </TouchableHighlight>
     );
   }

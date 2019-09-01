@@ -9,7 +9,7 @@ import HomeScreen from "../tabs/home/HomeScreen";
 import SettingsScreen from "../tabs/settings/SettingsScreen";
 import Header from "../elements/header/Header";
 import ProfileScreen from "../tabs/settings/profile/ProfileScreen";
-import BottomTabBar from "../elements/tab/BottomTabBar";
+import BottomTabBar from "../elements/bottom-tab/BottomTabBar";
 import BetsScreen from "../tabs/bets/BetsScreen";
 import BetView from "../tabs/bets/BetView";
 import WalletScreen from "../tabs/wallet/WalletScreen";

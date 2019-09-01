@@ -18,8 +18,10 @@ import { inject, observer } from "mobx-react";
 import Header from "../../elements/header/Header";
 import TransactionList from "./transactions/TransactionList";
 import BalanceSection from "./BalanceSection";
-import ReceiveButton from "./ReceiveButton";
+import ReceiveButton from "./action-buttons/ReceiveButton";
 import TabSelector from "../../elements/tab-selector/TabSelector";
+import theme from "../../../config/theme";
+import SendButton from "./action-buttons/SendButton";
 
 class WalletScreen extends Component {
   static navigationOptions = props => {
@@ -77,7 +79,11 @@ class WalletScreen extends Component {
 
             <TransactionList style={styles.transactionList} filter={filter} />
 
-            {/*<ReceiveButton />*/}
+            <View style={styles.actionButtons}>
+              <ReceiveButton />
+              <View style={styles.actionSpacer} />
+              <SendButton />
+            </View>
           </View>
         </SafeAreaView>
       </Fragment>
@@ -97,6 +103,23 @@ const styles = StyleSheet.create({
   },
   transactionList: {
     paddingTop: 25
+  },
+  actionButtons: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 70,
+
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+
+    paddingLeft: theme.sidePadding,
+    paddingRight: theme.sidePadding
+  },
+  actionSpacer: {
+    marginLeft: 10,
+    marginRight: 10
   }
 });
 
