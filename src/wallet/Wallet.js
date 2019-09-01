@@ -84,29 +84,43 @@ export default class Wallet {
 
     this.mnemonic = mnemonic.trim();
     this.xpub = getXpubFromMnemonic(this.mnemonic, this.network);
-    this.appendDerivedAddresses(20);
+    this.appendDerivedAddresses(20, "receive");
+    this.appendDerivedAddresses(20, "change");
   }
 
   get isInitialized() {
     return !!this.xpub;
   }
 
-  appendDerivedAddresses(numberOfAddresses) {
+  appendDerivedAddresses(numberOfAddresses, type) {
     if (!this.xpub) {
       throw new Error("No wallet loaded.");
+    }
+
+    if (type !== "receive" && type !== "change") {
+      throw new Error(
+        "Invalid type for appendDerivedAddresses. Must be 'receive' or 'change'"
+      );
     }
 
     const startIndex = this.receiveAddresses.length;
     const endIndex = startIndex + numberOfAddresses;
 
     for (let index = startIndex; index < endIndex; index++) {
-      this.receiveAddresses.push(
-        getAddressFromXpub(this.xpub, index, this.network, "receive")
+      const address = getAddressFromXpub(
+        this.xpub,
+        index,
+        this.network,
+        "receive"
       );
 
-      this.changeAddresses.push(
-        getAddressFromXpub(this.xpub, index, this.network, "change")
-      );
+      if (type === "receive") {
+        this.receiveAddresses.push(address);
+      }
+
+      if (type === "change") {
+        this.changeAddresses.push(address);
+      }
     }
   }
 
@@ -241,15 +255,16 @@ export default class Wallet {
   }
 
   async unusedReceiveAddress() {
-    //TODO loop this until we get a clean address
     let unusedAddress = null;
 
     while (!unusedAddress) {
       const receiveAddress = this.receiveAddresses[
         this.unusedReceiveAddressIndex
       ];
+      
       if (!receiveAddress) {
-        //TODO derive some more addresses here
+        //TODO test this
+        this.appendDerivedAddresses(5, "receive");
       }
 
       await this.updateAddressBalance(receiveAddress);

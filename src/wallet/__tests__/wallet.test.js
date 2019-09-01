@@ -39,11 +39,11 @@ describe("initializing wallet", () => {
       });
   });
 
-  it("fail to derive addresses without initializing the wallet first", async () => {
+  it("fail to derive addresses without initializing the wallet first", () => {
     const wallet = new Wallet();
 
     expect(() => {
-      wallet.appendDerivedAddresses(20);
+      wallet.appendDerivedAddresses(20, "receive");
     }).toThrowError();
   });
 
@@ -178,7 +178,7 @@ describe("receive addresses", () => {
     "get unused receive address",
     async () => {
       const receiveAddress = await wallet.unusedReceiveAddress();
-      
+
       expect(wallet.unusedReceiveAddressIndex).toBeGreaterThan(0);
       expect(receiveAddress).toBe("35Y5r6WhUrE3MuBwQZApQ5DLjKchaGiAjg");
     },
