@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.2)"
+    backgroundColor: "rgba(0,0,0,0.36)"
   },
   mask: {
     flex: 1,
@@ -24,6 +24,19 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 7
+  },
+  dragBarContainer: {
+    backgroundColor: "transparent",
+    height: 16,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  dragBar: {
+    width: 80,
+    height: 5,
+    backgroundColor: "#D6D9E4",
+    borderRadius: 10
   }
 });
 

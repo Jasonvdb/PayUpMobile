@@ -107,14 +107,21 @@ class BottomSheet extends Component {
           />
           <Animated.View
             {...this.panResponder.panHandlers}
-            style={[
-              panStyle,
-              styles.container,
-              customStyles.container,
-              { height: animatedHeight }
-            ]}
+            style={[panStyle, { height: animatedHeight }]}
           >
-            {children}
+            <View style={styles.dragBarContainer}>
+              <View style={styles.dragBar}/>
+            </View>
+
+            <View
+              style={[
+                styles.container,
+                customStyles.container,
+                { height: "100%" }
+              ]}
+            >
+              {children}
+            </View>
           </Animated.View>
         </View>
       </Modal>
