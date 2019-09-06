@@ -58,7 +58,6 @@ class BottomTabBar extends Component {
         >
           <View style={styles.container}>
             {routes.map((route, routeIndex) => {
-              console.log(route.key);
               const isActive = routeIndex === activeRouteIndex;
 
               if (routeIndex === 2 && !hideCTA) {
