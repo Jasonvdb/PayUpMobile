@@ -30,7 +30,7 @@ class WalletScreen extends Component {
     return {
       title: "Wallet",
       headerTitle: props => (
-        <Header {...props} onProfilePress={() => navigation.push("Profile")} />
+        <Header {...props} onProfilePress={() => navigation.push("Profile")}/>
       )
     };
   };
@@ -66,10 +66,10 @@ class WalletScreen extends Component {
 
     return (
       <Fragment>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle="dark-content"/>
         <SafeAreaView>
           <View style={styles.root}>
-            <BalanceSection style={styles.balances} />
+            <BalanceSection style={styles.balances}/>
 
             <TabSelector
               style={styles.tabs}
@@ -77,12 +77,12 @@ class WalletScreen extends Component {
               onChange={this.onTabSwitch.bind(this)}
             />
 
-            <TransactionList style={styles.transactionList} filter={filter} />
+            <TransactionList style={styles.transactionList} filter={filter}/>
 
             <View style={styles.actionButtons}>
-              <ReceiveButton />
-              <View style={styles.actionSpacer} />
-              <SendButton />
+              <ReceiveButton/>
+              <View style={styles.actionSpacer}/>
+              <SendButton/>
             </View>
           </View>
         </SafeAreaView>
