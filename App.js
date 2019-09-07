@@ -17,9 +17,7 @@ YellowBox.ignoreWarnings([
     "\n" +
     "Please update the following components: withAnimatable",
 
-  "Warning: componentWillReceiveProps is deprecated and will be removed in the next major version. Use static getDerivedStateFromProps instead.\n" +
-    "\n" +
-    "Please update the following components: Carousel"
+  "Warning: componentWillReceiveProps is deprecated and will be removed in the next major version. Use static getDerivedStateFromProps instead."
 ]);
 
 //TODO check if we have a saved wallet, or if we must onboard the user

@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 
 import CtaButton from "./CtaButton";
 import TabButton from "./TabButton";
+import theme from "../../../config/theme";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -61,7 +62,7 @@ class BottomTabBar extends Component {
               const isActive = routeIndex === activeRouteIndex;
 
               if (routeIndex === 2 && !hideCTA) {
-              	//TODO move CtaButton into TabButton
+                //TODO move CtaButton into TabButton
                 return (
                   <View
                     key={routeIndex}
@@ -92,7 +93,7 @@ class BottomTabBar extends Component {
             })}
           </View>
         </ImageBackground>
-        <SafeAreaView />
+        <SafeAreaView/>
       </View>
     );
   }
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: "row",
-    height: 60,
+    height: theme.bottomTabHeight,
     elevation: 2,
     alignItems: "center"
   },

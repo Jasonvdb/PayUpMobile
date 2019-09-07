@@ -23,7 +23,7 @@ class ReceiveButton extends Component {
   componentDidUpdate(prevProps, prevState, snapshot): void {}
 
   showAddress() {
-    const { navigation, wallet, onOpen } = this.props;
+    const { wallet, onOpen } = this.props;
 
     this.RBSheet.open();
 
@@ -36,7 +36,7 @@ class ReceiveButton extends Component {
   }
 
   render() {
-    const { navigation, wallet, onClose, onOpen } = this.props;
+    const { onClose } = this.props;
     const { address } = this.state;
 
     return (

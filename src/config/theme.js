@@ -8,6 +8,13 @@ const theme = {
   fontColor1: "#111111",
   fontColor2: "#515151",
 
+  textInputLabelColor: "#f857a6",
+  textInputValueColor: "#515151",
+  textInputPassiveBorderColor: "#f857a6",
+  textInputActiveBorderColor: "#f857a6",
+
+  feeButtonBackgroundColor: "rgba(38,183,106,0.67)",
+
   sentColor: "#ee4d5f",
   receivedColor: "#219653",
   unconfirmedColor: "rgba(127,127,127,0.56)",
@@ -26,7 +33,9 @@ const theme = {
   lostGradients: ["#E10600", "#ff3200"],
   addGradients: ["#c8c8c8", "#c8c8c8"],
 
-  sidePadding: 14 //TODO Adjust depending on phone size
+  sidePadding: 14, //TODO Adjust depending on phone size
+
+  bottomTabHeight: 60
 };
 
 export default theme;

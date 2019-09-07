@@ -1,5 +1,6 @@
 import moment from "moment";
 import {
+  createTransactionHex,
   formattedTransactionsFromAddresses,
   generateMnemonic,
   getAddressFromXpub,
@@ -35,6 +36,8 @@ export default class Wallet {
   receiveAddresses = [];
 
   unusedReceiveAddressIndex = 0;
+
+  unusedChangeAddressIndex = 0;
 
   changeAddresses = [];
 
@@ -311,5 +314,55 @@ export default class Wallet {
     }
 
     return unusedAddress;
+  }
+
+  async unusedChangeAddress() {
+    let unusedAddress = null;
+
+    while (!unusedAddress) {
+      const changeAddress = this.changeAddresses[this.unusedChangeAddressIndex];
+
+      if (!changeAddress) {
+        //TODO test this
+        this.appendDerivedAddresses(5, "change");
+      }
+
+      await this.updateAddressBalance(changeAddress);
+
+      const balances = this.addressBalances[changeAddress];
+      if (balances) {
+        const { confirmedValueInSats, unconfirmedValueInSats } = balances;
+
+        if (!confirmedValueInSats && !unconfirmedValueInSats) {
+          //Address is clean
+          unusedAddress = changeAddress;
+        } else {
+          this.unusedChangeAddressIndex++;
+        }
+      }
+    }
+
+    return unusedAddress;
+  }
+
+  async createTransaction(toAddress, amountInSats, fee) {
+    const changeAddress = await this.unusedChangeAddress();
+
+    const utxos = [
+      {
+        tx_hash:
+          "2f445cf016fa2772db7d473bff97515355b4e6148e1c980ce351d47cf54c517f",
+        block_height: 523186,
+        tx_input_n: -1,
+        tx_output_n: 1,
+        value: 100000,
+        ref_balance: 100000,
+        spent: false,
+        confirmations: 215,
+        confirmed: "2018-05-18T03:16:34Z",
+        double_spend: false
+      }
+    ];
+    createTransactionHex(utxos, toAddress, amountInSats, fee, changeAddress);
   }
 }

@@ -176,3 +176,82 @@ export const formattedTransactionsFromAddresses = (
 
   return filteredResults;
 };
+
+export const createTransactionHex = (
+  utxos,
+  toAddress,
+  amount,
+  fixedFee,
+  changeAddress
+) => {
+  const feeInSatoshis = parseInt((fixedFee * 100000000).toFixed(0));
+  const amountToOutputSatoshi = parseInt(
+    ((amount - fixedFee) * 100000000).toFixed(0)
+  ); // how much payee should get
+  const txb = new bitcoin.TransactionBuilder();
+  let unspentAmountSatoshi = 0;
+  const ourOutputs = {};
+  let outputNum = 0;
+  for (const unspent of utxos) {
+    if (unspent.confirmations < 1) {
+      // using only confirmed outputs
+      continue;
+    }
+    txb.addInput(unspent.txid, unspent.vout);
+    ourOutputs[outputNum] = ourOutputs[outputNum] || {};
+    const keyPair = bitcoin.ECPair.fromWIF(unspent.wif);
+    const pubKey = keyPair.getPublicKeyBuffer();
+    const pubKeyHash = bitcoin.crypto.hash160(pubKey);
+    const redeemScript = bitcoin.script.witnessPubKeyHash.output.encode(
+      pubKeyHash
+    );
+    ourOutputs[outputNum].keyPair = keyPair;
+    ourOutputs[outputNum].redeemScript = redeemScript;
+    ourOutputs[outputNum].amount = unspent.amount;
+    unspentAmountSatoshi += unspent.amount;
+    if (unspentAmountSatoshi >= amountToOutputSatoshi + feeInSatoshis) {
+      // found enough inputs to satisfy payee and pay fees
+      break;
+    }
+    outputNum++;
+  }
+
+  if (unspentAmountSatoshi < amountToOutputSatoshi + feeInSatoshis) {
+    throw new Error(
+      "Not enough balance. Please, try sending a smaller amount."
+    );
+  }
+
+  // adding outputs
+
+  txb.addOutput(toAddress, amountToOutputSatoshi);
+  if (amountToOutputSatoshi + feeInSatoshis < unspentAmountSatoshi) {
+    // sending less than we have, so the rest should go back
+    if (
+      unspentAmountSatoshi - amountToOutputSatoshi - feeInSatoshis >
+      3 * feeInSatoshis
+    ) {
+      // to prevent @dust error change transferred amount should be at least 3xfee.
+      // if not - we just dont send change and it wil add to fee
+      txb.addOutput(
+        changeAddress,
+        unspentAmountSatoshi - amountToOutputSatoshi - feeInSatoshis
+      );
+    }
+  }
+
+  // now, signing every input with a corresponding key
+
+  for (let c = 0; c <= outputNum; c++) {
+    txb.sign(
+      c,
+      ourOutputs[c].keyPair,
+      ourOutputs[c].redeemScript,
+      null,
+      ourOutputs[c].amount
+    );
+  }
+
+  const tx = txb.build();
+  return tx.toHex();
+};

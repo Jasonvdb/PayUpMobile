@@ -7,5 +7,5 @@ export default sats => {
   //Format numbers with spaces for thousdand separators
   const numberString = stringSats.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-  return `${numberString} sats`;
+  return `${numberString} sat${numberString === "1" ? "" : "s"}`;
 };
