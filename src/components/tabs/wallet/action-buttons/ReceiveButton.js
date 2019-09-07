@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { inject, observer } from "mobx-react";
+import PropTypes from "prop-types";
 
 import Button from "../../../elements/button/Button";
 import BottomSheet from "../../../elements/bottom-sheet/BottomSheet";
 import ReceiveSheetContent from "../ReceiveSheetContent";
 import onError from "../../../../helpers/onError";
+import Wallet from "../../../../wallet/Wallet";
 
 const windowHeight = Dimensions.get("window").height;
 
@@ -21,9 +23,11 @@ class ReceiveButton extends Component {
   componentDidUpdate(prevProps, prevState, snapshot): void {}
 
   showAddress() {
-    const { navigation, wallet } = this.props;
+    const { navigation, wallet, onOpen } = this.props;
 
     this.RBSheet.open();
+
+    onOpen();
 
     wallet
       .unusedReceiveAddress()
@@ -32,7 +36,7 @@ class ReceiveButton extends Component {
   }
 
   render() {
-    const { navigation, wallet } = this.props;
+    const { navigation, wallet, onClose, onOpen } = this.props;
     const { address } = this.state;
 
     return (
@@ -50,7 +54,7 @@ class ReceiveButton extends Component {
           ref={ref => {
             this.RBSheet = ref;
           }}
-          //onClose={onClose}
+          onClose={onClose}
           height={windowHeight * 0.75}
           duration={200}
           customStyles={{
@@ -60,7 +64,7 @@ class ReceiveButton extends Component {
             }
           }}
         >
-          <ReceiveSheetContent address={address} />
+          <ReceiveSheetContent address={address}/>
         </BottomSheet>
       </Fragment>
     );
@@ -72,5 +76,11 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+ReceiveButton.propTypes = {
+  onOpen: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  wallet: PropTypes.instanceOf(Wallet)
+};
 
 export default inject("wallet")(observer(ReceiveButton));

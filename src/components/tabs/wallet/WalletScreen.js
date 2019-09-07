@@ -39,7 +39,8 @@ class WalletScreen extends Component {
     super(props);
 
     this.state = {
-      filter: "all"
+      filter: "all",
+      maskBalanceValues: false
     };
   }
 
@@ -62,14 +63,17 @@ class WalletScreen extends Component {
 
   render() {
     const { navigation, wallet } = this.props;
-    const { filter } = this.state;
+    const { filter, maskBalanceValues } = this.state;
 
     return (
       <Fragment>
         <StatusBar barStyle="dark-content"/>
         <SafeAreaView>
           <View style={styles.root}>
-            <BalanceSection style={styles.balances}/>
+            <BalanceSection
+              style={styles.balances}
+              maskValues={maskBalanceValues}
+            />
 
             <TabSelector
               style={styles.tabs}
@@ -80,9 +84,12 @@ class WalletScreen extends Component {
             <TransactionList style={styles.transactionList} filter={filter}/>
 
             <View style={styles.actionButtons}>
-              <ReceiveButton/>
+              <ReceiveButton
+                onOpen={() => this.setState({ maskBalanceValues: true })}
+                onClose={() => this.setState({ maskBalanceValues: false })}
+              />
               <View style={styles.actionSpacer}/>
-              <SendButton/>
+              <SendButton onPress={() => navigation.push("Send")}/>
             </View>
           </View>
         </SafeAreaView>

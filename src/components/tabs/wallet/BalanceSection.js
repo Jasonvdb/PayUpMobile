@@ -8,7 +8,7 @@ import displayCurrency from "../../../helpers/displayCurrency";
 import theme from "../../../config/theme";
 
 const BalanceSection = props => {
-  const { wallet, style } = props;
+  const { wallet, style, maskValues } = props;
 
   const balances = wallet.balances;
   const { totalBalanceInSats } = balances;
@@ -18,7 +18,7 @@ const BalanceSection = props => {
       <View>
         <Text style={styles.subHeadingText}>In wallet</Text>
         <Text style={{ ...styles.valueText, ...styles.receivedText }}>
-          {displayCurrency(totalBalanceInSats)}
+          {maskValues ? "---" : displayCurrency(totalBalanceInSats)}
         </Text>
       </View>
 
@@ -27,7 +27,7 @@ const BalanceSection = props => {
           Locked up in bets
         </Text>
         <Text style={{ ...styles.valueText, ...styles.rightAlignText }}>
-          {displayCurrency(0)}
+          {maskValues ? "---" : displayCurrency(0)}
         </Text>
       </View>
     </View>
@@ -40,7 +40,8 @@ BalanceSection.defaultProps = {
 
 BalanceSection.propTypes = {
   wallet: PropTypes.instanceOf(Wallet).isRequired,
-  style: PropTypes.object
+  style: PropTypes.object,
+  maskValues: PropTypes.bool
 };
 
 const styles = StyleSheet.create({

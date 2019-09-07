@@ -13,6 +13,7 @@ import BottomTabBar from "../elements/bottom-tab/BottomTabBar";
 import BetsScreen from "../tabs/bets/BetsScreen";
 import BetView from "../tabs/bets/BetView";
 import WalletScreen from "../tabs/wallet/WalletScreen";
+import SendScreen from "../tabs/wallet/send/SendScreen";
 
 const defaultNavigationOptions = {
 	headerTitle: props => <Header {...props}/>,
@@ -54,6 +55,9 @@ const WalletNavigator = createStackNavigator(
 	{
 		Wallet: {
 			screen: WalletScreen
+		},
+		Send: {
+			screen: SendScreen
 		}
 	},
 	{
