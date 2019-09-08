@@ -185,3 +185,43 @@ describe("receive addresses", () => {
     10 * 60 * 1000
   );
 });
+
+describe("transaction constructing", () => {
+  let wallet;
+
+  beforeAll(async () => {
+    const mnemonic = process.env.MAINNET_MNEMONIC;
+
+    if (!mnemonic) {
+      throw new Error(`Missing words (process.env.MAINNET_MNEMONIC)`);
+    }
+
+    wallet = new Wallet();
+    await wallet.importExistingWallet(mnemonic, "mainnet");
+  });
+
+  afterAll(() => {
+    wallet = null;
+  });
+
+  it("get a wif for addresses in wallet", () => {
+    const receiveAddress = wallet.receiveAddresses[0];
+    const wif0 = wallet._getWifForAddress(receiveAddress);
+    expect(wif0).toBe("KwX6TwrXnfczMvvpVnPjMh3kDQhjFndjrGgUsrFK8Mxf52YpT3vN");
+
+    const changeAddress = wallet.changeAddresses[0];
+    const wif1 = wallet._getWifForAddress(changeAddress);
+    expect(wif1).toBe("L3G4ujgPaGiDLB9hGYUr1xnYBCdXJoM7rUnN2rPf91EkzHrekDLd");
+  });
+
+  it(
+    "fetch spendable utxos",
+    async () => {
+      const spendableUtxos = await wallet.fetchSpendableUtxos(5);
+
+      //TODO check the struct of this array
+      expect(Array.isArray(spendableUtxos)).toBeTruthy();
+    },
+    10 * 60 * 1000
+  );
+});

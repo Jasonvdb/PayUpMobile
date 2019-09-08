@@ -1,12 +1,21 @@
 import moment from "moment";
 import {
   createTransactionHex,
+  doesOwnAddress,
   formattedTransactionsFromAddresses,
   generateMnemonic,
   getAddressFromXpub,
-  getXpubFromMnemonic
+  getWifFromIndex,
+  getXpubFromMnemonic,
+  ownedUtxos
 } from "./wallet-functions";
-import { getAddressBalance, getAddressTransactions } from "./blockexplorer";
+import {
+  getAddressBalance,
+  getAddressTransactions,
+  getUtxosForAddress
+} from "./blockexplorer";
+import BigNumber from "bignumber.js";
+const bip39 = require("bip39");
 
 const bitcoin = require("bitcoinjs-lib");
 
@@ -18,6 +27,18 @@ const networks = {
   testnet: {
     network: bitcoin.networks.testnet,
     apiBaseUrl: "https://blockstream.info/testnet/api/"
+  },
+  litecoin: {
+    network: {
+      messagePrefix: "\x19Litecoin Signed Message:\n",
+      bip32: {
+        public: 0x019da462,
+        private: 0x019d9cfe
+      },
+      pubKeyHash: 0x30,
+      scriptHash: 0x32,
+      wif: 0xb0
+    }
   }
 };
 
@@ -54,6 +75,8 @@ export default class Wallet {
   busyUpdatingAddressTxData = false;
 
   addressUpdatesInQueue = false;
+
+  _wifForAddressCache = {};
 
   constructor() {}
 
@@ -345,24 +368,86 @@ export default class Wallet {
     return unusedAddress;
   }
 
-  async createTransaction(toAddress, amountInSats, fee) {
-    const changeAddress = await this.unusedChangeAddress();
+  //TODO move to wallet functions
+  _getWifForAddress(address) {
+    if (this._wifForAddressCache[address]) {
+      return this._wifForAddressCache[address];
+    }
 
-    const utxos = [
-      {
-        tx_hash:
-          "2f445cf016fa2772db7d473bff97515355b4e6148e1c980ce351d47cf54c517f",
-        block_height: 523186,
-        tx_input_n: -1,
-        tx_output_n: 1,
-        value: 100000,
-        ref_balance: 100000,
-        spent: false,
-        confirmations: 215,
-        confirmed: "2018-05-18T03:16:34Z",
-        double_spend: false
-      }
-    ];
-    createTransactionHex(utxos, toAddress, amountInSats, fee, changeAddress);
+    // //If we own it and whether or not it is a receive or change address
+    const addressTypeDetails = doesOwnAddress(
+      address,
+      this.receiveAddresses,
+      this.changeAddresses
+    );
+
+    if (!addressTypeDetails) {
+      throw new Error("Does not own address");
+    }
+
+    const { type, index } = addressTypeDetails;
+
+    const wif = getWifFromIndex(this.mnemonic, this.network, index, type);
+
+    return wif;
   }
+
+  async fetchSpendableUtxos(testLimit = null) {
+    const spendableUtxos = [];
+
+    const allAddresses = [...this.receiveAddresses, ...this.changeAddresses];
+
+    let addressCheckCount = 0;
+
+    for (const address of allAddresses) {
+      console.log(address);
+      const utxos = await getUtxosForAddress(this.apiBaseUrl, address);
+
+      if (utxos) {
+        for (const utxo of utxos) {
+          if (utxo.status.confirmed) {
+            spendableUtxos.push({ ...utxo, address });
+          }
+        }
+      }
+
+      addressCheckCount++;
+
+      if (testLimit && testLimit < addressCheckCount) {
+        break;
+      }
+    }
+
+    return spendableUtxos;
+  }
+
+  getUtxosWithWIF() {
+    // // const utxos = ownedUtxos(
+    // //   this.rawTransactions,
+    // //   this.receiveAddresses,
+    // //   this.changeAddresses
+    // // );
+    //
+    // for (const utxo of utxos) {
+    //   const { scriptpubkey_address } = utxo;
+    //   utxo.wif = this._getWifForAddress(scriptpubkey_address);
+    // }
+    // return utxos;
+  }
+
+  // async createTransaction(toAddress, amountInSats, feeInSatsPerByte) {
+  //   const changeAddress = await this.unusedChangeAddress();
+  //   const utxosWithKeys = this.getUtxosWithWIF();
+  //
+  //   const feeInSats = 100; // initial fee guess
+  //   //TODO try get actual fee
+  //
+  //   const amountPlusFee = parseFloat(
+  //     new BigNumber(amountInSats).plus(feeInSats).toString(10)
+  //   );
+  //
+  //   const txHex = createTransactionHex(utxosWithKeys, this.network);
+  //
+  //   return txHex;
+  // }
 }

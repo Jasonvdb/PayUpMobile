@@ -10,7 +10,10 @@ import {
   getXpubFromMnemonic,
   validateMnemonic,
   getXprivFromMnemonic,
-  createTransactionHex
+  createTransactionHex,
+  createTx,
+  getWifFromIndex,
+  createTransactionHexTest
 } from "../wallet-functions";
 
 const litecoinNetwork = {
@@ -129,46 +132,68 @@ Object.keys(testDataByNetwork).forEach(networkKey => {
 });
 
 //TODO move this into loop to test both mainnet and testnet
-describe(`create transaction hex`, () => {
-  it("creates value tx hex", () => {
+describe(`transactions`, () => {
+  it("get WIF from address index", () => {
+    const mnemonic =
+      "arena coin myth kangaroo age obey scrap fog exercise space logic rib uphold become ahead mixed power shed state raccoon wreck weird blame ability";
+
+    const wif = getWifFromIndex(
+      mnemonic,
+      bitcoin.networks.bitcoin,
+      0,
+      "receive"
+    );
+
+    expect(wif).toBe("KxRgFEG1xppcZNdd8Xn4ChjiZz8KpypmoL1emXYc7SmiRtBsHi1D");
+  });
+
+  it("create transaction hex", () => {
     const utxos = [
       {
-        tx_hash:
-          "2f445cf016fa2772db7d473bff97515355b4e6148e1c980ce351d47cf54c517f",
-        block_height: 523186,
-        tx_input_n: -1,
-        tx_output_n: 1,
-        value: 100000,
-        ref_balance: 100000,
-        spent: false,
-        confirmations: 215,
-        confirmed: "2018-05-18T03:16:34Z",
-        double_spend: false
+        txid:
+          "0e18ab260212d7bba6181ff58f23b17f9683aed22a2a86871290cc890e731073",
+        vout: 0,
+        status: {
+          confirmed: true,
+          block_height: 592786,
+          block_hash:
+            "0000000000000000000010a2f54513b2d1c5fb0ab12145a4cfef5d99c850e12b",
+          block_time: 1567357791
+        },
+        value: 1000,
+        address: "35Y5r6WhUrE3MuBwQZApQ5DLjKchaGiAjg"
+      },
+      {
+        txid:
+          "22e9e39b09fd3ca243258cd10058f93926a2e0b96e9ac3282aa540f9676d4c3c",
+        vout: 0,
+        status: {
+          confirmed: true,
+          block_height: 592258,
+          block_hash:
+            "00000000000000000009005763922312cc931c04f474c833aaef2c263850d1ca",
+          block_time: 1567071425
+        },
+        value: 6660,
+        address: "3AnQsXubEbGnwXt1sY6XeDvVRPKWQuw6ga"
+      },
+      {
+        txid:
+          "14ebc1cffff0e8a605a996060028726f1412f6ecb8dbd0c9a68787e1390d5393",
+        vout: 0,
+        status: {
+          confirmed: true,
+          block_height: 592636,
+          block_hash:
+            "0000000000000000000ae7d09faa16923025bfedd401906d8d2da9f32c634ab9",
+          block_time: 1567275028
+        },
+        value: 1000,
+        address: "3JLAA1P4gvY5ngGRgHKYDmoiLxKVm5jsQ1"
       }
     ];
 
-    // receiveAddresses: [
-    // 	"3LessnBS6BoYKLsCQv9vJyNBEiEJVQ6eQZ",
-    // 	"3KbFmdPCgwpZqGTgWyeoA6A1JkFaRYnp9x"
-    // ],
-    // 	changeAddresses: [
-    // 	"3MYnbKB16fbBEm7JA64Qd7fgzG29b4L3C7",
-    // 	"32gYJb5FcgMzubsskCJzTzjdaca58Bi6x1"
-    // ]
-
-    const toAddress = "3LessnBS6BoYKLsCQv9vJyNBEiEJVQ6eQZ";
-    const changeAddress = "3MYnbKB16fbBEm7JA64Qd7fgzG29b4L3C7";
-
-    const amountInSats = 10000;
-    const fee = 2;
-
-    const txHex = createTransactionHex(
-      utxos,
-      toAddress,
-      amountInSats,
-      fee,
-      changeAddress
-    );
+    const txHex = createTransactionHex(utxos, "3LessnBS6BoYKLsCQv9vJyNBEiEJVQ6eQZ", bitcoin.networks.bitcoin);
 
     expect(txHex).toStrictEqual("TODO");
   });
