@@ -29,13 +29,14 @@ target 'PayUpMobile' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
 
 
   pod 'react-native-slider', :path => '../node_modules/@react-native-community/slider'
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'PayUpMobileTests' do
     inherit! :search_paths

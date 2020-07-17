@@ -24,7 +24,7 @@ const BetCard = props => {
 
       <View style={styles.row2}>
         <Text style={styles.subHeading}>Winning outcome</Text>
-        <Text style={styles.valueText}>Muller gets a baby</Text>
+        <Text style={styles.valueText}>Bitcoin reaches the moon</Text>
       </View>
 
       <View style={styles.row3}>
